@@ -30,11 +30,17 @@ export const logout = () => dispatch => (
     .then(() => dispatch(logoutCurrentUser()))
 );
 
+// export const signup = user => dispatch => {
+//   return SessionAPI.signup(user)
+//     .then(currentUser =>{
+//      return (dispatch(receiveCurrentUser(currentUser))),
+//       err => {
+//         debugger
+//         return (dispatch(receiveErrors(err.responseJSON)))
+//       }});
+//     };
+
 export const signup = user => dispatch => {
-  return SessionAPI.signup(user)
-    .then(currentUser =>{
-     return (dispatch(receiveCurrentUser(currentUser))),
-      err => {
-        return (dispatch(receiveErrors(err.responseJSON)))
-      }});
-    };
+  return SessionAPI.signup(user).then(currentUser => dispatch(receiveCurrentUser(currentUser)), 
+  err => dispatch(receiveErrors(err.responseJSON)));
+};
