@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Greeting from './greeting';
+import NavBar from './nav_bar';
 import { logout } from '../../actions/session_actions';
 
 const mapStateToProps = ({ session, entities: { users }}) => {
@@ -12,4 +12,4 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Greeting);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

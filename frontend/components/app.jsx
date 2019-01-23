@@ -1,17 +1,16 @@
 import React from 'react';
-import GreetingContainer from './greeting/greeting_container';
+import NavBarContainer from './nav_bar/nav_bar_container';
 import LoginFormContainer from './session_form/login_form_container';
 import SignupFormContainer from './session_form/signup_form_container';
 import { Route, Link, Switch } from 'react-router-dom';
+import Home from './home/home';
 import { AuthRoute } from "../util/route_util";
 
 const App = () => (
   <div>
     <header>
-      <Link to="/" className="header_link">
-        <h1>Pollr Bear</h1>
-      </Link>
-      <GreetingContainer />
+      <NavBarContainer />
+      <Route exact path="/" component={Home} />
     </header>
     <Switch>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
