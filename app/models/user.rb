@@ -24,14 +24,12 @@ class User < ApplicationRecord
   end
 
   def reset_session_token!
-    debugger
     generate_unique_session_token
     self.save!
     self.session_token
   end
 
   def set_username
-    debugger
     generate_unique_username
     self.save!
     self.username
@@ -40,12 +38,10 @@ class User < ApplicationRecord
   private
 
   def ensure_username
-    debugger
     generate_unique_username unless self.username
   end
 
   def new_username
-    debugger
     self.firstname + self.lastname + Random.rand(1...99).to_s
   end
   

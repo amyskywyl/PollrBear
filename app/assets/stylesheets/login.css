@@ -1,0 +1,28 @@
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-form-box h1 {
+  font-size: 40px;
+}
+
+.login {
+  padding: .25em 1em;
+  flex-basis: 50%;
+  max-width: 50%;
+  color: #6193c5;
+}
+
+
+.signup:hover{
+  background-color: #6193c5;
+  color: #ffffff;
+}
+
+.login-message {
+  margin-top: 15px;
+}

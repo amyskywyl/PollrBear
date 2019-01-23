@@ -12,7 +12,17 @@ class SignupForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   update(field) {
+    return (e) => {
+      this.setState({ [field]: e.target.value });
+    };
+  }
+
+  handleDemo() {
     return (e) => {
       this.setState({ [field]: e.target.value });
     };
@@ -40,14 +50,13 @@ class SignupForm extends React.Component {
     return (
       <div className="signup-form-container">
         <form onSubmit={this.handleSubmit} className="signup-form-box">
-          Create your account
+          <h1>Create your account</h1>
           <br />
-          Please {this.props.formType} or {this.props.navLink}
           {this.renderErrors()}
           <div className="signup-form">
             <br />
             <label>First name:
-              <input type="text"
+              <input required type="text"
                 value={this.state.firstname}
                 onChange={this.update('firstname')}
                 className="signup-input"
@@ -55,7 +64,7 @@ class SignupForm extends React.Component {
             </label>
             <br />
             <label>Last name:
-              <input type="text"
+              <input required type="text"
                 value={this.state.lastname}
                 onChange={this.update('lastname')}
                 className="signup-input"
@@ -63,7 +72,7 @@ class SignupForm extends React.Component {
             </label>
             <br />
             <label>Email:
-              <input type="text"
+              <input required type="text"
                 value={this.state.email}
                 onChange={this.update('email')}
                 className="signup-input"
@@ -71,15 +80,16 @@ class SignupForm extends React.Component {
             </label>
             <br />
             <label>Password:
-              <input type="password"
+              <input required type="password"
                 value={this.state.password}
                 onChange={this.update('password')}
                 className="signup-input"
               />
             </label>
             <br />
-            <input className="session-submit" type="submit" value={this.props.formType} />
+            <input className="session-submit" type="submit" value="Create my Pollr Bear account" />
           </div>
+        <div className="signup-message">Already have an account? {this.props.navLink}</div>
         </form>
       </div>
     );

@@ -10,6 +10,10 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
+
   update(field) {
     return (e) => {
       this.setState({ [field]: e.target.value });
@@ -38,13 +42,13 @@ class LoginForm extends React.Component {
     return (
       <div className="login-form-container">
         <form onSubmit={this.handleSubmit} className="login-form-box">
+          <h1>Log in</h1>
           <br />
-          Please {this.props.formType} or {this.props.navLink}
           {this.renderErrors()}
           <div className="login-form">
             <br />
             <label>Username:
-              <input type="text"
+              <input required type="text"
                 value={this.state.username}
                 onChange={this.update('username')}
                 className="login-input"
@@ -52,15 +56,16 @@ class LoginForm extends React.Component {
             </label>
             <br />
             <label>Password:
-              <input type="password"
+              <input required type="password"
                 value={this.state.password}
                 onChange={this.update('password')}
                 className="login-input"
               />
             </label>
             <br />
-            <input className="session-submit" type="submit" value={this.props.formType} />
+            <input required className="session-submit" type="submit" value={this.props.formType} />
           </div>
+        <div className="login-message">Need an account? {this.props.navLink}</div>
         </form>
       </div>
     );
