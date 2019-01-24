@@ -8,6 +8,7 @@ class LoginForm extends React.Component {
       password: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemo = this.handleDemo.bind(this);
   }
 
   componentWillUnmount() {
@@ -22,6 +23,17 @@ class LoginForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const user = Object.assign({}, this.state);
+    this.props.login(user);
+  }
+
+  handleDemo(e) {
+    e.preventDefault();
+    this.state = {
+      username: 'pollrbear',
+      password: 'bearbear'
+    }
+    debugger
     const user = Object.assign({}, this.state);
     this.props.login(user);
   }
@@ -67,6 +79,11 @@ class LoginForm extends React.Component {
           </div>
         <div className="login-message">Need an account? {this.props.navLink}</div>
         </form>
+        <div className="demo-login-form-container">
+          <form onSubmit={this.handleDemo} className="login-form-box">
+            <input required className="demo-session-submit" type="submit" value="Demo Login" />
+          </form>
+        </div>
       </div>
     );
   }

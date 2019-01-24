@@ -190,11 +190,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Route"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Route"], {
     exact: true,
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -466,6 +466,7 @@ function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -487,6 +488,18 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      var user = Object.assign({}, this.state);
+      this.props.login(user);
+    }
+  }, {
+    key: "handleDemo",
+    value: function handleDemo(e) {
+      e.preventDefault();
+      this.state = {
+        username: 'pollrbear',
+        password: 'bearbear'
+      };
+      debugger;
       var user = Object.assign({}, this.state);
       this.props.login(user);
     }
@@ -528,7 +541,17 @@ function (_React$Component) {
         value: this.props.formType
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-message"
-      }, "Need an account? ", this.props.navLink)));
+      }, "Need an account? ", this.props.navLink)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "demo-login-form-container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleDemo,
+        className: "login-form-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        required: true,
+        className: "demo-session-submit",
+        type: "submit",
+        value: "Demo Login"
+      }))));
     }
   }]);
 
@@ -652,15 +675,6 @@ function (_React$Component) {
 
       return function (e) {
         _this2.setState(_defineProperty({}, field, e.target.value));
-      };
-    }
-  }, {
-    key: "handleDemo",
-    value: function handleDemo() {
-      var _this3 = this;
-
-      return function (e) {
-        _this3.setState(_defineProperty({}, field, e.target.value));
       };
     }
   }, {

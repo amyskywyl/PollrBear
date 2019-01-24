@@ -37,11 +37,6 @@
   z-index: 1;
 }
 
-.login-signup {
-  display: flex;
-  justify-content: space-between;
-}
-
 .mypolls-logout {
   display: flex;
   justify-content: space-between;
@@ -66,9 +61,9 @@
 }
 
 header h1 {
-    display: block;
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 28px;
+    font-weight: 1000;
+    color: #6193c5;
 }
 
 .session-submit {

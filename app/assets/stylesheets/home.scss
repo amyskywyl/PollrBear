@@ -21,44 +21,58 @@
    justify-content: center;
    align-items: flex-start;
    h1 {
-    padding-inline-start: 50px;
-    height: 250px;
-    z-index: 1;
+    height: 110px;
     color: white;
     text-shadow: 1px 1px 15px black;
-    width: 100%;
-    font-size: 60px;
-    line-height: 72px;
     font-weight: bold;
+    padding-top: 60px;
+    padding-left: 32px;
+    font-size: 52px;
+    line-height: 53px;
    }
    p {
-    padding-inline-start: 50px;
-    font-size: 28px;
-    line-height: 36px;
     width: 100%;
     color: white;
+    padding-top: 24px;
+    padding-left: 32px;
+    font-size: 20px;
+    line-height: 25px;
    }
    .get-started {
-    margin-left: 50px;
-    padding: 5px 10px;
-    background-color: #fc5d51;
-    border-color: #fc5d51;
-    color: #fff;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    box-sizing: border-box;
-    line-height: 1.5;
-    text-decoration: none;
+    background-color: #EE6860;
+    color: white;
     text-align: center;
-    transition-duration: .2s;
-    transition-property: background-color,border-color,color;
-    font-family: inherit;
+    height: 44px;
+    width: 120px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    line-height: 25px;
+    margin: 56px 0 0 32px;
+    box-sizing: border-box;
+    padding: 8px;
+   }
+   .get-started:hover {
+     background-color: #b84037;
    }
  }
 
  .nav-primary {
-   height: 150px;
- }
+   height: 74px;
+   display: flex;
+  }
+
+.login-signup {
+  width: 100%;
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 30px;
+  div{
+    align-self: center;
+  }
+}
 
  .nav-loggedin {
    height: 150px;
