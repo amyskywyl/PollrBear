@@ -16,13 +16,17 @@ const NavBar = ({ currentUser, logout }) => {
     </nav>
   );
   const personalGreeting = () => (
-    <hgroup className="header-group">
-      <Link to="/" className="header_link">
-        <h1 className="logo">Pollr Bear</h1>
-      </Link>
-      <h2 className="header-name">Hi, {currentUser.username}!</h2>
-      <button className="header-button" onClick={logout}>Log Out</button>
-    </hgroup>
+    <nav className="nav-loggedin">
+      <div className="mypolls-logout">
+        <Link to="/" className="header_link">
+          <h1 className="logo">Pollr Bear</h1>
+        </Link>
+        <div>
+          <h2 className="header-name">Hi, {currentUser.username}!</h2>
+          <button className="header-button" onClick={logout}>Log Out</button>
+        </div>
+      </div>
+    </nav>
   );
 
   return currentUser ? personalGreeting() : sessionLinks();

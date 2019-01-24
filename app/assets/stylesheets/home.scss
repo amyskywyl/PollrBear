@@ -11,23 +11,55 @@
 
  .hero-img {
    width: 100%;
+   filter: brightness(40%);
  }
 
  .home {
    min-height: 400px;
    display: flex;
+   flex-direction: column;
    justify-content: center;
-   align-items: flex-end;
+   align-items: flex-start;
    h1 {
-    height: 100%;
+    padding-inline-start: 50px;
+    height: 250px;
     z-index: 1;
     color: white;
     text-shadow: 1px 1px 15px black;
-    text-align: center;
     width: 100%;
+    font-size: 60px;
+    line-height: 72px;
+    font-weight: bold;
+   }
+   p {
+    padding-inline-start: 50px;
+    font-size: 28px;
+    line-height: 36px;
+    width: 100%;
+    color: white;
+   }
+   .get-started {
+    margin-left: 50px;
+    padding: 5px 10px;
+    background-color: #fc5d51;
+    border-color: #fc5d51;
+    color: #fff;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    box-sizing: border-box;
+    line-height: 1.5;
+    text-decoration: none;
+    text-align: center;
+    transition-duration: .2s;
+    transition-property: background-color,border-color,color;
+    font-family: inherit;
    }
  }
 
  .nav-primary {
+   height: 150px;
+ }
+
+ .nav-loggedin {
    height: 150px;
  }
