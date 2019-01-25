@@ -3,8 +3,8 @@ import NavBarContainer from './nav_bar/nav_bar_container';
 import HomeContainer from './home/home_container';
 import LoginFormContainer from './session_form/login_form_container';
 import SignupFormContainer from './session_form/signup_form_container';
+import GroupIndexContainer from './groups/group_index_container';
 import { Route, Link, Switch } from 'react-router-dom';
-import Home from './home/home';
 import { AuthRoute } from "../util/route_util";
 
 const App = () => (
@@ -16,6 +16,7 @@ const App = () => (
     <Switch>
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
+      <Route exact path="/groups" component={GroupIndexContainer} />
     </Switch>
   </div>
 );

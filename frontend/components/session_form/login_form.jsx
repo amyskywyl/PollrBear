@@ -33,7 +33,6 @@ class LoginForm extends React.Component {
       username: 'pollrbear',
       password: 'bearbear'
     }
-    debugger
     const user = Object.assign({}, this.state);
     this.props.login(user);
   }
