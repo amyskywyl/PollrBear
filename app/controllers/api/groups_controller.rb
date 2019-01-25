@@ -3,7 +3,6 @@ class Api::GroupsController < ApplicationController
 
   def index
     @groups = Group.all
-    debugger
     render :index
   end
 
@@ -11,7 +10,8 @@ class Api::GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.user_id = current_user.id
     if @group.save
-      redirect_to group_url(@group)
+      @groups = Group.all
+      render :index
     else
       render json: @group.errors.full_messages, status: 422
     end
@@ -20,7 +20,8 @@ class Api::GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     if @group.update(group_params)
-      redirect_to group_url(@group)
+      @groups = Group.all
+      render :index
     else
       render json: @group.errors.full_messages, status: 422
     end
@@ -29,7 +30,8 @@ class Api::GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
     if @group.destroy
-      redirect_to groups_url
+      @groups = Group.all
+      render :index
     else
       render plain: "You can't destroy what's not there."
     end

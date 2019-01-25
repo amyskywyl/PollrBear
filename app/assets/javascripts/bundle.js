@@ -132,9 +132,7 @@ var removeGroup = function removeGroup(groupId) {
 
 var fetchGroups = function fetchGroups() {
   return function (dispatch) {
-    debugger;
     return _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchGroups"]().then(function (groups) {
-      debugger;
       return dispatch(receiveAllGroups(groups));
     });
   };
@@ -262,8 +260,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session_form/login_form_container */ "./frontend/components/session_form/login_form_container.jsx");
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.jsx");
 /* harmony import */ var _groups_group_index_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./groups/group_index_container */ "./frontend/components/groups/group_index_container.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _groups_edit_group_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./groups/edit_group_form_container */ "./frontend/components/groups/edit_group_form_container.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+
 
 
 
@@ -274,22 +274,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Route"], {
     exact: true,
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_8__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_8__["AuthRoute"], {
     exact: true,
     path: "/signup",
     component: _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Route"], {
     exact: true,
     path: "/groups",
     component: _groups_group_index_container__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Route"], {
+    path: "/posts/:postId/edit",
+    component: _groups_edit_group_form_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   })));
 };
 
@@ -301,6 +304,45 @@ var App = function App() {
 /*!********************************************************************!*\
   !*** ./frontend/components/groups/create_group_form_container.jsx ***!
   \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _group_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_form */ "./frontend/components/groups/group_form.jsx");
+/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/groups */ "./frontend/actions/groups.js");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var group = {
+    title: ''
+  };
+  var formType = 'Create Group';
+  return {
+    group: group,
+    formType: formType
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    action: function action(group) {
+      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["createGroup"])(group));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_group_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/groups/edit_group_form_container.jsx":
+/*!******************************************************************!*\
+  !*** ./frontend/components/groups/edit_group_form_container.jsx ***!
+  \******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -335,7 +377,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var formType = 'Create Group';
+  var group = {
+    title: ''
+  };
+  var formType = 'Edit Group';
   return {
     group: group,
     formType: formType
@@ -344,37 +389,27 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchGroup: function (_fetchGroup) {
-      function fetchGroup(_x) {
-        return _fetchGroup.apply(this, arguments);
-      }
-
-      fetchGroup.toString = function () {
-        return _fetchGroup.toString();
-      };
-
-      return fetchGroup;
-    }(function (id) {
-      return dispatch(fetchGroup(id));
-    }),
+    fetchGroup: function fetchGroup(id) {
+      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_3__["fetchGroup"])(id));
+    },
     action: function action(group) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_3__["createGroup"])(group));
+      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_3__["updateGroup"])(group));
     }
   };
 };
 
-var CreateGroupForm =
+var EditGroupForm =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(CreateGroupForm, _React$Component);
+  _inherits(EditGroupForm, _React$Component);
 
-  function CreateGroupForm() {
-    _classCallCheck(this, CreateGroupForm);
+  function EditGroupForm() {
+    _classCallCheck(this, EditGroupForm);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CreateGroupForm).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(EditGroupForm).apply(this, arguments));
   }
 
-  _createClass(CreateGroupForm, [{
+  _createClass(EditGroupForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchGroup(this.props.match.params.groupId);
@@ -401,49 +436,10 @@ function (_React$Component) {
     }
   }]);
 
-  return CreateGroupForm;
+  return EditGroupForm;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(CreateGroupForm));
-
-/***/ }),
-
-/***/ "./frontend/components/groups/edit_group_form_container.jsx":
-/*!******************************************************************!*\
-  !*** ./frontend/components/groups/edit_group_form_container.jsx ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _group_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_form */ "./frontend/components/groups/group_form.jsx");
-/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/groups */ "./frontend/actions/groups.js");
-
-
-
-
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var post = {
-    title: ''
-  };
-  var formType = 'Edit Group';
-  return {
-    group: group,
-    formType: formType
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    action: function action(group) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["updateGroup"])(group));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_group_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(EditGroupForm));
 
 /***/ }),
 
@@ -508,12 +504,8 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      var _this3 = this;
-
       e.preventDefault();
-      this.props.action(this.state).then(function () {
-        return _this3.props.history.push('/');
-      });
+      this.props.action(this.state);
     }
   }, {
     key: "errors",
@@ -535,11 +527,14 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.errors()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "group-form",
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.title,
         onChange: this.update('title')
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Create Group")));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: this.props.formType
+      })));
     }
   }]);
 
@@ -601,7 +596,6 @@ function (_React$Component) {
   _createClass(GroupIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      debugger;
       this.props.fetchGroups();
     }
   }, {
@@ -616,7 +610,7 @@ function (_React$Component) {
           deleteGroup: _this.props.deleteGroup
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, groups));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, groups), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_create_group_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 
@@ -683,12 +677,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var GroupIndexItem = function GroupIndexItem(_ref) {
-  var group = _ref.group;
+  var group = _ref.group,
+      deleteGroup = _ref.deleteGroup;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "group-index-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/group/".concat(group.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return deleteGroup(group.id);
+    }
+  }, "Delete"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GroupIndexItem);
@@ -1399,11 +1398,10 @@ var GroupsReducer = function GroupsReducer() {
 
   switch (action.type) {
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_GROUPS"]:
-      debugger;
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.groups);
 
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GROUP"]:
-      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, oldState, _defineProperty({}, action.group.id, action.post));
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, oldState, _defineProperty({}, action.group.id, action.group));
 
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["REMOVE_GROUP"]:
       var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, oldState);
@@ -1606,7 +1604,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGroup", function() { return updateGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteGroup", function() { return deleteGroup; });
 var fetchGroups = function fetchGroups() {
-  debugger;
   return $.ajax({
     method: "GET",
     url: "/api/groups"
@@ -3133,24 +3130,8 @@ var FORWARD_REF_STATICS = {
     propTypes: true
 };
 
-var MEMO_STATICS = {
-    '$$typeof': true,
-    compare: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true,
-    type: true
-};
-
 var TYPE_STATICS = {};
 TYPE_STATICS[ReactIs.ForwardRef] = FORWARD_REF_STATICS;
-
-function getStatics(component) {
-    if (ReactIs.isMemo(component)) {
-        return MEMO_STATICS;
-    }
-    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
-}
 
 var defineProperty = Object.defineProperty;
 var getOwnPropertyNames = Object.getOwnPropertyNames;
@@ -3176,8 +3157,8 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
             keys = keys.concat(getOwnPropertySymbols(sourceComponent));
         }
 
-        var targetStatics = getStatics(targetComponent);
-        var sourceStatics = getStatics(sourceComponent);
+        var targetStatics = TYPE_STATICS[targetComponent['$$typeof']] || REACT_STATICS;
+        var sourceStatics = TYPE_STATICS[sourceComponent['$$typeof']] || REACT_STATICS;
 
         for (var i = 0; i < keys.length; ++i) {
             var key = keys[i];

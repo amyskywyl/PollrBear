@@ -20,10 +20,8 @@ const removeGroup = groupId => ({
 });
 
 export const fetchGroups = () => dispatch => {
-  debugger
   return (
   GroupAPI.fetchGroups().then(groups => {
-    debugger
     return (dispatch(receiveAllGroups(groups)))})
 )};
 

@@ -15,7 +15,7 @@ class GroupForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.action(this.state).then(() => this.props.history.push('/'));
+    this.props.action(this.state);
   }
 
   errors() {
@@ -33,8 +33,10 @@ class GroupForm extends React.Component {
       <section className="questions">
       <ul>{this.errors()}</ul>
       <form className="group-form" onSubmit={this.handleSubmit}>
-        <input type="text" value={this.state.title} onChange={this.update('title')}/>
-        <button>Create Group</button>
+        <label>
+          <input type="text" value={this.state.title} onChange={this.update('title')}/>
+        </label>
+        <input type="submit" value={this.props.formType} />
       </form>
       </section>
     );

@@ -1,5 +1,4 @@
 export const fetchGroups = () => {
-  debugger
   return $.ajax({
     method: "GET",
     url: "/api/groups",

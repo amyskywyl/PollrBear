@@ -6,7 +6,6 @@ import EditGroupFormContainer from './edit_group_form_container';
 class GroupIndex extends React.Component {
 
   componentDidMount() {
-    debugger
     this.props.fetchGroups();
   }
 
@@ -25,8 +24,7 @@ class GroupIndex extends React.Component {
         <ul>
           {groups}
         </ul>
-        {/* <CreateGroupFormContainer />
-        <EditGroupFormContainer /> */}
+        <CreateGroupFormContainer />
       </div>
     );
   }

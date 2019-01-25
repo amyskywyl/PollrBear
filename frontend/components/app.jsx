@@ -4,6 +4,7 @@ import HomeContainer from './home/home_container';
 import LoginFormContainer from './session_form/login_form_container';
 import SignupFormContainer from './session_form/signup_form_container';
 import GroupIndexContainer from './groups/group_index_container';
+import EditGroupFormContainer from './groups/edit_group_form_container'
 import { Route, Link, Switch } from 'react-router-dom';
 import { AuthRoute } from "../util/route_util";
 
@@ -17,6 +18,7 @@ const App = () => (
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <Route exact path="/groups" component={GroupIndexContainer} />
+      <Route path="/posts/:postId/edit" component={EditGroupFormContainer} />
     </Switch>
   </div>
 );
