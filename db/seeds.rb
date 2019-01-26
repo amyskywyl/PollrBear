@@ -17,3 +17,5 @@ demo = User.create(firstname: "Pollr",
 demogroup1 = Group.create(title: "Bears favorite", user_id: demo.id)
 demogroup2 = Group.create(user_id: demo.id)
 demogroup3 = Group.create(title: "Group for bears", user_id: demo.id)
+
+question1 = Question.create(body: "what", question_type: "q", group_id: demogroup1.id)

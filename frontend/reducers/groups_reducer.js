@@ -9,9 +9,10 @@ const GroupsReducer = (oldState = {}, action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_ALL_GROUPS:
+    debugger
       return merge({}, action.groups);
     case RECEIVE_GROUP:
-      return merge({}, oldState, {[action.group.id]: action.group});
+      return merge({}, action.group);
     case REMOVE_GROUP:
       let newState = merge({}, oldState);
       delete newState[action.groupId];

@@ -505,7 +505,9 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.action(this.state);
+      this.props.action(this.state).then(this.setState({
+        title: ''
+      }));
     }
   }, {
     key: "errors",
@@ -604,8 +606,8 @@ function (_React$Component) {
       var _this = this;
 
       var groups = this.props.groups.map(function (group) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_group_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: group.id,
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_group_index_item__WEBPACK_IMPORTED_MODULE_1__["default"] // key={`group${group.id}`}
+        , {
           group: group,
           deleteGroup: _this.props.deleteGroup
         });
@@ -673,6 +675,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _questions_question_index_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../questions/question_index_container */ "./frontend/components/questions/question_index_container.jsx");
+
 
 
 
@@ -680,6 +684,7 @@ var GroupIndexItem = function GroupIndexItem(_ref) {
   var group = _ref.group,
       deleteGroup = _ref.deleteGroup;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    key: group.id,
     className: "group-index-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/group/".concat(group.id)
@@ -687,7 +692,9 @@ var GroupIndexItem = function GroupIndexItem(_ref) {
     onClick: function onClick() {
       return deleteGroup(group.id);
     }
-  }, "Delete"));
+  }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_questions_question_index_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    group: group
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GroupIndexItem);
@@ -869,6 +876,139 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_nav_bar__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/questions/question_index.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/questions/question_index.jsx ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var QuestionIndex =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(QuestionIndex, _React$Component);
+
+  function QuestionIndex() {
+    _classCallCheck(this, QuestionIndex);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(QuestionIndex).apply(this, arguments));
+  }
+
+  _createClass(QuestionIndex, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // debugger
+      this.props.fetchQuestions();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      debugger;
+      var questions = this.props.group.questions.map(function (question) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(QuestionIndexItem, {
+          key: question.id,
+          question: question,
+          deleteQuestion: _this.props.deleteQuestion
+        });
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, questions));
+    }
+  }]);
+
+  return QuestionIndex;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (QuestionIndex);
+
+/***/ }),
+
+/***/ "./frontend/components/questions/question_index_container.jsx":
+/*!********************************************************************!*\
+  !*** ./frontend/components/questions/question_index_container.jsx ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _question_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./question_index */ "./frontend/components/questions/question_index.jsx");
+
+
+
+var mapStateToProps = function mapStateToProps(_ref, ownProps) {
+  var entities = _ref.entities;
+  return {
+    questions: Object.keys(entities.questions).map(function (id) {
+      return entities.questions[id];
+    }),
+    group: ownProps.group
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchQuestions: function (_fetchQuestions) {
+      function fetchQuestions() {
+        return _fetchQuestions.apply(this, arguments);
+      }
+
+      fetchQuestions.toString = function () {
+        return _fetchQuestions.toString();
+      };
+
+      return fetchQuestions;
+    }(function () {
+      return dispatch(fetchQuestions());
+    }),
+    deleteQuestion: function (_deleteQuestion) {
+      function deleteQuestion(_x) {
+        return _deleteQuestion.apply(this, arguments);
+      }
+
+      deleteQuestion.toString = function () {
+        return _deleteQuestion.toString();
+      };
+
+      return deleteQuestion;
+    }(function (id) {
+      return dispatch(deleteQuestion(id, entities.questions[id].groupId));
+    })
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_question_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -1386,8 +1526,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/groups */ "./frontend/actions/groups.js");
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -1398,10 +1536,11 @@ var GroupsReducer = function GroupsReducer() {
 
   switch (action.type) {
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_GROUPS"]:
+      debugger;
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.groups);
 
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GROUP"]:
-      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, oldState, _defineProperty({}, action.group.id, action.group));
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.group);
 
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["REMOVE_GROUP"]:
       var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, oldState);
@@ -3130,8 +3269,24 @@ var FORWARD_REF_STATICS = {
     propTypes: true
 };
 
+var MEMO_STATICS = {
+    '$$typeof': true,
+    compare: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true,
+    type: true
+};
+
 var TYPE_STATICS = {};
 TYPE_STATICS[ReactIs.ForwardRef] = FORWARD_REF_STATICS;
+
+function getStatics(component) {
+    if (ReactIs.isMemo(component)) {
+        return MEMO_STATICS;
+    }
+    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
 
 var defineProperty = Object.defineProperty;
 var getOwnPropertyNames = Object.getOwnPropertyNames;
@@ -3157,8 +3312,8 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
             keys = keys.concat(getOwnPropertySymbols(sourceComponent));
         }
 
-        var targetStatics = TYPE_STATICS[targetComponent['$$typeof']] || REACT_STATICS;
-        var sourceStatics = TYPE_STATICS[sourceComponent['$$typeof']] || REACT_STATICS;
+        var targetStatics = getStatics(targetComponent);
+        var sourceStatics = getStatics(sourceComponent);
 
         for (var i = 0; i < keys.length; ++i) {
             var key = keys[i];

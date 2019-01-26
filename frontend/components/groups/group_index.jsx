@@ -13,7 +13,7 @@ class GroupIndex extends React.Component {
     const groups = this.props.groups.map(group => {
       return (
         <GroupIndexItem
-          key={group.id}
+          // key={`group${group.id}`}
           group={group}
           deleteGroup={this.props.deleteGroup} />
       );
