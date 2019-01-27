@@ -31,4 +31,30 @@ class ApplicationController < ActionController::Base
       render json: { base: ['invalid credentials'] }, status: 401
     end
   end
+
+  def group_ord(group) #technically input can be a task or a column.
+    all_questions = group.questions
+    question_hash = {}
+    head, tail = nil
+    all_questions.length.times do |idx|
+      current_question = all_questions[idx]
+      question_hash[current_question.id] = current_question
+      head = current_question if current_question.prev_id == nil
+      tail = current_question if current_question.next_id == nil
+    end
+    return [] if head == nil
+
+    ord = [head.id]
+
+    until ord[-1] == tail.id
+      last = question_hash[ord[-1]]
+      next_question = question_hash[last.next_id]
+      if next_question != nil
+        question_hash[next_question.id] = next_question
+        ord << next_question.id
+      end
+    end
+
+    ord
+  end
 end

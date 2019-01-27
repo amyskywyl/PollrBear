@@ -5,7 +5,8 @@ class CreateQuestions < ActiveRecord::Migration[5.2]
       t.string :question_type, null: false
       t.boolean :active, null: false, default: "false"
       t.integer :group_id, null: false
-      t.float :ord
+      t.integer :prev_id
+      t.integer :next_id
 
       t.timestamps
     end

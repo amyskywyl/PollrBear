@@ -50,11 +50,27 @@ export const createQuestion = (question) => dispatch => (
   QuestionAPI.createQurstion(question).then(question => dispatch(receiveGroup(question)))
 );
 
-export const updateQuestion = (question, groupId) => dispatch => (
-  QuestionAPI.updateQuestion(question, groupId)
+export const moveQuestion = (APIParams, question) => {
+  return (dispatch) => {
+    dispatch(updateQuestion(question));
+    QuestionAPI.moveQuestion(APIParams).then(question => {
+      dispatch(updateQuestion(question));
+    });
+  };
+};
+
+export const renderQuestionMove = (question) => {
+  return(dispatch) => {
+    dispatch(updateQuestion(question))
+  }
+}
+
+
+export const updateQuestion = (question) => dispatch => (
+  QuestionAPI.updateQuestion(question)
     .then(question => dispatch(receiveQuestion(question)))
 );
 
-export const deleteQuestion = (questionId, groupId) => dispatch => (
-  QuestionAPI.deleteQuestion(questionId, groupId).then(questionId => dispatch(removeQuestion(questionId)))
+export const deleteQuestion = (questionId) => dispatch => (
+  QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
