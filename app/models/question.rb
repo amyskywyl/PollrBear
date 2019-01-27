@@ -6,4 +6,5 @@ class Question < ApplicationRecord
   has_one :user,
     through: :group,
     source: :user
+
 end

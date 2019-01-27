@@ -46,6 +46,6 @@ class Api::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:body, :type, :active)
+    params.require(:question).permit(:group_id, :body, :question_type, :active, :ord)
   end
 end

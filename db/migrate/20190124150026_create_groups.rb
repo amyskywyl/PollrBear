@@ -3,6 +3,7 @@ class CreateGroups < ActiveRecord::Migration[5.2]
     create_table :groups do |t|
       t.string :title, null: false, default: "Ungrouped"
       t.integer :user_id, null: false
+      t.integer :ord, null:false
 
       t.timestamps
     end

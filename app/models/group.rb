@@ -4,5 +4,7 @@ class Group < ApplicationRecord
   belongs_to :user
   has_many :questions,
     foreign_key: :group_id,
-    class_name: 'Question'
+    class_name: 'Question',
+    dependent: :destroy
+
 end
