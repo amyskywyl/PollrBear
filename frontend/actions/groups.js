@@ -1,23 +1,32 @@
 import * as GroupAPI from "../util/group_api_util";
 
-export const RECEIVE_ALL_GROUPS = 'RECEIVE_ALL_GROUPS';
-export const RECEIVE_GROUP = 'RECEIVE_GROUP';
+// export const RECEIVE_ALL_GROUPS = 'RECEIVE_ALL_GROUPS';
+export const RECEIVE_NRE_GROUP = 'RECEIVE_NRE_GROUP';
 export const REMOVE_GROUP = "REMOVE_GROUP";
+export const UPDATE_ORDER_FRONT_END = "UPDATE_ORDER_FRONT_END";
 
-export const receiveAllGroups = groups => ({
-  type: RECEIVE_ALL_GROUPS,
-  groups
+// export const receiveAllGroups = groups => ({
+//   type: RECEIVE_ALL_GROUPS,
+//   groups
+// });
+
+const receiveGroup = ({ groups, questions }) => ({
+  type: RECEIVE_NRE_GROUP,
+  groups,
+  questions
 });
 
-const receiveGroup = group => ({
-  type: RECEIVE_GROUP,
+const removeGroup = ({ group }) => ({
+  type: REMOVE_GROUP,
   group
 });
 
-const removeGroup = groupId => ({
-  type: REMOVE_GROUP,
-  groupId
-});
+export const updateOrderFrontEnd = (payload) => {
+  return {
+    type: UPDATE_ORDER_FRONT_END,
+    payload,
+  };
+};
 
 export const fetchGroups = () => dispatch => {
   return (
@@ -30,15 +39,15 @@ export const fetchGroup = groupId => dispatch => (
 );
 
 export const createGroup = group => dispatch => (
-  GroupAPI.createGroup(group).then(group => dispatch(receiveGroup(group)))
+  GroupAPI.createGroup(group).then(payload => dispatch(receiveGroup(payload)))
 );
 
 export const updateGroup = group => dispatch => (
   GroupAPI.updateGroup(group)
-    .then(group => dispatch(receiveGroup(group)))
+    .then(payload => dispatch(receiveGroup(payload)))
 );
 
 export const deleteGroup = groupId => dispatch => (
-  GroupAPI.deleteGroup(groupId).then(group => dispatch(removeGroup(groupId)))
+  GroupAPI.deleteGroup(groupId).then(payload => dispatch(removeGroup(payload)))
 );
 

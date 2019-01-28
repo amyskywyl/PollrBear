@@ -1,24 +1,37 @@
-import {
-  RECEIVE_ALL_QUESTIONS,
-  RECEIVE_QUESTION,
-  REMOVE_QUESTION,
-} from '../actions/questions';
-import merge from 'lodash/merge';
 
-const QuestionsReducer = (oldState = {}, action) => {
-  Object.freeze(oldState);
+import { RECEIVE_NEW_GROUP, UPDATE_ORDER_FRONT_END } from '../actions/groups';
+import { RECEIVE_NEW_QUESTION, REMOVE_QUESTION, RECEIVE_UPDATED_QUESTION } from '../actions/questions';
+import { merge } from 'lodash';
+
+const questionsReducer = (state = {}, action) => {
+  Object.freeze(state);
+  let newState = merge({}, state);
+  let question;
+
   switch (action.type) {
-    case RECEIVE_ALL_QUESTIONS:
-      return merge({}, action.questions);
-    case RECEIVE_QUESTION:
-      return merge({}, action.question);
-    case REMOVE_QUESTION:
-      let newState = merge({}, oldState);
-      delete newState[action.questionId];
+    case RECEIVE_NEW_GROUP:
+      return merge({}, newState, action.questions);
+
+    case RECEIVE_NEW_QUESTION:
+      return merge({}, newState, action.questions);
+
+    case RECEIVE_UPDATED_QUESTION:
+      question = Object.values(action.question)[0];
+      newState[question.id] = question;
       return newState;
+
+    case UPDATE_ORDER_FRONT_END:
+      newState[action.payload.question.id].column_id = action.payload.future_col;
+      return newState;
+
+    case REMOVE_QUESTION:
+      delete newState[action.question.id];
+      return newState;
+
     default:
-      return oldState;
+      return state;
   }
+
 };
 
-export default QuestionsReducer;
+export default questionsReducer;

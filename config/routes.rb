@@ -4,8 +4,9 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resource :session, only: [:create, :destroy, :show]
     resources :groups, only: [:create, :destroy, :index, :update]
-    resources :questions, only: [:show, :create, :index, :update, :destroy]
-    resources :moves, only: [:create, :show, :update]
+    resources :questions, only: [:show, :create, :index, :update, :destroy] do
+      patch 'update_order'
+    end
   end
   root to: "static_pages#root"
 end

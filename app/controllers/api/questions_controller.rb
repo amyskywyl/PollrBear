@@ -46,43 +46,63 @@ class Api::QuestionsController < ApplicationController
     @next_group = Group.find(params[:orderInfo][:future_group].to_i)
     arr = [@question]
     unless @question.prev_id.nil?
-      @prev_question = Task.find(@task.prev_id)
-      arr << @prev_task
+      @prev_question = Question.find(@question.prev_id)
+      arr << @prev_question
     end
-    unless @task.next_id.nil?
-      @next_task = Task.find(@task.next_id)
-      arr << @next_task
+    unless @question.next_id.nil?
+      @next_question = Question.find(@question.next_id)
+      arr << @next_question
     end
-    if (task_idx - 1) >= 0
-      @future_prev = Task.find(future_ord[task_idx - 1].to_i)
+    if (question_idx - 1) >= 0
+      @future_prev = Question.find(future_ord[question_idx - 1].to_i)
       arr << @future_prev
     end
-    unless future_ord[task_idx + 1].nil?
-      @future_next = Task.find(future_ord[task_idx + 1].to_i)
+    unless future_ord[question_idx + 1].nil?
+      @future_next = Question.find(future_ord[question_idx + 1].to_i)
       arr << @future_next
     end
 
-    update_related_tasks
+    update_related_questions
 
     begin
-      Task.transaction do
-        arr.each do |task|
-          task.save!
+      Question.transaction do
+        arr.each do |question|
+          question.save!
         end
       end
       render :order
     rescue ActiveRecord::RecordInvalid
-      render json: @task.errors.full_messages, status: 401
+      render json: @question.errors.full_messages, status: 401
     end
   end
 
-  def destroy
+   def destroy
     @question = Question.find(params[:id])
-    if @question.destroy
-      @questions = current_user.questions
+    if @question.prev_id
+      @prev_question = Question.find(@question.prev_id)
+    end
+
+    if @question.next_id
+      @next_question = Question.find(@question.next_id)
+    end
+
+    if @prev_question
+      @prev_question.next_id = @question.next_id
+    end
+    if @next_question
+      @next_question.prev_id = @question.prev_id
+    end
+
+    begin
+      Question.transaction do
+        @question.destroy
+        @prev_question.save if @prev_question
+        @next_question.save if @next_question
+      end
+      @group = Group.find(@question.group_id)
       render :index
-    else
-      render plain: "You can't destroy what's not there."
+    rescue ActiveRecord::RecordInvalid
+      render json: @question.errors.full_messages, status: 401
     end
   end
 
@@ -100,7 +120,7 @@ class Api::QuestionsController < ApplicationController
     @future_next.prev_id = @question.id if @future_next
     @future_next ? @question.next_id = @future_next.id : @question.next_id = nil
     @future_prev ? @question.prev_id = @future_prev.id : @question.prev_id = nil
-    @question.column_id = params[:orderInfo][:future_group].to_i
+    @question.group_id = params[:orderInfo][:future_group].to_i
   end
 
 end
