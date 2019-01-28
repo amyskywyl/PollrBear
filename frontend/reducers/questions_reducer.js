@@ -2,6 +2,7 @@ import {
   RECEIVE_ALL_QUESTIONS,
   RECEIVE_QUESTION,
   REMOVE_QUESTION,
+  TOGGLE_ACTIVE
 } from '../actions/questions';
 import merge from 'lodash/merge';
 
@@ -16,6 +17,10 @@ const QuestionsReducer = (oldState = {}, action) => {
       let newState = merge({}, oldState);
       delete newState[action.questionId];
       return newState;
+    case TOGGLE_ACTIVE:
+      return Object.assign({}, oldState, {
+        active: !state.active
+      });
     default:
       return oldState;
   }

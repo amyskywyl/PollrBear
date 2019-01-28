@@ -2,8 +2,7 @@ class Api::QuestionsController < ApplicationController
   before_action :require_logged_in
 
   def index
-    debugger
-    @questions = Question.where(group_id: params[:group_id])
+    @questions = Question.all
     render :index
   end
 
@@ -18,11 +17,13 @@ class Api::QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find_by(id: params[:question_id])
+    @question = Question.find(params[:id])
     if @question
       render :show
     else
       render json: @question.errors.full_messages, status: 404
+    end
+  end
 
   def update
     @question = Question.find(params[:id])
@@ -46,6 +47,6 @@ class Api::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:body, :type, :active)
+    params.require(:question).permit(:body, :question_type, :active)
   end
 end

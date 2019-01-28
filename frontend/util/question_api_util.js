@@ -1,37 +1,33 @@
-export const fetchQuestions = (groupId) => {
+export const fetchQuestions = () => {
   return $.ajax({
     method: "GET",
-    url: `/api/groups/${groupId}/questions`,
+    url: `/api/questions`,
   });
 };
 
-export const fetchQuestion = (questionId, groupId ) => {
+export const fetchQuestion = (questionId) => {
   return $.ajax({
     method: "GET",
-    url: `/api/groups/${groupId}/questions/${questionId}`,
-    data: { 
-      question_id: questionId,
-      group_id: groupId
-    }
+    url: `/api/questions/${questionId}`
   });
 };
-export const createQuestion = (question, groupId) => {
+export const createQuestion = (question) => {
   return $.ajax({
     method: "POST",
-    url: `/api/groups/${groupId}/questions`,
+    url: `/api/questions`,
     data: { question }
   });
 };
-export const updateQuestion = (question, groupId) => {
+export const updateQuestion = (question) => {
   return $.ajax({
     method: "PATCH",
-    url: `/api/groups/${groupId}/questions/${question.id}`,
+    url: `/api/questions/${question.id}`,
     data: { question }
   });
 };
-export const deleteQuestion = (questionId, groupId) => {
+export const deleteQuestion = (questionId) => {
   return $.ajax({
     method: "DELETE",
-    url: `/api/groups/${groupId}/questions/${questionId}`,
+    url: `/api/questions/${questionId}`,
   });
 };

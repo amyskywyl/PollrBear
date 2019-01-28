@@ -1,12 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const QuestionDetail= ({ question, deleteQuestion }) => {
+const QuestionIndexItem= ({ question, deleteQuestion }) => {
   return (
     <li className="question-index-item">
-      <Link to={`/groups/${question.groupId}/question/${question.id}`}>
-        <span>{question.title}</span>
+      <Link to={`/questions/${question.id}`}>
+        {question.title}
       </Link>
-      <button onClick={() => deleteQuestion(question.id, question.groupId)}>Delete</button>
+      <Link to={`/questions/${question.id}/edit`}>
+        Edit
+      </Link>
+      <button onClick={() => deleteQuestion(question.id)}>Delete</button>
     </li>
   )
 }

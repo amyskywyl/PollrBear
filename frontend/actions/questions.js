@@ -3,6 +3,7 @@ import * as QuestionAPI from "../util/question_api_util";
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
+export const TOGGLE_ACTIVE = "TOGGLE_ACTIVE";
 
 export const receiveAllQuestions = questions => ({
   type: RECEIVE_ALL_QUESTIONS,
@@ -19,27 +20,33 @@ const removeQuestion = questionId => ({
   questionId
 });
 
-export const fetchQuestions = (groupId) => dispatch => {
+export const fetchQuestions = () => dispatch => {
+  debugger
   return (
-    QuestionAPI.fetchQuestions(groupId).then(questions => {
+    QuestionAPI.fetchQuestions().then(questions => {
       return (dispatch(receiveAllQuestions(questions)))
     })
   )
 };
 
-export const fetchQuestion = (questionId, groupId) => dispatch => (
-  QuestionAPI.fetchQuestion(questionId, groupId).then(question => dispatch(receiveQuestion(question)))
+export const fetchQuestion = (questionId) => dispatch => (
+  QuestionAPI.fetchQuestion(questionId).then(question => dispatch(receiveQuestion(question)))
 );
 
-export const createQuestion = (question, groupId) => dispatch => (
-  QuestionAPI.createQurstion(question, groupId).then(question => dispatch(receiveGroup(question)))
+export const createQuestion = (question) => dispatch => (
+  QuestionAPI.createQuestion(question).then(question => dispatch(receiveGroup(question)))
 );
 
-export const updateQuestion = (question, groupId) => dispatch => (
-  QuestionAPI.updateQuestion(question, groupId)
+export const updateQuestion = (question) => dispatch => (
+  QuestionAPI.updateQuestion(question)
     .then(question => dispatch(receiveQuestion(question)))
 );
 
-export const deleteQuestion = (questionId, groupId) => dispatch => (
-  QuestionAPI.deleteQuestion(questionId, groupId).then(questionId => dispatch(removeQuestion(questionId)))
+export const deleteQuestion = (questionId) => dispatch => (
+  QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
+
+export const toggleActive = (id) => ({
+  type: TOGGLE_ACTIVE,
+  id
+})

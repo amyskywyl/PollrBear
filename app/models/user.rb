@@ -8,6 +8,9 @@ class User < ApplicationRecord
   after_initialize :ensure_session_token, :ensure_username
 
   has_many :groups
+  has_many :questions,
+    through: :groups,
+    source: :questions
 
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)

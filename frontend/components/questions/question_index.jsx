@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import QuestionIndexItem from './question_index_item';
+// import CreateQuestionFormContainer from './create_question_form_container';
 
 class QuestionIndex extends React.Component {
 
   componentDidMount() {
-    // debugger
+    debugger
     this.props.fetchQuestions();
   }
 
   render() {
-    debugger
-    const questions = this.props.group.questions.map(question => {
+    const questions = this.props.questions.map(question => {
       return (
         <QuestionIndexItem
           key={question.id}
