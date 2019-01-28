@@ -5,7 +5,6 @@ import QuestionIndexItem from './question_index_item';
 class QuestionIndex extends React.Component {
 
   componentDidMount() {
-    debugger
     this.props.fetchQuestions();
   }
 

@@ -3,7 +3,6 @@ import GroupIndex from './group_index';
 import { fetchGroups, deleteGroup } from '../../actions/groups';
 
 const mapStateToProps = ({ entities }) => {
-  debugger
   return({
   groups: Object.keys(entities.groups).map(id => entities.groups[id])
 })};

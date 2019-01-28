@@ -15,13 +15,12 @@ const receiveQuestion = question => ({
   question
 });
 
-const removeQuestion = questionId => ({
+const removeQuestion = question => ({
   type: REMOVE_QUESTION,
-  questionId
+  question
 });
 
 export const fetchQuestions = () => dispatch => {
-  debugger
   return (
     QuestionAPI.fetchQuestions().then(questions => {
       return (dispatch(receiveAllQuestions(questions)))

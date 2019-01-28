@@ -3,7 +3,6 @@ import QuestionIndex from './question_index';
 import { fetchQuestions, deleteQuestion } from '../../actions/questions';
 
 const mapStateToProps = (state) => {
-  debugger
   return{
   questions: Object.keys(state.entities.questions).map(id => state.entities.questions[id])
   }

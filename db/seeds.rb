@@ -19,3 +19,7 @@ demogroup2 = Group.create(user_id: demo.id)
 demogroup3 = Group.create(title: "Group for bears", user_id: demo.id)
 
 question1 = Question.create(body: "what", question_type: "q", group_id: demogroup1.id)
+question2 = Question.create(body: "is", question_type: "q", group_id: demogroup1.id)
+question3 = Question.create(body: "it", question_type: "q", group_id: demogroup3.id)
+question4 = Question.create(body: "really", question_type: "q", group_id: demogroup3.id)
+question5 = Question.create(body: "so happy", question_type: "q", group_id: demogroup3.id)

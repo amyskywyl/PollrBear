@@ -15,7 +15,7 @@ const QuestionsReducer = (oldState = {}, action) => {
       return merge({}, action.question);
     case REMOVE_QUESTION:
       let newState = merge({}, oldState);
-      delete newState[action.questionId];
+      delete newState[action.question.id];
       return newState;
     case TOGGLE_ACTIVE:
       return Object.assign({}, oldState, {

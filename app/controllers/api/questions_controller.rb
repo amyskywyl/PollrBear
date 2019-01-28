@@ -38,7 +38,7 @@ class Api::QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     if @question.destroy
       @questions = current_user.questions
-      render :index
+      render :show
     else
       render plain: "You can't destroy what's not there."
     end
