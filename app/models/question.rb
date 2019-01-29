@@ -1,4 +1,7 @@
 class Question < ApplicationRecord
+  TYPES = [
+    'multiple choice'
+  ].sort.freeze
   validates :body, :question_type, presence: true
   # validates :active, presence: true, uniqueness: true
 

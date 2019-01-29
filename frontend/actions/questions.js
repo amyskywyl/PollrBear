@@ -10,9 +10,9 @@ export const receiveAllQuestions = questions => ({
   questions
 });
 
-const receiveQuestion = question => ({
+const receiveQuestion = entities => ({
   type: RECEIVE_QUESTION,
-  question
+  entities
 });
 
 const removeQuestion = question => ({
@@ -33,7 +33,7 @@ export const fetchQuestion = (questionId) => dispatch => (
 );
 
 export const createQuestion = (question) => dispatch => (
-  QuestionAPI.createQuestion(question).then(question => dispatch(receiveGroup(question)))
+  QuestionAPI.createQuestion(question).then(question => dispatch(receiveQuestion(question)))
 );
 
 export const updateQuestion = (question) => dispatch => (

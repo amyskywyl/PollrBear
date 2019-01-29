@@ -3,6 +3,7 @@ import {
   RECEIVE_GROUP,
   REMOVE_GROUP,
 } from '../actions/groups';
+import { RECEIVE_QUESTION } from '../actions/questions';
 import merge from 'lodash/merge';
 
 const GroupsReducer = (oldState = {}, action) => {
@@ -16,6 +17,8 @@ const GroupsReducer = (oldState = {}, action) => {
       let newState = merge({}, oldState);
       delete newState[action.groupId];
       return newState;
+    case RECEIVE_QUESTION:
+      return merge({}, action.entities.groups);
     default:
       return oldState;
   }

@@ -7,7 +7,7 @@ class QuestionShow extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.question.id != this.props.match.params.questionId) {
+    if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
       this.props.fetchQuestion(this.props.match.params.questionId);
     }
   }
