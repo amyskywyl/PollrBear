@@ -1249,7 +1249,9 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(QuestionForm).call(this, props));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.state = _this.props.question;
+    _this.updateType = _this.updateType.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.state = _this.props.question; // this.tabs = this.tabs.bind(this);
+
     return _this;
   }
 
@@ -1263,10 +1265,23 @@ function (_React$Component) {
       };
     }
   }, {
+    key: "updateType",
+    value: function updateType(type) {
+      var _this3 = this;
+
+      debugger;
+      return function (e) {
+        _this3.setState({
+          question_type: "QnA"
+        });
+      };
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
       var question = Object.assign({}, this.props.question, this.state);
+      debugger;
       this.props.action(question).then(this.setState({
         question_type: '',
         body: '',
@@ -1277,6 +1292,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var groups = this.props.groups.map(function (group, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
@@ -1292,29 +1309,7 @@ function (_React$Component) {
         className: "poll-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question Type", this.tabs()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "question-body",
-        name: "Question",
-        value: "Question: ".concat(this.props.question.body),
-        onChange: this.update('body')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "activity-creator"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "groups-dropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        onChange: this.update('group_id')
-      }, groups))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        className: "component-activity-creator__create",
-        type: "submit",
-        value: this.props.formType
-      }))));
-    }
-  }, {
-    key: "tabs",
-    value: function tabs() {
-      var _this3 = this;
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question Type", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "tabs"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
@@ -1340,9 +1335,7 @@ function (_React$Component) {
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__title",
         onClick: function onClick() {
-          return _this3.setState({
-            question_type: "Multiple choice"
-          });
+          return _this4.updateType("Multiple choice");
         }
       }, "Multiple Choice")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
@@ -1378,9 +1371,7 @@ function (_React$Component) {
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__title",
         onClick: function onClick() {
-          return _this3.setState({
-            question_type: "Word cloud"
-          });
+          return _this4.updateType("Word cloud");
         }
       }, "Word cloud")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
@@ -1414,9 +1405,7 @@ function (_React$Component) {
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__title",
         onClick: function onClick() {
-          return _this3.setState({
-            question_type: "QnA"
-          });
+          return _this4.updateType("QnA");
         }
       }, "Q&A")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
@@ -1443,12 +1432,28 @@ function (_React$Component) {
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__title",
         onClick: function onClick() {
-          return _this3.setState({
-            question_type: "Clickable image"
-          });
+          return _this4.updateType("Clickable image");
         }
-      }, "Clickable image")));
-    }
+      }, "Clickable image")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "question-body",
+        value: this.state.body,
+        onChange: this.update('body')
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-creator"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "groups-dropdown"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        onChange: this.update('group_id')
+      }, groups))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "component-activity-creator__create",
+        type: "submit",
+        value: this.props.formType
+      }))));
+    } // tabs () {
+    //   return (
+    //   )
+    // }
+
   }]);
 
   return QuestionForm;
