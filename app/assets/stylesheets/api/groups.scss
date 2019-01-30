@@ -19,7 +19,7 @@
   align-items: center;
 }
 .create-poll {
-  margin: 20px 10px;
+  margin: 14px 0px;
   display: flex;
   width: 152.59px;
   height: 40px;
@@ -41,4 +41,13 @@
 .poll-groups {
   width: 83%;
   margin: 20px 10px;
+}
+
+.app-discovery {
+  width: 152.59px;
+  padding: 6.4px 10px;
+  .app-discovery--title {
+    font-weight: bold;
+    color: #000000;
+  }
 }
