@@ -1,3 +1,64 @@
 // Place all the styles related to the api/questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.columns {
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    color: #000;
+  }
+
+  .poll-body {
+    color: gray;
+    background-color: #d8d9db;
+    height: 940px;
+    display: flex;
+    flex-direction: column;
+    input{
+      background-color: white;
+      width: 100%;
+    }
+
+    .question-body:active {
+      font-size: 10px;
+    }
+    .question-body:active {
+      font-size: 10px;
+    }
+  }
+
+  .x-btn {
+    margin: 20px 10px;
+    display: flex;
+    width: 44px;
+    height: 38px;
+    background-color: #fc5d51;
+    border-color: #fc5d51;
+    color: #fff;
+    border: 1px solid #dbdbdb;
+    box-sizing: border-box;
+    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+  }
+
+  select { 
+      display: block;
+      padding: 10px 70px 10px 13px !important; 
+      max-width: 100%; 
+      height: auto !important; 
+      border: 1px solid #e3e3e3; 
+      border-radius: 3px; 
+      background-color: #fff; 
+      color: #444444; 
+      font-size: 12px; 
+      line-height: 16px !important; 
+      appearance: none; 
+      /* this is must */ -webkit-appearance: none; 
+      -moz-appearance: none; 
+  } 
+  /* body select.select_box option */ 
+  body select option { 
+      padding: 0 4px; 
+  } 
+}

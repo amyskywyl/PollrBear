@@ -26,7 +26,9 @@ class Api::QuestionsController < ApplicationController
   end
 
   def update
+    # debugger
     @question = Question.find(params[:id])
+    debugger
     if @question.update(question_params)
       render :show
     else
@@ -47,6 +49,6 @@ class Api::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:body, :question_type, :active)
+    params.require(:question).permit(:body, :question_type, :active, :group_id, :id)
   end
 end

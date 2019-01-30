@@ -19,7 +19,7 @@ const Home = ({ currentUser }) => {
       </div>
       <h1>Live interactive audience participation</h1>
       <p>Engage your audience or class in real time</p>
-      <Link className="get-started" to="/signup">Get started</Link>
+      <Link className="get-started" to="/groups">Get started</Link>
     </div>
   );
   return currentUser ? loggedinHome() : primaryHome();

@@ -28,9 +28,15 @@ export const fetchQuestions = () => dispatch => {
   )
 };
 
-export const fetchQuestion = (questionId) => dispatch => (
-  QuestionAPI.fetchQuestion(questionId).then(question => dispatch(receiveQuestion(question)))
-);
+export const fetchQuestion = (questionId) => dispatch => {
+  debugger
+  return(
+    QuestionAPI.fetchQuestion(questionId).then(question => {
+      return (dispatch(receiveQuestion(question)))
+    })
+  )
+}
+
 
 export const createQuestion = (question) => dispatch => (
   QuestionAPI.createQuestion(question).then(question => dispatch(receiveQuestion(question)))

@@ -4,7 +4,7 @@ import QuestionForm from './question_form';
 import { fetchQuestion, updateQuestion } from '../../actions/questions';
 
 const mapStateToProps = (state, ownProps) => {
-  const defaultQuestion = { question_type: '', body: '', groupd_id: 0};
+  const defaultQuestion = { question_type: '', body: '', group_id: 0};
   const question = state.entities.questions[ownProps.match.params.questionId] || defaultQuestion;
   const groups = Object.values(state.entities.groups)
   const formType = 'Update Question'

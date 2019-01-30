@@ -1,3 +1,66 @@
 // Place all the styles related to the api/sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.login-form-box h1 {
+  font-size: 40px;
+}
+
+.navl {
+  padding: .25em 1em;
+  flex-basis: 50%;
+  max-width: 50%;
+  color: #6193c5;
+  width: 75px;
+}
+
+
+.signup:hover{
+  background-color: #6193c5;
+  color: #ffffff;
+}
+
+.login-message {
+  margin-top: 15px;
+}
+
+.signup-form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-weight: bold;
+  .signup-form label{
+    font-weight: bold;
+  }
+}
+
+.signup-form-box h1 {
+  font-size: 50px;
+}
+
+.navb {
+  padding: .25em 1em;
+  flex-basis: 50%;
+  max-width: 50%;
+  border: 1px solid #4f4f4f;
+  border-color: #6193c5;
+  color: #6193c5;
+}
+
+.navb:hover{
+  background-color: #6193c5;
+  color: #ffffff;
+}
+
+.signup-message {
+  margin-top: 15px;
+}

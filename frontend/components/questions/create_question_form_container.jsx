@@ -6,7 +6,7 @@ import { fetchGroups } from '../../actions/groups'
 
 const mapStateToProps = (state, ownProps) => {
   const question = { question_type: '', body: '', group_id: 0};
-  const formType = 'Create Question';
+  const formType = 'Create';
   const groups = Object.values(state.entities.groups)
   return { question, groups, formType };
 };

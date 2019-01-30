@@ -1,3 +1,44 @@
 // Place all the styles related to the api/groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.group-index-item{
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  padding: 12px 28px 12px 12px;
+  border-bottom: 1px solid #fff;
+  background-color: #ccdce8;
+}
+
+.question-index-item{
+  margin-bottom: 13px;
+  padding: 6px 12px;
+  background-color: #e9eff4;
+  border-bottom: 1px solid #fff;
+  align-items: center;
+}
+.create-poll {
+  margin: 20px 10px;
+  display: flex;
+  width: 152.59px;
+  height: 40px;
+  background-color: #fc5d51;
+  border-color: #fc5d51;
+  color: #fff;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+}
+
+.poll-body{
+  display: flex;
+  // flex-direction: column;
+}
+
+.poll-groups {
+  width: 83%;
+  margin: 20px 10px;
+}

@@ -1,29 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const NavBar = ({ currentUser, logout }) => {
+const NavBar = ({ currentUser, logout, history }) => {
   const sessionLinks = () => (
-    <nav className="nav-primary">
+    <nav className="nav-home">
       <div className="login-signup">
         <Link to="/" className="header_link">
           <h1 className="logo">Pollr Bear</h1>
         </Link>
         <div>
-          <Link className="login" to="/login">Log in</Link>
-          <Link className="signup" to="/signup">Sign up</Link>
+          <Link className="login navl" to="/login">Log in</Link>
+          <Link className="signup navb" to="/signup">Sign up</Link>
         </div>
       </div>
     </nav>
   );
+  const handleClick = () => {
+    logout().then(() => history.push("/"))
+  }
   const personalGreeting = () => (
-    <nav className="nav-loggedin">
-      <div className="mypolls-logout">
+    <nav className="nav-home">
+      <div className="login-signup">
         <Link to="/" className="header_link">
           <h1 className="logo">Pollr Bear</h1>
         </Link>
         <div>
-          <h2 className="header-name">Hi, {currentUser.username}!</h2>
-          <button className="header-button" onClick={logout}>Log Out</button>
+          <Link className="mypolls navb" to="/groups">My polls</Link>
+          {/* <h2 className="header-name">Hi, {currentUser.username}!</h2> */}
+          <button className="logout navl" onClick={handleClick}>Log Out</button>
         </div>
       </div>
     </nav>
@@ -33,4 +37,4 @@ const NavBar = ({ currentUser, logout }) => {
 };
 
 
-export default NavBar;
+export default withRouter(NavBar);

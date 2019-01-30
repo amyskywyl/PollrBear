@@ -5,11 +5,13 @@ import {
   TOGGLE_ACTIVE
 } from '../actions/questions';
 import merge from 'lodash/merge';
+import { RECEIVE_ALL_GROUPS } from '../actions/groups';
 
 const QuestionsReducer = (oldState = {}, action) => {
   Object.freeze(oldState);
   switch (action.type) {
     case RECEIVE_ALL_QUESTIONS:
+    case RECEIVE_ALL_GROUPS:
       return merge({}, action.questions);
     case RECEIVE_QUESTION:
       return merge({}, oldState, {[action.entities.question.id]: action.entities.question});

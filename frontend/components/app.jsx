@@ -10,23 +10,23 @@ import QuestionShowContainer from './questions/question_show_container';
 import EditQuestionFormContainer from './questions/edit_question_form_container';
 import CreateQuestionFormContainer from './questions/create_question_form_container';
 import { Route, Link, Switch } from 'react-router-dom';
-import { AuthRoute } from "../util/route_util";
+import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
 const App = () => (
   <div>
     <header>
       <NavBarContainer />
     </header>
-      <Route exact path="/" component={HomeContainer} />
     <Switch>
+      <Route exact path="/" component={HomeContainer} />
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
-      <Route exact path="/groups" component={GroupIndexContainer} />
-      <Route path="/groups/:groupId/edit" component={EditGroupFormContainer} />
-      <Route exact path="/questions" component={QuestionIndexContainer} />
-      <Route exact path="/questions/:questionId" component={QuestionShowContainer} />
-      <Route path="/questions/:questionId/edit" component={EditQuestionFormContainer} />
-      <Route path="/questions/:questionId/new" component={CreateQuestionFormContainer} />
+      <ProtectedRoute exact path="/groups" component={GroupIndexContainer} />
+      <ProtectedRoute path="/groups/:groupId/edit" component={EditGroupFormContainer} />
+      <ProtectedRoute exact path="/questions" component={QuestionIndexContainer} />
+      <ProtectedRoute exact path="/questions/new" component={CreateQuestionFormContainer} />
+      <ProtectedRoute exact path="/questions/:questionId" component={QuestionShowContainer} />
+      <ProtectedRoute path="/questions/:questionId/edit" component={EditQuestionFormContainer} />
     </Switch>
   </div>
 );

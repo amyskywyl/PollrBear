@@ -19,6 +19,7 @@ export const createQuestion = (question) => {
   });
 };
 export const updateQuestion = (question) => {
+  debugger
   return $.ajax({
     method: "PATCH",
     url: `/api/questions/${question.id}`,

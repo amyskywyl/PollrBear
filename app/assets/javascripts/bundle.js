@@ -224,6 +224,7 @@ var fetchQuestions = function fetchQuestions() {
 };
 var fetchQuestion = function fetchQuestion(questionId) {
   return function (dispatch) {
+    debugger;
     return _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchQuestion"](questionId).then(function (question) {
       return dispatch(receiveQuestion(question));
     });
@@ -373,11 +374,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
     exact: true,
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -385,27 +386,28 @@ var App = function App() {
     exact: true,
     path: "/signup",
     component: _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     exact: true,
     path: "/groups",
     component: _groups_group_index_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/groups/:groupId/edit",
     component: _groups_edit_group_form_container__WEBPACK_IMPORTED_MODULE_6__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     exact: true,
     path: "/questions",
     component: _questions_question_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
+    exact: true,
+    path: "/questions/new",
+    component: _questions_create_question_form_container__WEBPACK_IMPORTED_MODULE_10__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     exact: true,
     path: "/questions/:questionId",
     component: _questions_question_show_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     path: "/questions/:questionId/edit",
     component: _questions_edit_question_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
-    path: "/questions/:questionId/new",
-    component: _questions_create_question_form_container__WEBPACK_IMPORTED_MODULE_10__["default"]
   })));
 };
 
@@ -674,6 +676,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _group_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_index_item */ "./frontend/components/groups/group_index_item.jsx");
 /* harmony import */ var _create_group_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create_group_form_container */ "./frontend/components/groups/create_group_form_container.jsx");
 /* harmony import */ var _edit_group_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit_group_form_container */ "./frontend/components/groups/edit_group_form_container.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -691,6 +694,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -725,7 +729,14 @@ function (_React$Component) {
           deleteGroup: _this.props.deleteGroup
         });
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, groups), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_create_group_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "poll-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
+        className: "create-poll",
+        to: "/questions/new"
+      }, "Create"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "poll-groups"
+      }, groups));
     }
   }]);
 
@@ -789,21 +800,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
- // import QuestionIndexContainer from '../questions/question_index_container';
+
 
 var GroupIndexItem = function GroupIndexItem(_ref) {
   var group = _ref.group,
       deleteGroup = _ref.deleteGroup;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  var questions;
+
+  if (!group.questions) {
+    questions = null;
+  } else {
+    questions = Object.values(group.questions).map(function (question, index) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: index,
+        className: "question-index-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/questions/".concat(question.id)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, question.body)));
+    });
+  }
+
+  var showQuestion = "question-index";
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     key: group.id,
     className: "group-index-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    onClick: function onClick() {
+      return "question-index";
+    },
     to: "/group/".concat(group.id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
       return deleteGroup(group.id);
     }
-  }, "Delete"));
+  }, "Delete")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: showQuestion
+  }, questions));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GroupIndexItem);
@@ -852,7 +884,7 @@ var Home = function Home(_ref) {
       src: window.splashURL
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Live interactive audience participation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Engage your audience or class in real time"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       className: "get-started",
-      to: "/signup"
+      to: "/groups"
     }, "Get started"));
   };
 
@@ -906,11 +938,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var NavBar = function NavBar(_ref) {
   var currentUser = _ref.currentUser,
-      logout = _ref.logout;
+      logout = _ref.logout,
+      history = _ref.history;
 
   var sessionLinks = function sessionLinks() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-      className: "nav-primary"
+      className: "nav-home"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "login-signup"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -919,36 +952,43 @@ var NavBar = function NavBar(_ref) {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "logo"
     }, "Pollr Bear")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      className: "login",
+      className: "login navl",
       to: "/login"
     }, "Log in"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-      className: "signup",
+      className: "signup navb",
       to: "/signup"
     }, "Sign up"))));
   };
 
+  var handleClick = function handleClick() {
+    logout().then(function () {
+      return history.push("/");
+    });
+  };
+
   var personalGreeting = function personalGreeting() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-      className: "nav-loggedin"
+      className: "nav-home"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "mypolls-logout"
+      className: "login-signup"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
       to: "/",
       className: "header_link"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
       className: "logo"
-    }, "Pollr Bear")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-      className: "header-name"
-    }, "Hi, ", currentUser.username, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      className: "header-button",
-      onClick: logout
+    }, "Pollr Bear")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+      className: "mypolls navb",
+      to: "/groups"
+    }, "My polls"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "logout navl",
+      onClick: handleClick
     }, "Log Out"))));
   };
 
   return currentUser ? personalGreeting() : sessionLinks();
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (NavBar);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(NavBar));
 
 /***/ }),
 
@@ -1014,7 +1054,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
     body: '',
     group_id: 0
   };
-  var formType = 'Create Question';
+  var formType = 'Create';
   var groups = Object.values(state.entities.groups);
   return {
     question: question,
@@ -1079,7 +1119,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   var defaultQuestion = {
     question_type: '',
     body: '',
-    groupd_id: 0
+    group_id: 0
   };
   var question = state.entities.questions[ownProps.match.params.questionId] || defaultQuestion;
   var groups = Object.values(state.entities.groups);
@@ -1213,7 +1253,8 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.action(this.state).then(this.setState({
+      var question = Object.assign({}, this.props.question, this.state);
+      this.props.action(question).then(this.setState({
         question_type: '',
         body: '',
         group_id: 0
@@ -1223,31 +1264,73 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       var groups = this.props.groups.map(function (group, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
           value: group.id
         }, group.title);
       });
-      debugger;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.props.formType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "columns"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/groups",
+        className: "x-btn"
+      }, "x"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "poll-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question Type", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.question_type,
-        onChange: this.update('question_type')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-        value: this.state.body,
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question Type", this.tabs()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "question-body",
+        name: "Question",
+        value: "Question: ".concat(this.props.question.body),
         onChange: this.update('body')
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "activity-creator"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "groups-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         onChange: this.update('group_id')
-      }, groups)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, groups))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "submit",
         value: this.props.formType
-      })));
+      }))));
+    }
+  }, {
+    key: "tabs",
+    value: function tabs() {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "tabs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "multiple_choice",
+        onClick: function onClick() {
+          return _this3.setState({
+            question_type: "Multiple choice"
+          });
+        }
+      }, "Multiple Choice"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "word_cloud",
+        onClick: function onClick() {
+          return _this3.setState({
+            question_type: "Word cloud"
+          });
+        }
+      }, "Word cloud"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "QnA",
+        onClick: function onClick() {
+          return _this3.setState({
+            question_type: "Word cloud"
+          });
+        }
+      }, "Word cloud"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "Clickable image",
+        onClick: function onClick() {
+          return _this3.setState({
+            question_type: "Clickable image"
+          });
+        }
+      }, "Clickable image"));
     }
   }]);
 
@@ -1314,6 +1397,7 @@ function (_React$Component) {
     value: function render() {
       var _this = this;
 
+      debugger;
       var questions = this.props.questions.map(function (question, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_question_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
           key: index,
@@ -2081,7 +2165,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_questions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/questions */ "./frontend/actions/questions.js");
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/groups */ "./frontend/actions/groups.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2093,6 +2179,7 @@ var QuestionsReducer = function QuestionsReducer() {
 
   switch (action.type) {
     case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_QUESTIONS"]:
+    case _actions_groups__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_ALL_GROUPS"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.questions);
 
     case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUESTION"]:
@@ -2378,6 +2465,7 @@ var createQuestion = function createQuestion(question) {
   });
 };
 var updateQuestion = function updateQuestion(question) {
+  debugger;
   return $.ajax({
     method: "PATCH",
     url: "/api/questions/".concat(question.id),

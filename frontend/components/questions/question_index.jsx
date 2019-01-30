@@ -8,6 +8,7 @@ class QuestionIndex extends React.Component {
   }
 
   render() {
+    debugger
     const questions = this.props.questions.map((question, index) => {
       return (
         <QuestionIndexItem
