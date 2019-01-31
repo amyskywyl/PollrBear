@@ -189,6 +189,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteQuestion", function() { return deleteQuestion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggleActive", function() { return toggleActive; });
 /* harmony import */ var _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/question_api_util */ "./frontend/util/question_api_util.js");
+/* harmony import */ var _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/choice_api_util */ "./frontend/util/choice_api_util.js");
+
 
 var RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 var RECEIVE_QUESTION = 'RECEIVE_QUESTION';
@@ -230,10 +232,17 @@ var fetchQuestion = function fetchQuestion(questionId) {
     });
   };
 };
-var createQuestion = function createQuestion(question) {
+var createQuestion = function createQuestion(question, choices) {
   return function (dispatch) {
-    return _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__["createQuestion"](question).then(function (question) {
-      return dispatch(receiveQuestion(question));
+    debugger;
+    _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__["createQuestion"](question).then(function (question) {
+      debugger;
+      _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["createChoice"](choices[0], question.id);
+    }).then(function () {
+      debugger;
+      _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["createChoice"](choices[1], question.id).then(function () {
+        return dispatch(receiveQuestion(question));
+      });
     });
   };
 };
@@ -1081,8 +1090,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchGroups: function fetchGroups() {
       return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_4__["fetchGroups"])());
     },
-    action: function action(question) {
-      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_3__["createQuestion"])(question));
+    action: function action(question, choices) {
+      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_3__["createQuestion"])(question, choices));
     }
   };
 };
@@ -1250,8 +1259,13 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(QuestionForm).call(this, props));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.updateType = _this.updateType.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.state = _this.props.question; // this.tabs = this.tabs.bind(this);
-
+    _this.state = {
+      body: _this.props.question.body,
+      group_id: _this.props.question.group_id,
+      choice1: "",
+      choice2: "",
+      question_type: ""
+    };
     return _this;
   }
 
@@ -1269,37 +1283,60 @@ function (_React$Component) {
     value: function updateType(type) {
       var _this3 = this;
 
-      debugger;
       return function (e) {
         _this3.setState({
-          question_type: "QnA"
+          question_type: type
         });
       };
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchGroups();
+    }
+  }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
-      var question = Object.assign({}, this.props.question, this.state);
+      var _this4 = this;
+
+      e.preventDefault(); // let question = Object.assign({}, this.props.question, this.state.body);
+
+      var question = {
+        question_type: this.state.question_type,
+        body: this.state.body,
+        group_id: this.state.group_id
+      };
       debugger;
-      this.props.action(question).then(this.setState({
-        question_type: '',
-        body: '',
-        group_id: 0
-      }));
+      var choices = [this.state.choice1, this.state.choice2];
+      debugger;
+      this.props.action(question, choices).then(function (response) {
+        debugger;
+
+        _this4.props.history.push("/questions/".concat(response.entities.question.id));
+      });
       ;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
-
       var groups = this.props.groups.map(function (group, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
           value: group.id
         }, group.title);
-      });
+      }); // const choices = this.state.choices.map((choice, index) => {
+      //   debugger
+      //   return (
+      //     <li>
+      //       <input
+      //         placeholder="Text, Image URL, LaTex"
+      //         className="choice-body"
+      //         value={choice.body}
+      //         onChange={this.update('choice')} />
+      //     </li>
+      //   )
+      // });
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "columns"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -1315,7 +1352,8 @@ function (_React$Component) {
         tabIndex: "0",
         role: "button",
         className: "component-picker__btn component-picker__btn--active",
-        "data-identifier": "multiple-choice"
+        "data-identifier": "multiple-choice",
+        onClick: this.updateType("Multiple choice")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__image-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1333,15 +1371,13 @@ function (_React$Component) {
         fill: "#4F4F4F",
         d: "M16.3 26.9h2.2l5.3 15.7h-2.1l-1.5-4.8h-5.7L13 42.6h-2l5.3-15.7zM15 36.2h4.7l-.7-2.4c-.6-1.7-1.1-3.5-1.6-5.3h-.1c-.5 1.8-1 3.5-1.6 5.3l-.7 2.4zM13 61.5h4.7c3.2 0 5.4 1.1 5.4 3.8 0 1.6-.8 2.9-2.3 3.4v.1c1.9.4 3.2 1.6 3.2 3.8 0 3.1-2.4 4.6-6 4.6h-5V61.5zm4.3 6.7c2.7 0 3.8-1 3.8-2.6 0-1.8-1.2-2.5-3.7-2.5H15v5.1h2.3zm.4 7.4c2.7 0 4.3-1 4.3-3.1 0-1.9-1.5-2.8-4.3-2.8H15v5.9h2.7z"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "component-picker__btn__title",
-        onClick: function onClick() {
-          return _this4.updateType("Multiple choice");
-        }
+        className: "component-picker__btn__title"
       }, "Multiple Choice")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
         role: "button",
         className: "component-picker__btn",
-        "data-identifier": "word-cloud"
+        "data-identifier": "word-cloud",
+        onClick: this.updateType("Word cloud")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__image-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1369,15 +1405,13 @@ function (_React$Component) {
         fill: "#60E2DC",
         d: "M99.9 69.6c0-5.1 3.2-8.2 7.1-8.2 2 0 3.5.9 4.5 2l-1.5 1.8c-.8-.8-1.7-1.4-3-1.4-2.6 0-4.4 2.2-4.4 5.7 0 3.6 1.7 5.7 4.3 5.7 1.4 0 2.5-.6 3.3-1.6l1.5 1.7c-1.3 1.5-2.9 2.3-4.9 2.3-3.8.1-6.9-2.8-6.9-8zM113.5 71.6c0-3.9 2.7-6.2 5.6-6.2 2.9 0 5.6 2.2 5.6 6.2 0 3.9-2.7 6.1-5.6 6.1-3 0-5.6-2.3-5.6-6.1zm8.3 0c0-2.4-1.1-3.9-2.8-3.9-1.7 0-2.7 1.6-2.7 3.9s1 3.9 2.7 3.9c1.8-.1 2.8-1.6 2.8-3.9zM126.6 71.6c0-3.9 2.7-6.2 5.6-6.2 2.9 0 5.6 2.2 5.6 6.2 0 3.9-2.7 6.1-5.6 6.1-3 0-5.6-2.3-5.6-6.1zm8.3 0c0-2.4-1.1-3.9-2.8-3.9-1.7 0-2.7 1.6-2.7 3.9s1 3.9 2.7 3.9c1.8-.1 2.8-1.6 2.8-3.9zM140.5 74.4V60.5h2.7v14c0 .7.3.9.6.9h.4l.4 2.1c-.3.1-.8.2-1.5.2-1.9 0-2.6-1.3-2.6-3.3z"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "component-picker__btn__title",
-        onClick: function onClick() {
-          return _this4.updateType("Word cloud");
-        }
+        className: "component-picker__btn__title"
       }, "Word cloud")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
         role: "button",
         className: "component-picker__btn",
-        "data-identifier": "up-down-vote"
+        "data-identifier": "up-down-vote",
+        onClick: this.updateType("QnA")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__image-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1403,15 +1437,13 @@ function (_React$Component) {
         fill: "#60E2DC",
         d: "M137.7 34.7H49.3c-3.2 0-5.8 2.6-5.8 5.8v17.6c0 3.2 2.6 5.8 5.8 5.8h.5v8.6c0 .5.1 1.1.5 1.5.4.4.9.6 1.4.6.5 0 1-.2 1.4-.6l10.1-10.1h74.5c3.2 0 5.8-2.6 5.8-5.8V40.5c0-3.2-2.6-5.8-5.8-5.8zm1.9 23.4c0 1.1-.9 1.9-1.9 1.9H62.5c-.5 0-1 .1-1.4.5l-7.4 7.4v-6c0-1.1-.9-1.9-1.9-1.9h-2.4c-1.1 0-1.9-.9-1.9-1.9V40.5c0-1.1.9-1.9 1.9-1.9h88.4c1.1 0 1.9.9 1.9 1.9v17.6h-.1z"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "component-picker__btn__title",
-        onClick: function onClick() {
-          return _this4.updateType("QnA");
-        }
+        className: "component-picker__btn__title"
       }, "Q&A")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         tabIndex: "0",
         role: "button",
         className: "component-picker__btn",
-        "data-identifier": "clickable-image"
+        "data-identifier": "clickable-image",
+        onClick: this.updateType("Clickable image")
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-picker__btn__image-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -1430,30 +1462,40 @@ function (_React$Component) {
         d: "M43.3 3.9c-6.7 0-12.1 5.4-12.1 12.1 0 1.1.1 2.1.4 3.1l.1.3c.1.5.3 1 .5 1.4l8.9 19.7c.3.8 1.1 1.4 2.1 1.4.9 0 1.7-.6 2.1-1.4l8.5-18.8c.1-.2 1-2.1 1-2.3.4-1.1.5-2.5.5-3.6.1-6.4-5.3-11.9-12-11.9zm0 18.4c-3.3 0-5.9-2.7-5.9-5.9s2.7-5.9 5.9-5.9 5.9 2.7 5.9 5.9-2.6 5.9-5.9 5.9z",
         opacity: ".7"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "component-picker__btn__title",
-        onClick: function onClick() {
-          return _this4.updateType("Clickable image");
-        }
-      }, "Clickable image")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Question:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "component-picker__btn__title"
+      }, "Clickable image")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-editor-multiple-choice"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: "Question",
         className: "question-body",
         value: this.state.body,
         onChange: this.update('body')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "choices"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: "Text, Image URL, LaTex",
+        className: "choice1-body",
+        value: this.state.choice1,
+        onChange: this.update('choice1')
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "choices"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        placeholder: "Text, Image URL, LaTex",
+        className: "choice2-body",
+        value: this.state.choice2,
+        onChange: this.update('choice2')
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-creator"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "groups-dropdown"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         onChange: this.update('group_id')
-      }, groups))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, groups)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "component-activity-creator__create",
         type: "submit",
         value: this.props.formType
       }))));
-    } // tabs () {
-    //   return (
-    //   )
-    // }
-
+    }
   }]);
 
   return QuestionForm;
@@ -2300,7 +2342,6 @@ var QuestionsReducer = function QuestionsReducer() {
   Object.freeze(oldState);
 
   switch (action.type) {
-    case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_ALL_QUESTIONS"]:
     case _actions_groups__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_ALL_GROUPS"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.questions);
 
@@ -2498,6 +2539,48 @@ var configureStore = function configureStore() {
 
 /***/ }),
 
+/***/ "./frontend/util/choice_api_util.js":
+/*!******************************************!*\
+  !*** ./frontend/util/choice_api_util.js ***!
+  \******************************************/
+/*! exports provided: createChoice, deleteChoice, fetchChoice */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createChoice", function() { return createChoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteChoice", function() { return deleteChoice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchChoice", function() { return fetchChoice; });
+var createChoice = function createChoice(body, questionId) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/choices',
+    data: {
+      choice: {
+        body: body,
+        questionId: questionId
+      }
+    }
+  });
+};
+var deleteChoice = function deleteChoice(choiceId) {
+  return $.ajax({
+    method: 'DELETE',
+    url: "api/choices/".concat(choiceId)
+  });
+};
+var fetchChoice = function fetchChoice(choiceId) {
+  return $.ajax({
+    method: 'GET',
+    url: "api/choice/".concat(choiceId),
+    data: {
+      choiceId: choiceId
+    }
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/util/group_api_util.js":
 /*!*****************************************!*\
   !*** ./frontend/util/group_api_util.js ***!
@@ -2578,6 +2661,7 @@ var fetchQuestion = function fetchQuestion(questionId) {
   });
 };
 var createQuestion = function createQuestion(question) {
+  debugger;
   return $.ajax({
     method: "POST",
     url: "/api/questions",

@@ -9,3 +9,11 @@ json.groups do
     end
   end
 end
+
+json.choices do
+  @question.choices.each do |choice|
+    json.set! choice.id do
+      json.partial! 'api/choices/choice', choice: choice
+    end
+  end
+end

@@ -6,8 +6,13 @@ class QuestionForm extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateType = this.updateType.bind(this);
-    this.state = this.props.question;
-    // this.tabs = this.tabs.bind(this);
+    this.state = {
+      body: this.props.question.body,
+      group_id: this.props.question.group_id,
+      choice1: "",
+      choice2: "",
+      question_type: "",
+    }
   }
   
   update(field) {
@@ -17,25 +22,52 @@ class QuestionForm extends React.Component {
   }
 
   updateType(type) {
-    debugger
     return (e) => {
-      this.setState({question_type: "QnA"})
+      this.setState({question_type: type})
     }
   }
   
+  componentDidMount() {
+    this.props.fetchGroups();
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    const question = Object.assign({}, this.props.question, this.state);
+    // let question = Object.assign({}, this.props.question, this.state.body);
+    const question = {
+      question_type: this.state.question_type,
+      body: this.state.body,
+      group_id: this.state.group_id,
+    }
     debugger
-    this.props.action(question).then(this.setState({ question_type: '', body: '', group_id: 0 })); ;
+    const choices = [this.state.choice1, this.state.choice2]
+    debugger
+    this.props.action(question, choices).then(response => {
+      debugger
+      this.props.history.push(`/questions/${response.entities.question.id}`)}); ;
   }
   
   render () {
     const groups = this.props.groups.map((group, index) => {
       return (
         <option key={index} value={group.id}>{group.title}</option>
-        )
-      });
+      )
+    });
+
+    // const choices = this.state.choices.map((choice, index) => {
+    //   debugger
+    //   return (
+    //     <li>
+    //       <input
+    //         placeholder="Text, Image URL, LaTex"
+    //         className="choice-body"
+    //         value={choice.body}
+    //         onChange={this.update('choice')} />
+    //     </li>
+    //   )
+    // });
+
+    
  
     return (
       <div className="columns">
@@ -46,7 +78,7 @@ class QuestionForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>Question Type
               <div className="tabs">
-                <div tabIndex="0" role="button" className="component-picker__btn component-picker__btn--active" data-identifier="multiple-choice">
+                <div tabIndex="0" role="button" className="component-picker__btn component-picker__btn--active" data-identifier="multiple-choice" onClick={this.updateType("Multiple choice")}>
                   <div className="component-picker__btn__image-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Multiple choice">
                       <g fill="none" fillRule="evenodd">
@@ -55,10 +87,10 @@ class QuestionForm extends React.Component {
                       </g>
                     </svg>
                   </div>
-                  <div className="component-picker__btn__title" onClick={() => this.updateType("Multiple choice")}>Multiple Choice</div>
+                  <div className="component-picker__btn__title" >Multiple Choice</div>
                 </div>
 
-                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="word-cloud">
+                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="word-cloud" onClick={this.updateType("Word cloud")}>
                   <div className="component-picker__btn__image-container">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Word cloud">
                       <g fill="none" fillRule="evenodd">
@@ -70,28 +102,50 @@ class QuestionForm extends React.Component {
                       </g>
                     </svg>
                   </div>
-                  <div className="component-picker__btn__title" onClick={() => this.updateType("Word cloud")}>Word cloud</div>
+                  <div className="component-picker__btn__title" >Word cloud</div>
                 </div>
-                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="up-down-vote"><div className="component-picker__btn__image-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Q&amp;A"><g fill="none" fillRule="evenodd"><path fill="#000" d="M26 39.5L18.5 32l-2.7-2.7L13 32l-7.4 7.5 2.7 2.7 7.5-7.5 7.4 7.5"></path><path fill="#848484" d="M5.6 60.7l7.4 7.5 2.8 2.7 2.7-2.7 7.5-7.5-2.8-2.7-7.4 7.5L8.3 58" opacity=".35"></path><path fill="#4F4F4F" d="M129.4 47H57.6c-.9 0-1.7-.8-1.7-1.7 0-.9.8-1.7 1.7-1.7h71.8c.9 0 1.7.8 1.7 1.7 0 .9-.8 1.7-1.7 1.7zM122.6 54.7h-65c-.9 0-1.7-.8-1.7-1.7 0-.9.8-1.7 1.7-1.7h65c.9 0 1.7.8 1.7 1.7 0 .9-.8 1.7-1.7 1.7z" opacity=".7"></path><path fill="#60E2DC" d="M137.7 34.7H49.3c-3.2 0-5.8 2.6-5.8 5.8v17.6c0 3.2 2.6 5.8 5.8 5.8h.5v8.6c0 .5.1 1.1.5 1.5.4.4.9.6 1.4.6.5 0 1-.2 1.4-.6l10.1-10.1h74.5c3.2 0 5.8-2.6 5.8-5.8V40.5c0-3.2-2.6-5.8-5.8-5.8zm1.9 23.4c0 1.1-.9 1.9-1.9 1.9H62.5c-.5 0-1 .1-1.4.5l-7.4 7.4v-6c0-1.1-.9-1.9-1.9-1.9h-2.4c-1.1 0-1.9-.9-1.9-1.9V40.5c0-1.1.9-1.9 1.9-1.9h88.4c1.1 0 1.9.9 1.9 1.9v17.6h-.1z"></path></g></svg></div>
-                  <div className="component-picker__btn__title" onClick={() => this.updateType("QnA")}>Q&amp;A</div>
+                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="up-down-vote" onClick={this.updateType("QnA")}><div className="component-picker__btn__image-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Q&amp;A"><g fill="none" fillRule="evenodd"><path fill="#000" d="M26 39.5L18.5 32l-2.7-2.7L13 32l-7.4 7.5 2.7 2.7 7.5-7.5 7.4 7.5"></path><path fill="#848484" d="M5.6 60.7l7.4 7.5 2.8 2.7 2.7-2.7 7.5-7.5-2.8-2.7-7.4 7.5L8.3 58" opacity=".35"></path><path fill="#4F4F4F" d="M129.4 47H57.6c-.9 0-1.7-.8-1.7-1.7 0-.9.8-1.7 1.7-1.7h71.8c.9 0 1.7.8 1.7 1.7 0 .9-.8 1.7-1.7 1.7zM122.6 54.7h-65c-.9 0-1.7-.8-1.7-1.7 0-.9.8-1.7 1.7-1.7h65c.9 0 1.7.8 1.7 1.7 0 .9-.8 1.7-1.7 1.7z" opacity=".7"></path><path fill="#60E2DC" d="M137.7 34.7H49.3c-3.2 0-5.8 2.6-5.8 5.8v17.6c0 3.2 2.6 5.8 5.8 5.8h.5v8.6c0 .5.1 1.1.5 1.5.4.4.9.6 1.4.6.5 0 1-.2 1.4-.6l10.1-10.1h74.5c3.2 0 5.8-2.6 5.8-5.8V40.5c0-3.2-2.6-5.8-5.8-5.8zm1.9 23.4c0 1.1-.9 1.9-1.9 1.9H62.5c-.5 0-1 .1-1.4.5l-7.4 7.4v-6c0-1.1-.9-1.9-1.9-1.9h-2.4c-1.1 0-1.9-.9-1.9-1.9V40.5c0-1.1.9-1.9 1.9-1.9h88.4c1.1 0 1.9.9 1.9 1.9v17.6h-.1z"></path></g></svg></div>
+                  <div className="component-picker__btn__title" >Q&amp;A</div>
                 </div>
 
-                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="clickable-image"><div className="component-picker__btn__image-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Clickable image"><g fill="none" fillRule="evenodd"><path fill="#60E2DC" d="M116.6 99.1c-.3 0-.7-.1-.9-.3-5.9-4.8-6.5-8-6.9-10.2-.2-1-.3-1.3-.6-1.6-1-1-3.3-1-6.3-1.1-1.4 0-2.9-.1-4.6-.2h-.8c-1.1 0-1.5.2-1.5.3-.1.1 0 .4.1.6.1.2.2.4.2.7 0 .8-.7 1.5-1.5 1.5h-.2c-3.1-.4-5.5-.6-7.2-.6-3 0-3.9.5-5.1 1.3-.9.6-2 1.3-3.9 1.9-1.3.4-2.2 1.1-2.6 2-.7 1.5-.2 3.3 0 3.7.1.2.1.4.1.6 0 .8-.7 1.5-1.5 1.5h-.1c-5.3-.2-6.9-3.8-8.4-7.3-.5-1.2-1-2.3-1.7-3.5-.6-.9-1-1.3-1.3-1.3-.6 0-1.5 1.1-1.9 1.9-.2.4-.5.6-.9.7-.4.1-.8.1-1.2-.1l-.1-.1c-2.1-1.2-2.2-1.5-4.4-5.4l-.4-.7c-.8-1.5-2-2.2-3.5-2.2-1.1 0-2 .4-2 .4-.3.1-.7.2-1 .1-13.9-3.8-24.2-10.9-29-20-3.1-5.9-3.7-12.1-1.7-17.6 3.9-11.2 4.7-19.5 4.7-19.6 0-.5.3-1 .8-1.2.5-.2 1-.2 1.4 0l1.8 1v-.1c0-.5.2-1 .6-1.3.4-.3.9-.4 1.4-.2 19.2 6.5 42.7 7 49.4 7h1.8c.3 0 .6.1.8.2 1.7 1.1 6.8 1.8 9.7 2.1.4 0 .9.3 1.1.6.7 1.1.1 2.2-.6 3.1l1.2-.3c1.3-.3 2.5-.6 3.5-.6 2.2 0 2.9 1.3 3.2 2.1.3 1.1.2 2.7-.2 5 0-.1.1-.2.1-.4.9-2.1 2.7-3.3 5.1-3.3 1.4 0 2.5.5 3.4 1.6 1.8 2.2 1.9 6.2 1.7 8.8 3.3-1.4 4-4.8 4.1-4.8.1-.7.7-1.1 1.4-1.2 4-.3 4.9-4.3 4.9-4.5.1-.6.6-1.1 1.2-1.2 4.8-.9 7.8-3.2 7.8-4.3 0-5.1 2.7-6.5 4.3-6.5.8 0 1.5.3 2 .8s.8 1.2.8 2c-.1 2.5.8 3.5 1.5 4.3.5.5 1 1.1 1 2.1 0 .6-.4 1.2-1 1.6-4.7 3.8-3 7.1-2.7 7.5.3.4.3.9.2 1.4-.2.5-.6.8-1.1.9-2.2.5-4.6 2.4-6 5-1.3 2.3-1.7 4.8-1 6.8 1.8 5.3-.3 10.9-6.2 16.1-4 3.5-5.3 5.7-1.3 11.1 5.4 7.3 1.5 12.7 1.3 13-.2.3-.6.5-1 .6-.1-.2-.2-.2-.3-.2zM61.8 84c1.5 0 2.8.9 3.9 2.8.8 1.3 1.4 2.6 1.9 3.8 1.2 2.8 2.1 4.4 3.8 5.1-.1-1.1 0-2.4.6-3.7.8-1.7 2.3-2.9 4.4-3.6 1.6-.5 2.4-1 3.2-1.6 1.4-.9 2.8-1.8 6.7-1.8 1.5 0 3.4.1 5.7.4.1-.4.2-.8.4-1.2.7-1.1 2.1-1.7 4-1.7.3 0 .7 0 1.1.1 1.6.1 3 .2 4.4.2 3.6.1 6.4.1 8.3 1.9 1 1 1.3 2.1 1.5 3.3.3 1.6.7 3.8 4.4 7.2.5-1.6.6-4.4-2-7.9-2.6-3.4-3.5-6.2-2.9-8.8.5-2.4 2.1-4.2 4.6-6.3 3.4-3 7.1-7.7 5.3-12.9-1-2.9-.5-6.1 1.2-9.2 1.5-2.7 3.9-4.8 6.3-5.9-.2-.6-.3-1.2-.3-2 0-1.8.7-4.5 3.8-7.3-.8-.9-2.1-2.6-2.1-5.8-.4.3-1.1 1.2-1.1 3.4 0 3.4-4.7 6-9.3 7.1-.7 2.1-2.6 5-6.3 5.8-.9 2.5-3.3 6-8.2 6.7-.5.1-.9-.1-1.3-.4-.3-.3-.5-.8-.4-1.3.4-2.5.5-7-.8-8.6-.3-.4-.6-.5-1.1-.5-2.3 0-2.8 1.5-3.1 5.8-.1 1.2-.2 2.4-.4 3.4-.5 1.9-1.7 2.4-2.6 2.5-.9.1-1.7-.2-2.2-.9-1.3-1.5-.9-4.4-.1-9 .3-1.9.7-4.5.5-5.3h-.3c-.7 0-1.7.2-2.8.5-1.4.3-3 .7-4.5.7-.7 0-1.4-.1-2-.3-.5-.2-.9-.6-1-1.2-.1-.6.1-1.1.6-1.5.6-.5 1.3-1 1.8-1.5-2.5-.3-6.2-.9-8.2-2h-1.4c-6.6 0-29-.5-48.2-6.4l.1.7c0 .6-.2 1.1-.7 1.4-.5.3-1.1.3-1.6 0L23.1 27c-.5 3.3-1.7 9.9-4.6 18-1.7 4.7-1.1 10.1 1.6 15.2 4.4 8.3 13.8 14.8 26.7 18.4.6-.2 1.5-.4 2.7-.4 2.6 0 4.8 1.3 6.1 3.7l.4.7c1 1.8 1.5 2.8 1.9 3.3l.3.3c.7-1 2-2.2 3.6-2.2z"></path><path fill="#4F4F4F" d="M43.3 3.9c-6.7 0-12.1 5.4-12.1 12.1 0 1.1.1 2.1.4 3.1l.1.3c.1.5.3 1 .5 1.4l8.9 19.7c.3.8 1.1 1.4 2.1 1.4.9 0 1.7-.6 2.1-1.4l8.5-18.8c.1-.2 1-2.1 1-2.3.4-1.1.5-2.5.5-3.6.1-6.4-5.3-11.9-12-11.9zm0 18.4c-3.3 0-5.9-2.7-5.9-5.9s2.7-5.9 5.9-5.9 5.9 2.7 5.9 5.9-2.6 5.9-5.9 5.9z" opacity=".7"></path></g></svg></div>
-                  <div className="component-picker__btn__title" onClick={() => this.updateType("Clickable image")}>Clickable image</div>
+                <div tabIndex="0" role="button" className="component-picker__btn" data-identifier="clickable-image" onClick={this.updateType("Clickable image")}><div className="component-picker__btn__image-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 104" className="component-picker__btn__image" title="Clickable image"><g fill="none" fillRule="evenodd"><path fill="#60E2DC" d="M116.6 99.1c-.3 0-.7-.1-.9-.3-5.9-4.8-6.5-8-6.9-10.2-.2-1-.3-1.3-.6-1.6-1-1-3.3-1-6.3-1.1-1.4 0-2.9-.1-4.6-.2h-.8c-1.1 0-1.5.2-1.5.3-.1.1 0 .4.1.6.1.2.2.4.2.7 0 .8-.7 1.5-1.5 1.5h-.2c-3.1-.4-5.5-.6-7.2-.6-3 0-3.9.5-5.1 1.3-.9.6-2 1.3-3.9 1.9-1.3.4-2.2 1.1-2.6 2-.7 1.5-.2 3.3 0 3.7.1.2.1.4.1.6 0 .8-.7 1.5-1.5 1.5h-.1c-5.3-.2-6.9-3.8-8.4-7.3-.5-1.2-1-2.3-1.7-3.5-.6-.9-1-1.3-1.3-1.3-.6 0-1.5 1.1-1.9 1.9-.2.4-.5.6-.9.7-.4.1-.8.1-1.2-.1l-.1-.1c-2.1-1.2-2.2-1.5-4.4-5.4l-.4-.7c-.8-1.5-2-2.2-3.5-2.2-1.1 0-2 .4-2 .4-.3.1-.7.2-1 .1-13.9-3.8-24.2-10.9-29-20-3.1-5.9-3.7-12.1-1.7-17.6 3.9-11.2 4.7-19.5 4.7-19.6 0-.5.3-1 .8-1.2.5-.2 1-.2 1.4 0l1.8 1v-.1c0-.5.2-1 .6-1.3.4-.3.9-.4 1.4-.2 19.2 6.5 42.7 7 49.4 7h1.8c.3 0 .6.1.8.2 1.7 1.1 6.8 1.8 9.7 2.1.4 0 .9.3 1.1.6.7 1.1.1 2.2-.6 3.1l1.2-.3c1.3-.3 2.5-.6 3.5-.6 2.2 0 2.9 1.3 3.2 2.1.3 1.1.2 2.7-.2 5 0-.1.1-.2.1-.4.9-2.1 2.7-3.3 5.1-3.3 1.4 0 2.5.5 3.4 1.6 1.8 2.2 1.9 6.2 1.7 8.8 3.3-1.4 4-4.8 4.1-4.8.1-.7.7-1.1 1.4-1.2 4-.3 4.9-4.3 4.9-4.5.1-.6.6-1.1 1.2-1.2 4.8-.9 7.8-3.2 7.8-4.3 0-5.1 2.7-6.5 4.3-6.5.8 0 1.5.3 2 .8s.8 1.2.8 2c-.1 2.5.8 3.5 1.5 4.3.5.5 1 1.1 1 2.1 0 .6-.4 1.2-1 1.6-4.7 3.8-3 7.1-2.7 7.5.3.4.3.9.2 1.4-.2.5-.6.8-1.1.9-2.2.5-4.6 2.4-6 5-1.3 2.3-1.7 4.8-1 6.8 1.8 5.3-.3 10.9-6.2 16.1-4 3.5-5.3 5.7-1.3 11.1 5.4 7.3 1.5 12.7 1.3 13-.2.3-.6.5-1 .6-.1-.2-.2-.2-.3-.2zM61.8 84c1.5 0 2.8.9 3.9 2.8.8 1.3 1.4 2.6 1.9 3.8 1.2 2.8 2.1 4.4 3.8 5.1-.1-1.1 0-2.4.6-3.7.8-1.7 2.3-2.9 4.4-3.6 1.6-.5 2.4-1 3.2-1.6 1.4-.9 2.8-1.8 6.7-1.8 1.5 0 3.4.1 5.7.4.1-.4.2-.8.4-1.2.7-1.1 2.1-1.7 4-1.7.3 0 .7 0 1.1.1 1.6.1 3 .2 4.4.2 3.6.1 6.4.1 8.3 1.9 1 1 1.3 2.1 1.5 3.3.3 1.6.7 3.8 4.4 7.2.5-1.6.6-4.4-2-7.9-2.6-3.4-3.5-6.2-2.9-8.8.5-2.4 2.1-4.2 4.6-6.3 3.4-3 7.1-7.7 5.3-12.9-1-2.9-.5-6.1 1.2-9.2 1.5-2.7 3.9-4.8 6.3-5.9-.2-.6-.3-1.2-.3-2 0-1.8.7-4.5 3.8-7.3-.8-.9-2.1-2.6-2.1-5.8-.4.3-1.1 1.2-1.1 3.4 0 3.4-4.7 6-9.3 7.1-.7 2.1-2.6 5-6.3 5.8-.9 2.5-3.3 6-8.2 6.7-.5.1-.9-.1-1.3-.4-.3-.3-.5-.8-.4-1.3.4-2.5.5-7-.8-8.6-.3-.4-.6-.5-1.1-.5-2.3 0-2.8 1.5-3.1 5.8-.1 1.2-.2 2.4-.4 3.4-.5 1.9-1.7 2.4-2.6 2.5-.9.1-1.7-.2-2.2-.9-1.3-1.5-.9-4.4-.1-9 .3-1.9.7-4.5.5-5.3h-.3c-.7 0-1.7.2-2.8.5-1.4.3-3 .7-4.5.7-.7 0-1.4-.1-2-.3-.5-.2-.9-.6-1-1.2-.1-.6.1-1.1.6-1.5.6-.5 1.3-1 1.8-1.5-2.5-.3-6.2-.9-8.2-2h-1.4c-6.6 0-29-.5-48.2-6.4l.1.7c0 .6-.2 1.1-.7 1.4-.5.3-1.1.3-1.6 0L23.1 27c-.5 3.3-1.7 9.9-4.6 18-1.7 4.7-1.1 10.1 1.6 15.2 4.4 8.3 13.8 14.8 26.7 18.4.6-.2 1.5-.4 2.7-.4 2.6 0 4.8 1.3 6.1 3.7l.4.7c1 1.8 1.5 2.8 1.9 3.3l.3.3c.7-1 2-2.2 3.6-2.2z"></path><path fill="#4F4F4F" d="M43.3 3.9c-6.7 0-12.1 5.4-12.1 12.1 0 1.1.1 2.1.4 3.1l.1.3c.1.5.3 1 .5 1.4l8.9 19.7c.3.8 1.1 1.4 2.1 1.4.9 0 1.7-.6 2.1-1.4l8.5-18.8c.1-.2 1-2.1 1-2.3.4-1.1.5-2.5.5-3.6.1-6.4-5.3-11.9-12-11.9zm0 18.4c-3.3 0-5.9-2.7-5.9-5.9s2.7-5.9 5.9-5.9 5.9 2.7 5.9 5.9-2.6 5.9-5.9 5.9z" opacity=".7"></path></g></svg></div>
+                  <div className="component-picker__btn__title" >Clickable image</div>
                 </div>
               </div>
             </label>
 
-            <label>
-              Question:
-              <input
-                className="question-body"
-                value={this.state.body}
-                onChange={this.update('body')} />
-            </label>
-            <div className="activity-creator">
-              <div className="groups-dropdown">
-                <select onChange={this.update('group_id')}>{groups}</select>
+            <div className="component-editor-multiple-choice">
+              <label>
+                <input
+                  placeholder="Question"
+                  className="question-body"
+                  value={this.state.body}
+                  onChange={this.update('body')} />
+              </label>
+
+              <label className="choices">
+                <li>
+                  <input
+                    placeholder="Text, Image URL, LaTex"
+                    className="choice1-body"
+                    value={this.state.choice1}
+                    onChange={this.update('choice1')} />
+                </li>
+              </label>
+              <label className="choices">
+                <li>
+                  <input
+                    placeholder="Text, Image URL, LaTex"
+                    className="choice2-body"
+                    value={this.state.choice2}
+                    onChange={this.update('choice2')} />
+                </li>
+              </label>
+
+              <div className="activity-creator">
+                <div className="groups-dropdown">
+                  <select onChange={this.update('group_id')}>{groups}</select>
+                </div>
               </div>
             </div>
 
@@ -102,12 +156,6 @@ class QuestionForm extends React.Component {
       </div>
     )
   }
-
-  // tabs () {
-  //   return (
-      
-  //   )
-  // }
 }
 
 export default withRouter(QuestionForm);

@@ -23,3 +23,10 @@ question2 = Question.create(body: "is", question_type: "q", group_id: demogroup1
 question3 = Question.create(body: "it", question_type: "q", group_id: demogroup3.id)
 question4 = Question.create(body: "really", question_type: "q", group_id: demogroup3.id)
 question5 = Question.create(body: "so happy", question_type: "q", group_id: demogroup3.id)
+
+choice1 = Choice.create(body: "okay", question_id: question1.id)
+choice2 = Choice.create(body: "not okay", question_id: question1.id)
+choice3 = Choice.create(body: "lol", question_id: question2.id)
+choice4 = Choice.create(body: "em", question_id: question2.id)
+choice5 = Choice.create(body: "hmmm", question_id: question3.id)
+choice6 = Choice.create(body: "haha", question_id: question3.id)

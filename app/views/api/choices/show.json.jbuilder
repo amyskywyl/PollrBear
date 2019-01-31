@@ -1,0 +1,1 @@
+json.partial! 'api/choices/choice', choice: @choice

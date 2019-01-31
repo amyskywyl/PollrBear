@@ -1,4 +1,5 @@
 import * as QuestionAPI from "../util/question_api_util";
+import * as ChoiceAPI from "../util/choice_api_util";
 
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
@@ -38,9 +39,20 @@ export const fetchQuestion = (questionId) => dispatch => {
 }
 
 
-export const createQuestion = (question) => dispatch => (
-  QuestionAPI.createQuestion(question).then(question => dispatch(receiveQuestion(question)))
-);
+export const createQuestion = (question, choices) => dispatch => {
+  debugger
+  QuestionAPI.createQuestion(question)
+    .then(question => {
+      debugger
+      (ChoiceAPI.createChoice(choices[0], question.id))})
+      .then(() => {
+        debugger
+        ChoiceAPI.createChoice(choices[1], question.id).then(() => {
+          return dispatch(receiveQuestion(question))
+        }
+      )
+    })
+}
 
 export const updateQuestion = (question) => dispatch => (
   QuestionAPI.updateQuestion(question)

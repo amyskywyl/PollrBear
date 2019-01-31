@@ -3,9 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .columns {
   .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    color: #000;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .tabs > div:focus {
+    background-color: white;
   }
 
   .component-picker__btn__image-container {
@@ -22,7 +25,12 @@
   .component-activity-creator__picker {
     margin-bottom: 7px;
   }
+  .question-body {
+    width: 100%;
+  }
+  
 
+  
   .component-picker__btn {
     box-sizing: border-box;
     transition-property: background-color,border-left-color,box-shadow,font-color,filter;
@@ -66,6 +74,7 @@
     height: 940px;
     display: flex;
     flex-direction: column;
+    padding: 14px;
 
     .question-body:active {
       font-size: 10px;

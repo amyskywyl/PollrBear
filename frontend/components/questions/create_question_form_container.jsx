@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchGroups: () => dispatch(fetchGroups()),
-    action: question => dispatch(createQuestion(question)),
+    action: (question, choices) => dispatch(createQuestion(question, choices)),
   };
 };
 
