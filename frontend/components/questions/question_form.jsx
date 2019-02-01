@@ -96,6 +96,7 @@ class QuestionForm extends React.Component {
             </label>
 
             <div className="component-editor-multiple-choice">
+              <div className="question">
               <label>
                 <input
                   placeholder="Question"
@@ -103,8 +104,9 @@ class QuestionForm extends React.Component {
                   value={this.state.body}
                   onChange={this.update('body')} />
               </label>
-
-              <label className="choices">
+              </div>
+              <div className="choices">
+              <label className="choices1">
                 <li>
                   <input
                     placeholder="Text, Image URL, LaTex"
@@ -113,7 +115,7 @@ class QuestionForm extends React.Component {
                     onChange={this.update('choice1')} />
                 </li>
               </label>
-              <label className="choices">
+              <label className="choices2">
                 <li>
                   <input
                     placeholder="Text, Image URL, LaTex"
@@ -122,6 +124,7 @@ class QuestionForm extends React.Component {
                     onChange={this.update('choice2')} />
                 </li>
               </label>
+              </div>
 
               <div className="activity-creator">
                 <div className="groups-dropdown">

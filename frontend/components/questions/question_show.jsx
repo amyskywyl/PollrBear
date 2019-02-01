@@ -32,7 +32,9 @@ class QuestionShow extends React.Component {
     }
     return(
       <div className="poll">
-        <h3 className="poll-question">{question.body}</h3>
+        <div className="poll-question">
+          <h3>{question.body}</h3>
+        </div>
         {/* <Link to="/groups">Back to Index</Link> */}
         <div className="poll-choices">
           {choicesArr}

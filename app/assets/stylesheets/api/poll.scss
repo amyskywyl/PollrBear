@@ -1,8 +1,62 @@
-.poll-question{
-  color: white;
-  background: linear-gradient(rgb(97, 147, 197), rgb(97, 147, 197));
-  text-align: center;
-}
+// .poll-question{
+//   color: white;
+//   background: linear-gradient(rgb(97, 147, 197), rgb(97, 147, 197));
+//   text-align: center;
+// }
 .poll {
   padding: 20px;
+  display: flex;
+  position: relative;
+  background-color: #d3d3d3;
+  height: 900px;
+  flex-direction: column;
+}
+
+.poll-question{
+  display: flex;
+  align-items: center;
+  margin-bottom: 12.8px;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  height: 47px;
+  padding: 12px 20px;
+  padding-right: 20px;
+}
+
+.poll-choices{
+  height: 104px;
+}
+
+.poll-choices li{
+  margin-bottom: 6.4px;
+  padding: 3px;
+  list-style: none;
+  position: relative;
+  background-color: #fff;
+  padding: 12px 20px;
+}
+
+.question{
+  display: flex;
+  align-items: center;
+  margin-bottom: 12.8px;
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  height: 47px;
+  padding: 12px 20px;
+  padding-right: 20px;
+  input {
+    border: none;
+  }
+}
+
+.choices li{
+  margin-bottom: 6.4px;
+  padding: 3px;
+  list-style: none;
+  position: relative;
+  background-color: #fff;
+  padding: 12px 20px;
 }

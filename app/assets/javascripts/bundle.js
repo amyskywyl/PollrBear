@@ -441,11 +441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
-    exact: true,
-    path: "/",
-    component: _home_home_container__WEBPACK_IMPORTED_MODULE_2__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -461,6 +457,9 @@ var App = function App() {
     path: "/groups/:groupId/edit",
     component: _groups_edit_group_form_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
+    path: "/questions/:questionId/edit",
+    component: _questions_edit_question_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
     exact: true,
     path: "/questions",
     component: _questions_question_index_container__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -472,9 +471,6 @@ var App = function App() {
     exact: true,
     path: "/questions/:questionId",
     component: _questions_question_show_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
-    path: "/questions/:questionId/edit",
-    component: _questions_edit_question_form_container__WEBPACK_IMPORTED_MODULE_9__["default"]
   })));
 };
 
@@ -912,9 +908,7 @@ var GroupIndexItem = function GroupIndexItem(_ref) {
     key: group.id,
     className: "group-index-item"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    onClick: function onClick() {
-      return "question-index";
-    },
+    className: "question-index",
     to: "/group/".concat(group.id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
@@ -963,7 +957,8 @@ var Home = function Home(_ref) {
     }, "Get started"));
   };
 
-  var loggedinHome = function loggedinHome() {
+  var loggedinHome = function loggedinHome(_ref2) {
+    var currentUser = _ref2.currentUser;
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "home"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1365,6 +1360,7 @@ function (_React$Component) {
 
     _classCallCheck(this, EditQuestionForm);
 
+    debugger;
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditQuestionForm).call(this, props));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
@@ -1496,6 +1492,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
+  debugger;
   var defaultQuestion = {
     question_type: '',
     body: '',
@@ -1769,26 +1766,30 @@ function (_React$Component) {
         className: "component-picker__btn__title"
       }, "Clickable image")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "component-editor-multiple-choice"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "question"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "Question",
         className: "question-body",
         value: this.state.body,
         onChange: this.update('body')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "choices"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "choices1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "Text, Image URL, LaTex",
         className: "choice1-body",
         value: this.state.choice1,
         onChange: this.update('choice1')
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "choices"
+        className: "choices2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "Text, Image URL, LaTex",
         className: "choice2-body",
         value: this.state.choice2,
         onChange: this.update('choice2')
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "activity-creator"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "groups-dropdown"
@@ -2036,9 +2037,9 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "poll"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "poll-question"
-      }, question.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, question.body)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "poll-choices"
       }, choicesArr));
     }

@@ -18,15 +18,15 @@ const App = () => (
       <NavBarContainer />
     </header>
     <Switch>
-      <Route exact path="/" component={HomeContainer} />
       <AuthRoute exact path="/login" component={LoginFormContainer} />
       <AuthRoute exact path="/signup" component={SignupFormContainer} />
       <ProtectedRoute exact path="/groups" component={GroupIndexContainer} />
       <ProtectedRoute path="/groups/:groupId/edit" component={EditGroupFormContainer} />
+      <ProtectedRoute path="/questions/:questionId/edit" component={EditQuestionFormContainer} />
       <ProtectedRoute exact path="/questions" component={QuestionIndexContainer} />
       <ProtectedRoute exact path="/questions/new" component={CreateQuestionFormContainer} />
       <ProtectedRoute exact path="/questions/:questionId" component={QuestionShowContainer} />
-      <ProtectedRoute path="/questions/:questionId/edit" component={EditQuestionFormContainer} />
+      {/* <Route exact path="/" component={HomeContainer} /> */}
     </Switch>
   </div>
 );

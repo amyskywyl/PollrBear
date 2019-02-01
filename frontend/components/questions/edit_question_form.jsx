@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 class EditQuestionForm extends React.Component {
   constructor(props) {
+    debugger
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
