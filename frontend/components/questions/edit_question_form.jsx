@@ -3,12 +3,11 @@ import { Link, withRouter } from 'react-router-dom';
 
 class EditQuestionForm extends React.Component {
   constructor(props) {
-    debugger
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      body: this.props.question.body,
-      group_id: this.props.question.group_id,
+      body: "",
+      group_id: 0,
       choice1: "",
       choice2: "",
       question_type: "",
@@ -16,7 +15,8 @@ class EditQuestionForm extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchQuestion(this.props.match.params.questionId).then(response => {
+    this.props.fetchQuestion(this.props.match.params.questionId)
+    .then(response => {
       this.setState ({
         body: response.data.question.body,
         choice1: Object.values(response.data.choices)[0].body,
@@ -29,10 +29,12 @@ class EditQuestionForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.questionId != this.props.match.params.questionId) {
+    debugger
+    if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
+      debugger
       this.props.fetchQuestion(this.props.match.params.questionId);
     }
-    this.props.history.push(`/groups`)
+    // this.props.history.push(`/groups`)
   }
 
   update(field) {
@@ -55,10 +57,12 @@ class EditQuestionForm extends React.Component {
     choice2.body = this.state.choice2;
     const choicesArray = [choice1, choice2];
     const choices = [this.state.choice1, this.state.choice2]
-    this.props.updateQuestion(question, choicesArray)
+    this.props.updateQuestion(question, choicesArray).then(() => this.props.history.push(`/groups`))
+
   }
 
   render() {
+    debugger
     return (
       <div className="columns">
         <Link to="/groups" className="x-btn">

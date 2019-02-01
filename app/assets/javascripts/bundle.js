@@ -441,7 +441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_bar_nav_bar_container__WEBPACK_IMPORTED_MODULE_1__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -471,7 +471,7 @@ var App = function App() {
     exact: true,
     path: "/questions/:questionId",
     component: _questions_question_show_container__WEBPACK_IMPORTED_MODULE_8__["default"]
-  })));
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -1360,12 +1360,11 @@ function (_React$Component) {
 
     _classCallCheck(this, EditQuestionForm);
 
-    debugger;
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditQuestionForm).call(this, props));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
-      body: _this.props.question.body,
-      group_id: _this.props.question.group_id,
+      body: "",
+      group_id: 0,
       choice1: "",
       choice2: "",
       question_type: ""
@@ -1391,11 +1390,13 @@ function (_React$Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      if (prevProps.match.params.questionId != this.props.match.params.questionId) {
-        this.props.fetchQuestion(this.props.match.params.questionId);
-      }
+      debugger;
 
-      this.props.history.push("/groups");
+      if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
+        debugger;
+        this.props.fetchQuestion(this.props.match.params.questionId);
+      } // this.props.history.push(`/groups`)
+
     }
   }, {
     key: "update",
@@ -1409,6 +1410,8 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
+      var _this4 = this;
+
       e.preventDefault();
       var question = {
         question_type: this.state.question_type,
@@ -1422,11 +1425,14 @@ function (_React$Component) {
       choice2.body = this.state.choice2;
       var choicesArray = [choice1, choice2];
       var choices = [this.state.choice1, this.state.choice2];
-      this.props.updateQuestion(question, choicesArray);
+      this.props.updateQuestion(question, choicesArray).then(function () {
+        return _this4.props.history.push("/groups");
+      });
     }
   }, {
     key: "render",
     value: function render() {
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "columns"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -1484,15 +1490,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _edit_question_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit_question_form */ "./frontend/components/questions/edit_question_form.jsx");
-/* harmony import */ var _actions_questions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/questions */ "./frontend/actions/questions.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _edit_question_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit_question_form */ "./frontend/components/questions/edit_question_form.jsx");
+/* harmony import */ var _actions_questions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/questions */ "./frontend/actions/questions.js");
+
 
 
 
 
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
-  debugger;
   var defaultQuestion = {
     question_type: '',
     body: '',
@@ -1514,17 +1521,16 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    // fetchGroups: () => dispatch(fetchGroups()),
     fetchQuestion: function fetchQuestion(id) {
-      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_3__["fetchQuestion"])(id));
+      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_4__["fetchQuestion"])(id));
     },
     updateQuestion: function updateQuestion(question, choices) {
-      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_3__["updateQuestion"])(question, choices));
+      return dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_4__["updateQuestion"])(question, choices));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_edit_question_form__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(_edit_question_form__WEBPACK_IMPORTED_MODULE_3__["default"])));
 
 /***/ }),
 
@@ -2673,7 +2679,7 @@ var GroupsReducer = function GroupsReducer() {
       return newState;
 
     case _actions_questions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_QUESTION"]:
-      return lodash_merge__WEBPACK_IMPORTED_MODULE_2___default()({}, action.groups);
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_2___default()({}, oldState, action.groups);
 
     default:
       return oldState;
