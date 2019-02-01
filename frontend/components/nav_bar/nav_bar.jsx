@@ -8,7 +8,7 @@ const NavBar = ({ currentUser, logout, history }) => {
         <Link to="/" className="header_link">
           <h1 className="logo">
             <img className="logo-img" src={window.logoURL}/>
-            Pollr Bear
+            Poll'r Bear
           </h1>
         </Link>
         <div>
@@ -25,7 +25,10 @@ const NavBar = ({ currentUser, logout, history }) => {
     <nav className="nav-home">
       <div className="login-signup">
         <Link to="/" className="header_link">
-          <h1 className="logo">Pollr Bear</h1>
+          <h1 className="logo">
+            <img className="logo-img" src={window.logoURL} />
+
+          Poll'r Bear</h1>
         </Link>
         <div>
           <Link className="mypolls navb" to="/groups">My polls</Link>
