@@ -29,9 +29,7 @@ class EditQuestionForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    debugger
     if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
-      debugger
       this.props.fetchQuestion(this.props.match.params.questionId);
     }
     // this.props.history.push(`/groups`)
@@ -62,7 +60,6 @@ class EditQuestionForm extends React.Component {
   }
 
   render() {
-    debugger
     return (
       <div className="columns">
         <Link to="/groups" className="x-btn">
