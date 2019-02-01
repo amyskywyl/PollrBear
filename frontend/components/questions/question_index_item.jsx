@@ -10,7 +10,7 @@ const QuestionIndexItem= ({ question, deleteQuestion }) => {
       <Link to={`/questions/${question.id}/edit`}>
         Edit
       </Link>
-      <button onClick={() => deleteQuestion(question.id)}>Delete</button>
+      <button className="delete-icon" onClick={() => deleteQuestion(question.id)}><i class="fas fa-trash"></i></button>
     </li>
   )
 }

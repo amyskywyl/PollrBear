@@ -6,7 +6,10 @@ const NavBar = ({ currentUser, logout, history }) => {
     <nav className="nav-home">
       <div className="login-signup">
         <Link to="/" className="header_link">
-          <h1 className="logo">Pollr Bear</h1>
+          <h1 className="logo">
+            <img className="logo-img" src={window.logoURL}/>
+            Pollr Bear
+          </h1>
         </Link>
         <div>
           <Link className="login navl" to="/login">Log in</Link>

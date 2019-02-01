@@ -33,18 +33,15 @@ class QuestionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // let question = Object.assign({}, this.props.question, this.state.body);
-    const question = {
+    let question = {
       question_type: this.state.question_type,
       body: this.state.body,
       group_id: this.state.group_id,
     }
-    debugger
+    question = Object.assign({}, this.props.question, question);
     const choices = [this.state.choice1, this.state.choice2]
-    debugger
     this.props.action(question, choices).then(response => {
-      debugger
-      this.props.history.push(`/questions/${response.entities.question.id}`)}); ;
+      this.props.history.push(`/groups`)}); ;
   }
   
   render () {
@@ -53,22 +50,6 @@ class QuestionForm extends React.Component {
         <option key={index} value={group.id}>{group.title}</option>
       )
     });
-
-    // const choices = this.state.choices.map((choice, index) => {
-    //   debugger
-    //   return (
-    //     <li>
-    //       <input
-    //         placeholder="Text, Image URL, LaTex"
-    //         className="choice-body"
-    //         value={choice.body}
-    //         onChange={this.update('choice')} />
-    //     </li>
-    //   )
-    // });
-
-    
- 
     return (
       <div className="columns">
         <Link to="/groups" className="x-btn">

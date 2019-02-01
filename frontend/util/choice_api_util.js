@@ -6,6 +6,14 @@ export const createChoice = (body, questionId) => {
   });
 }
 
+export const updateChoice = (choice, questionId) => {
+  return $.ajax({
+    method: "PATCH",
+    url: `/api/choices/${choice.id}`,
+    data: { choice }
+  });
+};
+
 export const deleteChoice = (choiceId) => {
   return $.ajax({
     method: 'DELETE',

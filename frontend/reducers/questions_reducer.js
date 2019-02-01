@@ -2,7 +2,8 @@ import {
   RECEIVE_ALL_QUESTIONS,
   RECEIVE_QUESTION,
   REMOVE_QUESTION,
-  TOGGLE_ACTIVE
+  TOGGLE_ACTIVE,
+  RECEIVE_NEW_QUESTION
 } from '../actions/questions';
 import merge from 'lodash/merge';
 import { RECEIVE_ALL_GROUPS } from '../actions/groups';
@@ -13,15 +14,14 @@ const QuestionsReducer = (oldState = {}, action) => {
     case RECEIVE_ALL_GROUPS:
       return merge({}, action.questions);
     case RECEIVE_QUESTION:
-      return merge({}, oldState, {[action.entities.question.id]: action.entities.question});
+      return merge({}, oldState, {[action.data.question.id]: action.data.question});
+    case RECEIVE_NEW_QUESTION:
+
+      return merge({}, action.question)
     case REMOVE_QUESTION:
       let newState = merge({}, oldState);
       delete newState[action.question.id];
       return newState;
-    case TOGGLE_ACTIVE:
-      return Object.assign({}, oldState, {
-        active: !state.active
-      });
     default:
       return oldState;
   }

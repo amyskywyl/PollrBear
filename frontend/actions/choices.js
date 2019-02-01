@@ -22,6 +22,14 @@ export const createChoice = (choice_params) => dispatch => {
   )
 }
 
+export const updateChoice = (choice_params) => dispatch => {
+  return (
+    ChoiceAPI.updateChoice(choice_params).then(choice => {
+      return (dispatch(receiveChoice(choice)))
+    })
+  )
+}
+
 export const deleteChoice = (choiceId) => dispatch => (
   ChoiceAPI.deleteChoice(choiceId).then(choiceId => dispatch(removeChoice(choiceId)))
 );

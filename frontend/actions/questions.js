@@ -3,17 +3,22 @@ import * as ChoiceAPI from "../util/choice_api_util";
 
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
+export const RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
-export const TOGGLE_ACTIVE = "TOGGLE_ACTIVE";
 
 export const receiveAllQuestions = questions => ({
   type: RECEIVE_ALL_QUESTIONS,
   questions
 });
 
-const receiveQuestion = entities => ({
+const receiveQuestion = data => ({
   type: RECEIVE_QUESTION,
-  entities
+  data
+});
+
+const receiveNewQuestion = ({question}) => ({
+  type: RECEIVE_NEW_QUESTION,
+  question
 });
 
 const removeQuestion = question => ({
@@ -30,7 +35,6 @@ export const fetchQuestions = () => dispatch => {
 };
 
 export const fetchQuestion = (questionId) => dispatch => {
-  debugger
   return(
     QuestionAPI.fetchQuestion(questionId).then(question => {
       return (dispatch(receiveQuestion(question)))
@@ -40,30 +44,31 @@ export const fetchQuestion = (questionId) => dispatch => {
 
 
 export const createQuestion = (question, choices) => dispatch => {
-  debugger
-  QuestionAPI.createQuestion(question)
+  return (QuestionAPI.createQuestion(question)
     .then(question => {
-      debugger
-      (ChoiceAPI.createChoice(choices[0], question.id))})
+      (ChoiceAPI.createChoice(choices[0], question.question.id))
       .then(() => {
-        debugger
-        ChoiceAPI.createChoice(choices[1], question.id).then(() => {
-          return dispatch(receiveQuestion(question))
+        ChoiceAPI.createChoice(choices[1], question.question.id).then(() => {
+          return dispatch(receiveNewQuestion(question))
         }
       )
-    })
+    })})
+  )
 }
 
-export const updateQuestion = (question) => dispatch => (
-  QuestionAPI.updateQuestion(question)
-    .then(question => dispatch(receiveQuestion(question)))
-);
+export const updateQuestion = (question, choices) => dispatch => {
+  return (QuestionAPI.updateQuestion(question)
+    .then(question => {
+      (ChoiceAPI.updateChoice(choices[0], question.question.id))
+      .then(() => {
+        ChoiceAPI.updateChoice(choices[1], question.question.id).then(() => {
+          return dispatch(receiveQuestion(question))
+        })
+      })
+    })
+  )
+};
 
 export const deleteQuestion = (questionId) => dispatch => (
   QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
-
-export const toggleActive = (id) => ({
-  type: TOGGLE_ACTIVE,
-  id
-})

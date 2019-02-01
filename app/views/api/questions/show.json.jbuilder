@@ -1,5 +1,5 @@
 json.question do 
-  json.extract! @question, :id, :body, :question_type, :active
+  json.extract! @question, :id, :body, :question_type, :active, :group_id
 end
 
 json.groups do
@@ -13,7 +13,7 @@ end
 json.choices do
   @question.choices.each do |choice|
     json.set! choice.id do
-      json.partial! 'api/choices/choice', choice: choice
+      json.extract! choice, :id, :body, :question_id
     end
   end
 end

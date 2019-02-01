@@ -12,7 +12,6 @@ export const fetchQuestion = (questionId) => {
   });
 };
 export const createQuestion = (question) => {
-  debugger
   return $.ajax({
     method: "POST",
     url: `/api/questions`,
@@ -20,7 +19,6 @@ export const createQuestion = (question) => {
   });
 };
 export const updateQuestion = (question) => {
-  debugger
   return $.ajax({
     method: "PATCH",
     url: `/api/questions/${question.id}`,
