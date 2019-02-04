@@ -69,6 +69,11 @@ export const updateQuestion = (question, choices) => dispatch => {
   )
 };
 
+export const activeQuestion = (question) => dispatch => (
+  QuestionAPI.updateQuestion(question).then(question => dispatch(receiveQuestion(question)))
+);
+
 export const deleteQuestion = (questionId) => dispatch => (
   QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
+

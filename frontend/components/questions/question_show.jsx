@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import EditActiveQuestionContainer from './active_question_edit_container';
 
 class QuestionShow extends React.Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class QuestionShow extends React.Component {
         {/* <Link to="/groups">Back to Index</Link> */}
         <div className="poll-choices">
           {choicesArr}
+        </div>
+        <div className="active-question">
+        <EditActiveQuestionContainer/>
         </div>
       </div>
     )

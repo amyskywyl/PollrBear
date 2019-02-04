@@ -28,6 +28,9 @@ class Api::QuestionsController < ApplicationController
   def update
     @question = Question.find(params[:id])
     if @question.update(question_params)
+      if @question.active == true
+        @question.user.questions.select{|question| question.id != @question.id}.map!{|question| question.active = false}
+      end
       render :show
     else
       render json: @question.errors.full_messages, status: 422

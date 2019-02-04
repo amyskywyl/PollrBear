@@ -11,6 +11,7 @@ export const fetchQuestion = (questionId) => {
     url: `/api/questions/${questionId}`
   });
 };
+
 export const createQuestion = (question) => {
   return $.ajax({
     method: "POST",
@@ -18,6 +19,7 @@ export const createQuestion = (question) => {
     data: { question }
   });
 };
+
 export const updateQuestion = (question) => {
   return $.ajax({
     method: "PATCH",
@@ -25,9 +27,11 @@ export const updateQuestion = (question) => {
     data: { question }
   });
 };
+
 export const deleteQuestion = (questionId) => {
   return $.ajax({
     method: "DELETE",
     url: `/api/questions/${questionId}`,
   });
 };
+
