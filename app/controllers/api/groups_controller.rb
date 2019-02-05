@@ -2,7 +2,7 @@ class Api::GroupsController < ApplicationController
   before_action :require_logged_in
 
   def index
-    @groups = Group.all
+    @groups = current_user.groups
     render :index
   end
 

@@ -11,6 +11,12 @@ class QuestionShow extends React.Component {
     this.props.fetchQuestion(this.props.match.params.questionId);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.questionId !== nextProps.match.params.questionId) {
+      this.props.fetchQuestion(nextProps.match.params.questionId);
+    }
+  }
+
   // componentDidUpdate(prevProps) {
   //   if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
   //     this.props.fetchQuestion(this.props.match.params.questionId);
@@ -30,6 +36,9 @@ class QuestionShow extends React.Component {
     }
     if (!question) {
       return <div>Loading...</div>;
+    }
+    if (question.unaccessible === true){
+      return "No active question right now."
     }
     return(
       <div className="poll">

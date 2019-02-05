@@ -475,7 +475,7 @@ var App = function App() {
     exact: true,
     path: "/questions/new",
     component: _questions_create_question_form_container__WEBPACK_IMPORTED_MODULE_10__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_12__["ProtectedRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_11__["Route"], {
     exact: true,
     path: "/questions/:questionId",
     component: _questions_question_show_container__WEBPACK_IMPORTED_MODULE_8__["default"]
@@ -1351,8 +1351,6 @@ function (_React$Component) {
   }, {
     key: "toggleActive",
     value: function toggleActive() {
-      debugger;
-
       if (this.state.active === true) {
         return "active";
       } else {
@@ -2183,6 +2181,13 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchQuestion(this.props.match.params.questionId);
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.match.params.questionId !== nextProps.match.params.questionId) {
+        this.props.fetchQuestion(nextProps.match.params.questionId);
+      }
     } // componentDidUpdate(prevProps) {
     //   if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
     //     this.props.fetchQuestion(this.props.match.params.questionId);
@@ -2207,6 +2212,10 @@ function (_React$Component) {
 
       if (!question) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading...");
+      }
+
+      if (question.unaccessible === true) {
+        return "No active question right now.";
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2722,6 +2731,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
+/***/ "./frontend/reducers/active_question_reducer.js":
+/*!******************************************************!*\
+  !*** ./frontend/reducers/active_question_reducer.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+/***/ }),
+
 /***/ "./frontend/reducers/choice_reducer.js":
 /*!*********************************************!*\
   !*** ./frontend/reducers/choice_reducer.js ***!
@@ -2779,6 +2799,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _groups_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./groups_reducer */ "./frontend/reducers/groups_reducer.js");
 /* harmony import */ var _questions_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./questions_reducer */ "./frontend/reducers/questions_reducer.js");
 /* harmony import */ var _choice_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./choice_reducer */ "./frontend/reducers/choice_reducer.js");
+/* harmony import */ var _active_question_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./active_question_reducer */ "./frontend/reducers/active_question_reducer.js");
+/* harmony import */ var _active_question_reducer__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_active_question_reducer__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -2788,7 +2811,8 @@ var entitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   groups: _groups_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   questions: _questions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  choices: _choice_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  choices: _choice_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  active: _active_question_reducer__WEBPACK_IMPORTED_MODULE_5___default.a
 });
 /* harmony default export */ __webpack_exports__["default"] = (entitiesReducer);
 

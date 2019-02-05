@@ -46,7 +46,6 @@ class EditActiveQuestionForm extends React.Component {
   }
 
   toggleActive() {
-    debugger
     if (this.state.active === true) {
       return "active"
     } else {

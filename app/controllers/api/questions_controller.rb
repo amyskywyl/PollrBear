@@ -19,9 +19,13 @@ class Api::QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     if @question
-      render :show
+      if @question[:active] == true || current_user.questions.find_by(id: params[:id])
+        render :show
+      else
+        render json: {question: {id: params[:id], unaccessible: true}}
+      end
     else
-      render json: @question.errors.full_messages, status: 404
+      render json: ["question not found"], status: 404
     end
   end
 
@@ -29,7 +33,10 @@ class Api::QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     if @question.update(question_params)
       if @question.active == true
-        @question.user.questions.select{|question| question.id != @question.id}.map!{|question| question.active = false}
+        @question.user.questions.select{|question| question.id != @question.id}.map! do |question| 
+          question.active = false
+          question.save!
+        end
       end
       render :show
     else
