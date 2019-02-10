@@ -8,6 +8,7 @@ class User < ApplicationRecord
   after_initialize :ensure_session_token, :ensure_username
 
   has_many :groups
+  has_one :active_poll
   has_many :questions,
     through: :groups,
     source: :questions

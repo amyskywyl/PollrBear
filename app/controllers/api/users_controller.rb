@@ -2,6 +2,7 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      ActivePoll.create!(user_id: @user.id, question_id: null)
       login(@user)
       render "api/users/show"
     else

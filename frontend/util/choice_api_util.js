@@ -28,3 +28,11 @@ export const fetchChoice = choiceId => {
     data: { choiceId }
   })
 }
+
+export const fetchChoices = (question_id) => {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/choices',
+    data: {question_id}
+  });
+};

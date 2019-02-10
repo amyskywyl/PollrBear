@@ -5,7 +5,7 @@ end
 json.groups do
   current_user.groups.each do |group|
     json.set! group.id do
-      json.extract! group, :id, :title
+      json.extract! group, :id, :title, :user_id
     end
   end
 end

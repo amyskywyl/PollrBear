@@ -1,12 +1,19 @@
 import * as ChoiceAPI from "../util/choice_api_util";
+import { receiveErrors } from "./session_actions";
 
 
 export const RECEIVE_CHOICE = "RECEIVE_CHOICE";
 export const REMOVE_CHOICE = "REMOVE_CHOICE";
+export const RECEIVE_CHOICES = "RECEIVE_CHOICES";
 
 const receiveChoice = (choice) => ({
   type: RECEIVE_CHOICE,
   choice
+})
+
+const receiveChoices = choices => ({
+  type: RECEIVE_CHOICES,
+  choices
 })
 
 const removeChoice = choice => ({
@@ -32,4 +39,9 @@ export const updateChoice = (choice_params) => dispatch => {
 
 export const deleteChoice = (choiceId) => dispatch => (
   ChoiceAPI.deleteChoice(choiceId).then(choiceId => dispatch(removeChoice(choiceId)))
+);
+
+export const fetchChoices = (question_id) => dispatch => (
+  ChoiceAPI.fetchChoices(question_id).then(choices => dispatch(receiveChoices(choices))),
+  err => (dispatch(receiveErrors(err.responseJSON)))
 );

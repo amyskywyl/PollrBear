@@ -7,6 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.destroy_all
 Group.destroy_all
+Question.destroy_all
+Choice.destroy_all
+ActivePoll.destroy_all
 
 demo = User.create(firstname: "Pollr",
                    lastname: "Bear",
@@ -30,3 +33,5 @@ choice3 = Choice.create(body: "lol", question_id: question2.id)
 choice4 = Choice.create(body: "em", question_id: question2.id)
 choice5 = Choice.create(body: "hmmm", question_id: question3.id)
 choice6 = Choice.create(body: "haha", question_id: question3.id)
+
+active_poll = ActivePoll.create!(user_id: demo.id)

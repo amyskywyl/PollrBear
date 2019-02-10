@@ -18,7 +18,7 @@ const GroupsReducer = (oldState = {}, action) => {
       delete newState[action.groupId];
       return newState;
     case RECEIVE_QUESTION:
-      return merge({}, oldState, action.groups);
+      return merge({}, oldState, action.data.groups);
     default:
       return oldState;
   }
