@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import merge from 'lodash/merge';
+
 
 class QuestionForm extends React.Component {
   constructor(props) {
@@ -7,12 +10,31 @@ class QuestionForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateType = this.updateType.bind(this);
     this.state = {
-      body: this.props.question.body,
-      group_id: this.props.question.group_id,
-      choice1: "",
-      choice2: "",
+      body: "",
+      group_id: 0,
+      choices: { 0: { body: '' }, 1: { body: '' } },
+      choiceCount: 2,
       question_type: "",
     }
+    this.handleButton = this.handleButton.bind(this);
+  }
+
+  handleButton(e) {
+    e.preventDefault();
+    this.setState({['choiceCount']: this.state.choiceCount + 1,
+    ['choices']:
+    merge({}, this.state.choices, {[this.state.choiceCount]: {body: ''}})
+    });
+  }
+
+  updateChoices(i) {
+    return e => (this.setState({['choices']: merge({}, this.state.choices, {[i]: {body: e.target.value}})}))
+  }
+
+  deleteChoice(i) {
+    let newState = merge({}, this.state);
+    delete newState.choices[i];
+    this.setState(newState);
   }
   
   update(field) {
@@ -33,18 +55,29 @@ class QuestionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let question = {
-      question_type: this.state.question_type,
-      body: this.state.body,
-      group_id: this.state.group_id,
-    }
-    question = Object.assign({}, this.props.question, question);
-    const choices = [this.state.choice1, this.state.choice2]
-    this.props.action(question, choices).then(response => {
-      this.props.history.push(`/groups`)}); ;
+    // let question = {
+    //   question_type: this.state.question_type,
+    //   body: this.state.body,
+    //   group_id: this.state.group_id,
+    // }
+    const question = Object.assign({}, this.state);
+    this.props.createQuestion(question, question.choices);
+    // .then(response => {
+    //   this.props.history.push(`/groups`)}); ;
   }
   
   render () {
+    let choiceList = [];
+    Object.keys(this.state.choices).forEach( i => {
+      choiceList.push(
+        <div key={i} className="responses">
+          <input key={i} type="text" placeholder={"Choices goes here"}
+          onChange={this.updateChoices(i)}
+          value={this.state.choices[i]['body']}/>
+          <button onClick={e => (this.deleteChoice(i))} className="trashcan"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
+        </div>
+      )
+    })
     const groups = this.props.groups.map((group, index) => {
       return (
         <option key={index} value={group.id}>{group.title}</option>
@@ -106,24 +139,10 @@ class QuestionForm extends React.Component {
               </label>
               </div>
               <div className="choices">
-              <label className="choices1">
-                <li>
-                  <input
-                    placeholder="Text, Image URL, LaTex"
-                    className="choice1-body"
-                    value={this.state.choice1}
-                    onChange={this.update('choice1')} />
-                </li>
-              </label>
-              <label className="choices2">
-                <li>
-                  <input
-                    placeholder="Text, Image URL, LaTex"
-                    className="choice2-body"
-                    value={this.state.choice2}
-                    onChange={this.update('choice2')} />
-                </li>
-              </label>
+                {choiceList}
+                <div className="add-answers-button">
+                  <button onClick={this.handleButton}>+</button>
+                </div>
               </div>
 
               <div className="activity-creator">

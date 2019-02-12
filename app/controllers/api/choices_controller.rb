@@ -1,11 +1,19 @@
 class Api::ChoicesController < ApplicationController
   def create
-    @choice = Choice.new(choice_params)
-    @choice.question_id = params[:choice][:questionId]
-    if @choice.save
-      render :show
-    else
+    fail = [];
+    params["choices"].values.each do |choice_in|
+      @choice = Choice.new(choice_in)
+      @choice.question_id = params[:questionId]
+      if @choice.save
+        next
+      else
+        fail << @choice
+      end
+    end
+    if fail.length >= 1
       render json: @choice.errors.full_messages, status: 422
+    else
+      render :show
     end
   end
 

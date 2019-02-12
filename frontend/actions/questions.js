@@ -1,5 +1,7 @@
 import * as QuestionAPI from "../util/question_api_util";
 import * as ChoiceAPI from "../util/choice_api_util";
+import { receiveErrors } from './error_actions';
+
 
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
@@ -43,31 +45,41 @@ export const fetchQuestion = (questionId) => dispatch => {
 }
 
 
-export const createQuestion = (question, choices) => dispatch => {
-  return (QuestionAPI.createQuestion(question)
+export const createQuestion = (question, choices) => dispatch => (
+  QuestionAPI.createQuestion(question)
+    .then(question => (ChoiceAPI.createChoice(choices, question.question.id)
+    ), err => (dispatch(receiveErrors(err.responseJSON))))
     .then(question => {
-      (ChoiceAPI.createChoice(choices[0], question.question.id))
-      .then(() => {
-        ChoiceAPI.createChoice(choices[1], question.question.id).then(() => {
-          return dispatch(receiveNewQuestion(question))
-        }
-      )
-    })})
-  )
-}
+      dispatch(receiveNewQuestion(question));
+      window.location.href = `/#/questions/${question.id}`;
+    }
+    ), err => (dispatch(receiveErrors(err.responseJSON))
+    ));
 
-export const updateQuestion = (question, choices) => dispatch => {
-  return (QuestionAPI.updateQuestion(question)
+export const updateQuestion = (question, choices) => dispatch => (
+  QuestionAPI.updateQuestion(question)
+    .then(question => (saveChoices(choices, question)
+    ), err => (dispatch(receiveErrors(err.responseJSON))))
     .then(question => {
-      (ChoiceAPI.updateChoice(choices[0], question.question.id))
-      .then(() => {
-        ChoiceAPI.updateChoice(choices[1], question.question.id).then(() => {
-          return dispatch(receiveQuestion(question))
-        })
-      })
-    })
-  )
-};
+      window.location.href = `/#/groups`;
+      return dispatch(receiveNewQuestion(question));
+    }
+    ), err => (dispatch(receiveErrors(err.responseJSON))
+    ));
+
+const saveChoices = (choices, question) => {
+  if (choices.length === 1) {
+    if (choices[0].question_id === 0 ) {
+      return ChoiceAPI.createChoice(choices, question.question.id)
+    }
+    return ChoiceAPI.updateChoice(choices[0], question.question.id)
+  }
+  if (choices[0].question_id === 0) {
+    return ChoiceAPI.createChoice(choices, question.question.id).then(() => saveChoices(choices.slice(1), question))
+  } else {
+    return ChoiceAPI.updateChoice(choices[0], question.question.id).then(() => saveChoices(choices.slice(1), question))
+  }
+}
 
 export const activeQuestion = (question) => dispatch => (
   QuestionAPI.updateQuestion(question).then(question => dispatch(receiveQuestion(question)))

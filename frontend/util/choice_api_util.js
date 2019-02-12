@@ -1,8 +1,8 @@
-export const createChoice = (body, questionId) => {
+export const createChoice = (choices, questionId) => {
   return $.ajax({
     method: 'POST',
     url: 'api/choices',
-    data: { choice: {body, questionId} }
+    data: { choices, questionId }
   });
 }
 

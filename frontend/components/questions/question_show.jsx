@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { BarChart, Bar, XAixs, YAxis, Tooltip, ResponseiveContainer} from 'recharts';
 
 class QuestionShow extends React.Component {
 
@@ -50,9 +51,10 @@ class QuestionShow extends React.Component {
     if (this.props.id === this.props.activeId) {
       buttonClassName = "active-button";
     }
+    let data = [];
     return(
       <div className="poll">
-        <div className="poll-question">
+        {/* <div className="poll-question">
           <h3>{question.body}</h3>
         </div>
         {/* <Link to="/groups">Back to Index</Link> */}
@@ -62,8 +64,17 @@ class QuestionShow extends React.Component {
         <div className="chart-buttons">
           <button className={buttonClassName} onClick={this.handleActive} >Activate</button>
 
-        </div>
+        </div> */}
 
+
+        {/* <BarChart width={730} height={250} data={choicesArr} layout="vertical">
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis dataKey="name" type="category" />
+          <Legend />
+          <Bar dataKey="pv" fill="#8884d8" />
+          <Bar dataKey="uv" fill="#82ca9d" />
+        </BarChart> */}
       </div>
     )
   }

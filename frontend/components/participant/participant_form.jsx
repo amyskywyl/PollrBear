@@ -3,10 +3,9 @@ import React from 'react';
 class ParticipantForm extends React.Component {
   constructor(props) {
     super(props);
-    debugger
     this.state = {
       answered: false,
-      load: false,
+      load: Object.keys(this.props.choices).length > 0,
       choiceId: -1,
     };
 
@@ -20,7 +19,6 @@ class ParticipantForm extends React.Component {
   }
 
   componentDidMount() {
-    debugger
     this.props.fetchActive(this.props.match.params.username);
     //this.props.fetchQuestion(this.props.active_id)
     // .then(() => {
@@ -38,7 +36,6 @@ class ParticipantForm extends React.Component {
     if (this.props.choices !== nextProps.choices &&  !this.state.load) {
       //this.props.fetchQuestion(nextProps.active_id);
       this.setState({ load: true });
-      debugger
     }
   }
 
@@ -64,7 +61,6 @@ class ParticipantForm extends React.Component {
  }
 
  render() {
-   debugger
    if(!this.state.load) {
      return null
    }

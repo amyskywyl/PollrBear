@@ -15,7 +15,6 @@ class Api::ActivePollsController < ApplicationController
     if question.active
       @active_poll = question.active_poll
       question.active = false
-      debugger
       question.active_poll.destroy!
       question.save!
       @active_poll = { id: 0, question_id: 0, user_id: 0 }

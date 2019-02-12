@@ -6,7 +6,6 @@ import { fetchChoices } from '../../actions/choices';
 import { fetchQuestion } from '../../actions/questions';
 
 const mapStateToProps = (state, ownProps) => {
-  debugger
   return({
     answers: state.entities.answers,
     choices: state.entities.choices,

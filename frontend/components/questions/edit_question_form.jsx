@@ -1,17 +1,32 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import merge from 'lodash/merge';
+
 
 class EditQuestionForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleButton = this.handleButton.bind(this);
     this.state = {
       body: "",
       group_id: 0,
-      choice1: "",
-      choice2: "",
+      choices: this.props.choices,
       question_type: "",
     }
+  }
+
+  handleButton(e) {
+    e.preventDefault();
+    this.setState({
+      ['choiceCount']: this.state.choiceCount + 1,
+      ['choices']:
+        merge({}, this.state.choices, { [this.state.choiceCount]: { body: '', question_id: 0 } })
+    });
+  }
+
+  updateChoices(i) {
+    return e => (this.setState({ ['choices']: merge({}, this.state.choices, { [i]: { body: e.target.value } }) }))
   }
 
   componentDidMount() {
@@ -19,13 +34,19 @@ class EditQuestionForm extends React.Component {
     .then(response => {
       this.setState ({
         body: response.data.question.body,
-        choice1: Object.values(response.data.choices)[0].body,
-        choice2: Object.values(response.data.choices)[1].body,
+        // choices: Object.values(response.data.choices).body,
         group_id: response.data.question.group_id,
         question_type: response.data.question.question_type
       })
      }
     )
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.choices !== nextProps.choices) {
+      //this.props.fetchQuestion(nextProps.active_id);
+      this.setState({ choices: nextProps.choices });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -49,17 +70,23 @@ class EditQuestionForm extends React.Component {
       group_id: this.state.group_id,
     }
     question = Object.assign({}, this.props.question, question);
-    const choice1 = Object.values(this.props.choices)[0];
-    const choice2 = Object.values(this.props.choices)[1];
-    choice1.body = this.state.choice1;
-    choice2.body = this.state.choice2;
-    const choicesArray = [choice1, choice2];
-    const choices = [this.state.choice1, this.state.choice2]
-    this.props.updateQuestion(question, choicesArray).then(() => this.props.history.push(`/groups`))
+    const choicesArray = Object.values(this.state.choices);
+    this.props.updateQuestion(question, choicesArray)
 
   }
 
   render() {
+    let choiceList = [];
+    Object.keys(this.state.choices).forEach(i => {
+      choiceList.push(
+        <div key={i} className="responses">
+          <input key={i} type="text" placeholder={"Choices goes here"}
+            onChange={this.updateChoices(i)}
+            value={this.state.choices[i]['body']} />
+          <button onClick={e => (this.deleteChoice(i))} className="trashcan"><i className="fa fa-trash-o" aria-hidden="true"></i></button>
+        </div>
+      )
+    })
     return (
       <div className="columns">
         <Link to="/groups" className="x-btn">
@@ -76,25 +103,12 @@ class EditQuestionForm extends React.Component {
                   onChange={this.update('body')} />
               </label>
 
-              <label className="choices">
-                <li>
-                  <input
-                    placeholder="Text, Image URL, LaTex"
-                    className="choice1-body"
-                    value={this.state.choice1}
-                    onChange={this.update('choice1')} />
-                </li>
-              </label>
-
-              <label className="choices">
-                <li>
-                  <input
-                    placeholder="Text, Image URL, LaTex"
-                    className="choice2-body"
-                    value={this.state.choice2}
-                    onChange={this.update('choice2')} />
-                </li>
-              </label>
+              <div className="choices">
+                {choiceList}
+                <div className="add-answers-button">
+                  <button onClick={this.handleButton}>+</button>
+                </div>
+              </div>
 
             </div>
 
