@@ -11,7 +11,7 @@ const receiveChoice = (choice) => ({
   choice
 })
 
-const receiveChoices = choices => ({
+const receiveChoices = choices => ({  
   type: RECEIVE_CHOICES,
   choices
 })

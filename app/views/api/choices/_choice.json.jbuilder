@@ -1,1 +1,1 @@
-json.extract! choice, :id, :body, :question_id
+json.extract! choice, :id, :body, :question_id, :answer_count

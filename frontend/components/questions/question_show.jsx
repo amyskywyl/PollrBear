@@ -1,26 +1,60 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BarChart, Bar, XAixs, YAxis, Tooltip, ResponseiveContainer} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 
 class QuestionShow extends React.Component {
 
   constructor(props) {
     super(props);
     this.handleActive = this.handleActive.bind(this);
+    this.handleEvents = this.handleEvents.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchQuestion(this.props.match.params.questionId);
-    // this.props.fetchActive(this.props.currentUser);
+    this.props.fetchActive(this.props.currentUser);
+    const pusher = new Pusher('c63d1e70a3b1cf4564ac', {
+      cluster: 'us2',
+      encrypted: true
+    });
+
+    Pusher.logToConsole = true;
+    const channel = pusher.subscribe('my-channel');
+    channel.bind('pusher:subscription_succeeded', function (members) {
+      console.log('subscribed successful');
+    });
+    channel.bind('pusher:subscription_error', function (status) {
+      console.log('subscribed error: ' + status);
+    });
+    channel.bind('my-event', this.handleEvents);
+  }
+
+  handleEvents(data) {
+    this.props.fetchQuestion(this.props.match.params.questionId);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.questionId !== nextProps.match.params.questionId) {
       this.props.fetchQuestion(nextProps.match.params.questionId);
-      // this.props.fetchActive();
     }
   }
 
+  // componentWillUnmount() {
+  //   this.channel.unbind();
+  // }
+
+  renderToolTip(props) {
+    if (props.payload[0]) {
+      return (
+        <div className="tool-tip">
+          <h1>{props.label}</h1>
+          <h2>Total Responses: {props.payload[0].payload.thisChoiceCount}</h2>
+          <h2>Percentage: {Math.round(props.payload[0].value * 100)}%</h2>
+        </div>
+      );
+    }
+  }
+  
   handleActive(e) {
     // if (this.props.question.active) {
     //   this.props.updateActive({question_id: null});
@@ -52,6 +86,23 @@ class QuestionShow extends React.Component {
       buttonClassName = "active-button";
     }
     let data = [];
+    this.props.choices.forEach((choice, i) => {
+      data.push(
+        {
+          name: choice.body, answers: (choice.answer_count) / this.props.answerCount, thisChoiceCount: choice.answer_count, amt: 100, time: 1
+        }
+      )
+    });
+
+    const ticks = [
+      0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1
+    ];
+
+    const toPercent = (decimal, fixed =0) => {
+      return `${(decimal * 100).toFixed(fixed)}%`;
+    };
+
+
     return(
       <div className="poll">
         {/* <div className="poll-question">
@@ -66,15 +117,35 @@ class QuestionShow extends React.Component {
 
         </div> */}
 
+        <div className="chart-container">
+          <ResponsiveContainer width="95%">
+            <BarChart
+              className="bar-chart"
+              layout="vertical"
+              data={data}
+              maxBarSize={100}
+              textAnchor="middle"
+              stackOffset="expand"
+              overflow="visible"
+              thisresponses="hi"
+              margin={{ top: 5, right: 50, left: 20, bottom: 5 }}>
+              <XAxis
+                domain={[0, 1]}
+                type="number"
+                ticks={ticks}
+                tickCount={5}
+                tickFormatter={toPercent}
+                stroke="#000"
+                fontSize={20 + "px"}
+                fontWeight="bold"
+              />
+              <Tooltip content={this.renderToolTip} />
+              <YAxis type="category" dataKey="name" stroke="#000" fontSize={20 + "px"} fontWeight="bold" overflow="visible" />
 
-        {/* <BarChart width={730} height={250} data={choicesArr} layout="vertical">
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis dataKey="name" type="category" />
-          <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="uv" fill="#82ca9d" />
-        </BarChart> */}
+              <Bar dataKey="answers" label={{ fill: 'white', fontSize: 20, position: 'insideRight' }} isAnimationActive={false} fill="rgb(60, 116, 158)" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     )
   }

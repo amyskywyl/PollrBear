@@ -6,6 +6,7 @@ import { receiveErrors } from './error_actions';
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
+export const RECEIVE_NEW_QUESTION2 = 'RECEIVE_NEW_QUESTION2';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
 
 export const receiveAllQuestions = questions => ({
@@ -21,6 +22,11 @@ const receiveQuestion = data => ({
 const receiveNewQuestion = ({question}) => ({
   type: RECEIVE_NEW_QUESTION,
   question
+});
+
+const receiveNewQuestion2 = (question) => ({
+  type: RECEIVE_NEW_QUESTION2,
+  question,
 });
 
 const removeQuestion = question => ({
@@ -45,16 +51,19 @@ export const fetchQuestion = (questionId) => dispatch => {
 }
 
 
-export const createQuestion = (question, choices) => dispatch => (
-  QuestionAPI.createQuestion(question)
-    .then(question => (ChoiceAPI.createChoice(choices, question.question.id)
-    ), err => (dispatch(receiveErrors(err.responseJSON))))
+export const createQuestion = (question, choices) => dispatch => {
+  debugger
+  return QuestionAPI.createQuestion(question)
     .then(question => {
-      dispatch(receiveNewQuestion(question));
-      window.location.href = `/#/questions/${question.id}`;
-    }
-    ), err => (dispatch(receiveErrors(err.responseJSON))
-    ));
+      ChoiceAPI.createChoice(choices, question.question.id)
+      return dispatch(receiveNewQuestion(question))
+    }, err => (dispatch(receiveErrors(err.responseJSON))))
+  //   .then(question => {
+  //     debugger
+  //     dispatch(receiveNewQuestion2(question));
+  //     }
+  // )
+};
 
 export const updateQuestion = (question, choices) => dispatch => (
   QuestionAPI.updateQuestion(question)
@@ -63,9 +72,10 @@ export const updateQuestion = (question, choices) => dispatch => (
     .then(question => {
       window.location.href = `/#/groups`;
       return dispatch(receiveNewQuestion(question));
-    }
+      } 
     ), err => (dispatch(receiveErrors(err.responseJSON))
-    ));
+  )
+);
 
 const saveChoices = (choices, question) => {
   if (choices.length === 1) {

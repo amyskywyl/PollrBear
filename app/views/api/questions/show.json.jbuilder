@@ -13,7 +13,7 @@ end
 json.choices do
   @question.choices.each do |choice|
     json.set! choice.id do
-      json.extract! choice, :id, :body, :question_id
+      json.extract! choice, :id, :body, :question_id, :answer_count
     end
   end
 end

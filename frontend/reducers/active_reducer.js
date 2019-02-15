@@ -1,7 +1,8 @@
 import { RECEIVE_ACTIVE, CLEAR_ACTIVE } from '../actions/active';
 import { merge } from 'lodash';
 
-const null_active = { body: "", id: -1, question_id: null };
+// const null_active = { body: "", id: -1, question_id: null };
+const null_active = { body: "", id: -1, question_id: -1 };
 
 const activeReducer = (state = null_active, action) => {
   Object.freeze(state);

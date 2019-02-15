@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import QuestionForm from './question_form';
 import { createQuestion } from '../../actions/questions';
 import { fetchGroups } from '../../actions/groups'

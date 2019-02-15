@@ -22,6 +22,6 @@ export const updateActive = questionId => dispatch => (
 
 export const fetchActive = user => dispatch => {
   return ActiveAPI.fetchActive(user).then(active => {
-    dispatch(receiveActive(active))
+    return dispatch(receiveActive(active))
   }), err => (dispatch(receiveErrors(err.responseJSON)))
 }

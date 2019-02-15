@@ -34,7 +34,6 @@ class EditQuestionForm extends React.Component {
     .then(response => {
       this.setState ({
         body: response.data.question.body,
-        // choices: Object.values(response.data.choices).body,
         group_id: response.data.question.group_id,
         question_type: response.data.question.question_type
       })
@@ -44,7 +43,6 @@ class EditQuestionForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.choices !== nextProps.choices) {
-      //this.props.fetchQuestion(nextProps.active_id);
       this.setState({ choices: nextProps.choices });
     }
   }
@@ -53,7 +51,6 @@ class EditQuestionForm extends React.Component {
     if (prevProps.match.params.questionId !== this.props.match.params.questionId) {
       this.props.fetchQuestion(this.props.match.params.questionId);
     }
-    // this.props.history.push(`/groups`)
   }
 
   update(field) {

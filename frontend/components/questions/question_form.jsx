@@ -55,15 +55,11 @@ class QuestionForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // let question = {
-    //   question_type: this.state.question_type,
-    //   body: this.state.body,
-    //   group_id: this.state.group_id,
-    // }
     const question = Object.assign({}, this.state);
-    this.props.createQuestion(question, question.choices);
-    // .then(response => {
-    //   this.props.history.push(`/groups`)}); ;
+    this.props.createQuestion(question, question.choices).then( (response) => {
+    debugger
+    this.props.history.push(`/questions/${response.question.id}`);
+    })
   }
   
   render () {

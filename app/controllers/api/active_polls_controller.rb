@@ -35,6 +35,9 @@ class Api::ActivePollsController < ApplicationController
         render json: @active_poll.errors.full_messages, status: 422
       end
     end
+    Pusher.trigger('answer_channel', 'new-active', {
+      message: 'active_polls active'
+    })
     render 'api/active_polls/index'
   end
 
@@ -44,7 +47,7 @@ class Api::ActivePollsController < ApplicationController
     if @active_poll
       render 'api/active_polls/index'
     else
-      render json: ["User has no active question"], status: 422
+      render json: ["User has no active question"]
     end
   end
 

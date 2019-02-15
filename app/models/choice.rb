@@ -2,9 +2,9 @@ class Choice < ApplicationRecord
   validates :body, presence: true
 
   belongs_to :question
-  has_many :choices
+  has_many :answers
 
-  def choice_count
-    choices.count
+  def answer_count
+    answers.count
   end
 end
