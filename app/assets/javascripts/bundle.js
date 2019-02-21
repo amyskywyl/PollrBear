@@ -1566,7 +1566,19 @@ function (_React$Component) {
       var _this2 = this;
 
       if (this.props.active_id === -1) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "\"As soon as ", this.props.match.params.username, " display a poll we'll update this area to give you the voting options. Easy as pie. Just hang tight, you're ready to go.\" ");
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
+          className: "active-poll"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "hold-screen"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+          className: "header"
+        }, "Welcome to ", this.props.match.params.username, "'s presentation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "callout"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "instruction"
+        }, "As soon as ", this.props.match.params.username, " display a poll, we'll update this area to give you the voting options."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          class: "instruction"
+        }, "Easy as pie. Just hang tight, you're ready to go."))));
       }
 
       if (!this.state.load) {
@@ -1597,12 +1609,24 @@ function (_React$Component) {
         clearAnswer = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "delete-answer",
           onClick: this.handleClear
-        }, "Clear Response");
+        }, "Clear last response");
       }
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "participant-main-content"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.question[this.props.active_id].body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, answerRecorded), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, choices), clearAnswer)));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "active-poll"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
+        className: "component-response-multiple-choice"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-response-multiple-choice"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-response-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-response-header__title"
+      }, this.props.question[this.props.active_id].body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-response-header__status"
+      }, answerRecorded)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "component-response-multiple-choice__body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, choices)), clearAnswer)));
     }
   }]);
 
@@ -1787,7 +1811,6 @@ function (_React$Component) {
     value: function handleButton(e) {
       var _this$setState;
 
-      debugger;
       e.preventDefault();
       this.setState((_this$setState = {}, _defineProperty(_this$setState, 'choiceCount', this.state.choiceCount + 1), _defineProperty(_this$setState, 'choices', lodash_merge__WEBPACK_IMPORTED_MODULE_2___default()({}, this.state.choices, _defineProperty({}, this.state.choiceCount, {
         body: '',
@@ -1822,7 +1845,6 @@ function (_React$Component) {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.choices !== nextProps.choices) {
-        debugger;
         this.setState({
           choiceCount: parseInt(Object.keys(nextProps.choices)[Object.keys(nextProps.choices).length - 1]) + 1
         });
@@ -1858,7 +1880,6 @@ function (_React$Component) {
       };
       question = Object.assign({}, this.props.question, question);
       var choicesArray = Object.values(this.state.choices);
-      debugger;
       this.props.updateQuestion(question, choicesArray);
     }
   }, {
@@ -2321,8 +2342,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2415,8 +2434,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this,
-          _React$createElement;
+      var _this2 = this;
 
       var _this$props = this.props,
           question = _this$props.question,
@@ -2439,10 +2457,10 @@ function (_React$Component) {
         return "No active question right now.";
       }
 
-      var buttonClassName = "";
+      var buttonClassName = "control";
 
       if (this.props.id === this.props.activeId) {
-        buttonClassName = "active-button";
+        buttonClassName += " active-button";
       }
 
       var data = [];
@@ -2472,14 +2490,14 @@ function (_React$Component) {
         return "".concat((decimal * 100).toFixed(fixed), "%");
       };
 
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "controls"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement = {
-        className: buttonClassName
-      }, _defineProperty(_React$createElement, "className", "control"), _defineProperty(_React$createElement, "onClick", this.handleActive), _React$createElement), "Activate")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: buttonClassName,
+        onClick: this.handleActive
+      }, "Activate")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart header--title"
@@ -2497,7 +2515,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "web--text"
       }, "Respond at ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        class: "url emphasis",
+        className: "url emphasis",
         target: "_blank",
         rel: "noopener",
         href: "/" + this.props.currentUser.username

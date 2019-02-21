@@ -67,9 +67,17 @@ class ParticipantForm extends React.Component {
   render() {
     if (this.props.active_id === -1) {
       return (
-      <h1>"As soon as {this.props.match.params.username} display a poll
-      we'll update this area to give you the voting options.
-      Easy as pie. Just hang tight, you're ready to go." </h1>
+        <body className="active-poll">
+          <div className="hold-screen">
+            <h1 className="header">Welcome to {this.props.match.params.username}'s presentation</h1>
+            <div className="callout">
+              <div className="instruction">
+                  As soon as {this.props.match.params.username} display a poll, we'll update this area to give you the voting options.
+              </div>
+              <div class="instruction">Easy as pie. Just hang tight, you're ready to go.</div>
+            </div>
+          </div>
+        </body>
       )
     }
      if(!this.state.load) {
@@ -95,17 +103,21 @@ class ParticipantForm extends React.Component {
 
     let clearAnswer;
     if (this.state.answered) {
-      clearAnswer = <button className="delete-answer" onClick={this.handleClear}>Clear Response</button>;
+      clearAnswer = <button className="delete-answer" onClick={this.handleClear}>Clear last response</button>;
     }
     return (
-      <div>
-        <section className="participant-main-content">
-        <div>
-          <h1>{this.props.question[this.props.active_id].body}</h1>
-          <h2>{answerRecorded}</h2>
-          <ul>{choices}</ul>
-          {clearAnswer}
-        </div>
+      <div className="active-poll">
+        <section className="component-response-multiple-choice">
+          <div className="component-response-multiple-choice">
+            <div className="component-response-header">
+              <div className="component-response-header__title">{this.props.question[this.props.active_id].body}</div>
+              <div className="component-response-header__status">{answerRecorded}</div>
+            </div>
+            <div className="component-response-multiple-choice__body">
+              <ul>{choices}</ul>
+            </div>
+            {clearAnswer}
+          </div>
         </section>
       </div>
     )

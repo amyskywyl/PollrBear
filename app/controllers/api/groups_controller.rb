@@ -35,10 +35,8 @@ class Api::GroupsController < ApplicationController
           question.destroy
         end
         @groups = current_user.groups
-        debugger
         render :index
       else
-        debugger
         render plain: "You didn't select anything"
       end
     elsif @group.destroy

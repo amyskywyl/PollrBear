@@ -81,9 +81,9 @@ class QuestionShow extends React.Component {
       return "No active question right now."
     }
 
-    let buttonClassName = "";
+    let buttonClassName = "control";
     if (this.props.id === this.props.activeId) {
-      buttonClassName = "active-button";
+      buttonClassName += " active-button";
     }
     let data = [];
     this.props.choices.forEach((choice, i) => {
@@ -111,12 +111,11 @@ class QuestionShow extends React.Component {
       return `${(decimal * 100).toFixed(fixed)}%`;
     };
 
-    debugger
 
     return(
       <div className="chart">
         <div className="controls">
-          <button className={buttonClassName} className="control" onClick={this.handleActive} >Activate</button>
+          <button className={buttonClassName} onClick={this.handleActive} >Activate</button>
         </div>
 
         <div className="chart-header">
@@ -127,7 +126,7 @@ class QuestionShow extends React.Component {
               </span>
               <div className="modality web">
                 <span className="icon web--icon" m-icon-medium="" data-glyph="desktop" m-icon-wide=""></span>
-                <span className="web--text">Respond at <a class="url emphasis" target="_blank" rel="noopener" href={"/" + this.props.currentUser.username}>{"/" + this.props.currentUser.username}</a></span>
+                <span className="web--text">Respond at <a className="url emphasis" target="_blank" rel="noopener" href={"/" + this.props.currentUser.username}>{"/" + this.props.currentUser.username}</a></span>
               </div> 
             </div>
           </div>
