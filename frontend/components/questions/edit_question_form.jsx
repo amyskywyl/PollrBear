@@ -4,6 +4,7 @@ import merge from 'lodash/merge';
 
 
 class EditQuestionForm extends React.Component {
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,11 +13,13 @@ class EditQuestionForm extends React.Component {
       body: "",
       group_id: 0,
       choices: this.props.choices,
+      choiceCount: 0,
       question_type: "",
     }
   }
 
   handleButton(e) {
+    debugger
     e.preventDefault();
     this.setState({
       ['choiceCount']: this.state.choiceCount + 1,
@@ -43,6 +46,9 @@ class EditQuestionForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.choices !== nextProps.choices) {
+      debugger
+      this.setState({
+        choiceCount: parseInt(Object.keys(nextProps.choices)[Object.keys(nextProps.choices).length - 1]) + 1});
       this.setState({ choices: nextProps.choices });
     }
   }
@@ -68,6 +74,7 @@ class EditQuestionForm extends React.Component {
     }
     question = Object.assign({}, this.props.question, question);
     const choicesArray = Object.values(this.state.choices);
+    debugger
     this.props.updateQuestion(question, choicesArray)
 
   }

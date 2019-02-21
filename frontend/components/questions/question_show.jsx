@@ -87,11 +87,20 @@ class QuestionShow extends React.Component {
     }
     let data = [];
     this.props.choices.forEach((choice, i) => {
-      data.push(
-        {
-          name: choice.body, answers: (choice.answer_count) / this.props.answerCount, thisChoiceCount: choice.answer_count, amt: 100, time: 1
-        }
-      )
+      if (choice.answer_count === 0){
+        data.push(
+          {
+            name: choice.body, answers: 0, thisChoiceCount: choice.answer_count, amt: 100, time: 1
+          }
+        )
+      } else {
+        data.push(
+          {
+            name: choice.body, answers: (choice.answer_count) / this.props.answerCount, thisChoiceCount: choice.answer_count, amt: 100, time: 1
+          }
+        )
+
+      }
     });
 
     const ticks = [
@@ -102,21 +111,28 @@ class QuestionShow extends React.Component {
       return `${(decimal * 100).toFixed(fixed)}%`;
     };
 
+    debugger
 
     return(
-      <div className="poll">
-        {/* <div className="poll-question">
-          <h3>{question.body}</h3>
+      <div className="chart">
+        <div className="controls">
+          <button className={buttonClassName} className="control" onClick={this.handleActive} >Activate</button>
         </div>
-        {/* <Link to="/groups">Back to Index</Link> */}
-        <div className="poll-choices">
-          {choicesArr}
+
+        <div className="chart-header">
+          <div className="chart header--title">
+            <div className="chart--title center">
+              <span className="title">
+                <h3>{question.body}</h3>
+              </span>
+              <div className="modality web">
+                <span className="icon web--icon" m-icon-medium="" data-glyph="desktop" m-icon-wide=""></span>
+                <span className="web--text">Respond at <a class="url emphasis" target="_blank" rel="noopener" href={"/" + this.props.currentUser.username}>{"/" + this.props.currentUser.username}</a></span>
+              </div> 
+            </div>
+          </div>
         </div>
-        <div className="chart-buttons">
-          <button className={buttonClassName} onClick={this.handleActive} >Activate</button>
-
-        </div> */}
-
+        
         <div className="chart-container">
           <ResponsiveContainer width="95%">
             <BarChart
@@ -145,6 +161,13 @@ class QuestionShow extends React.Component {
               <Bar dataKey="answers" label={{ fill: 'white', fontSize: 20, position: 'insideRight' }} isAnimationActive={false} fill="rgb(60, 116, 158)" />
             </BarChart>
           </ResponsiveContainer>
+        </div>
+
+        <div className="branding-footer">
+          <p className="logo">
+            <img className="logo-img" src={window.logoURL} />
+            Poll'r Bear
+          </p>
         </div>
       </div>
     )

@@ -52,17 +52,11 @@ export const fetchQuestion = (questionId) => dispatch => {
 
 
 export const createQuestion = (question, choices) => dispatch => {
-  debugger
   return QuestionAPI.createQuestion(question)
     .then(question => {
       ChoiceAPI.createChoice(choices, question.question.id)
       return dispatch(receiveNewQuestion(question))
     }, err => (dispatch(receiveErrors(err.responseJSON))))
-  //   .then(question => {
-  //     debugger
-  //     dispatch(receiveNewQuestion2(question));
-  //     }
-  // )
 };
 
 export const updateQuestion = (question, choices) => dispatch => (
@@ -85,7 +79,7 @@ const saveChoices = (choices, question) => {
     return ChoiceAPI.updateChoice(choices[0], question.question.id)
   }
   if (choices[0].question_id === 0) {
-    return ChoiceAPI.createChoice(choices, question.question.id).then(() => saveChoices(choices.slice(1), question))
+    return ChoiceAPI.createChoice(choices, question.question.id)
   } else {
     return ChoiceAPI.updateChoice(choices[0], question.question.id).then(() => saveChoices(choices.slice(1), question))
   }

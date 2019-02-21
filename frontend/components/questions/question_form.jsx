@@ -11,7 +11,7 @@ class QuestionForm extends React.Component {
     this.updateType = this.updateType.bind(this);
     this.state = {
       body: "",
-      group_id: 0,
+      group_id: this.props.groups[0].id,
       choices: { 0: { body: '' }, 1: { body: '' } },
       choiceCount: 2,
       question_type: "",
@@ -57,7 +57,6 @@ class QuestionForm extends React.Component {
     e.preventDefault();
     const question = Object.assign({}, this.state);
     this.props.createQuestion(question, question.choices).then( (response) => {
-    debugger
     this.props.history.push(`/questions/${response.question.id}`);
     })
   }

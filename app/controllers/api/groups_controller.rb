@@ -29,7 +29,19 @@ class Api::GroupsController < ApplicationController
 
   def destroy
     @group = Group.find(params[:id])
-    if @group.destroy
+    if @group.id == current_user.groups.first.id
+      if @group.questions
+        @group.questions.each do |question|
+          question.destroy
+        end
+        @groups = current_user.groups
+        debugger
+        render :index
+      else
+        debugger
+        render plain: "You didn't select anything"
+      end
+    elsif @group.destroy
       @groups = current_user.groups
       render :index
     else

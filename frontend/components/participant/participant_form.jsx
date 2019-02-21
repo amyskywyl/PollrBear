@@ -3,7 +3,6 @@ import React from 'react';
 class ParticipantForm extends React.Component {
   constructor(props) {
     super(props);
-    debugger
     this.state = {
       answered: false,
       load: Object.keys(this.props.choices).length > 0,
@@ -45,7 +44,6 @@ class ParticipantForm extends React.Component {
 
   handleEvents() {
     this.setState({ load: false });
-    debugger
     this.props.fetchActive(this.props.match.params.username)
   }
 
@@ -68,7 +66,6 @@ class ParticipantForm extends React.Component {
 
   render() {
     if (this.props.active_id === -1) {
-      debugger
       return (
       <h1>"As soon as {this.props.match.params.username} display a poll
       we'll update this area to give you the voting options.
@@ -100,7 +97,6 @@ class ParticipantForm extends React.Component {
     if (this.state.answered) {
       clearAnswer = <button className="delete-answer" onClick={this.handleClear}>Clear Response</button>;
     }
-    debugger
     return (
       <div>
         <section className="participant-main-content">

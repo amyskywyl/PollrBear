@@ -1,8 +1,9 @@
 class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
+    @user.groups.push(Group.new({title: "Ungrouped"}))
     if @user.save
-      ActivePoll.create!(user_id: @user.id, question_id: null)
+      ActivePoll.create!(user_id: @user.id, question_id: -1)
       login(@user)
       render "api/users/show"
     else

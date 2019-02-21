@@ -16,9 +16,8 @@ demo = User.create(firstname: "Pollr",
                    username: "pollrbear",
                    email: "demo@pollrbear.com",
                    password: "bearbear")
-
-demogroup1 = Group.create(title: "Bears favorite", user_id: demo.id)
-demogroup2 = Group.create(user_id: demo.id)
+demogroup1 = Group.create(title: "Ungrouped", user_id: demo.id)
+demogroup2 = Group.create(title: "Bears favorite", user_id: demo.id)
 demogroup3 = Group.create(title: "Group for bears", user_id: demo.id)
 
 question1 = Question.create(body: "what", question_type: "q", group_id: demogroup1.id)

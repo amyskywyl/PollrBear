@@ -470,17 +470,12 @@ var fetchQuestion = function fetchQuestion(questionId) {
 };
 var createQuestion = function createQuestion(question, choices) {
   return function (dispatch) {
-    debugger;
     return _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__["createQuestion"](question).then(function (question) {
       _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["createChoice"](choices, question.question.id);
       return dispatch(receiveNewQuestion(question));
     }, function (err) {
       return dispatch(Object(_error_actions__WEBPACK_IMPORTED_MODULE_2__["receiveErrors"])(err.responseJSON));
-    }); //   .then(question => {
-    //     debugger
-    //     dispatch(receiveNewQuestion2(question));
-    //     }
-    // )
+    });
   };
 };
 var updateQuestion = function updateQuestion(question, choices) {
@@ -508,9 +503,7 @@ var saveChoices = function saveChoices(choices, question) {
   }
 
   if (choices[0].question_id === 0) {
-    return _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["createChoice"](choices, question.question.id).then(function () {
-      return saveChoices(choices.slice(1), question);
-    });
+    return _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["createChoice"](choices, question.question.id);
   } else {
     return _util_choice_api_util__WEBPACK_IMPORTED_MODULE_1__["updateChoice"](choices[0], question.question.id).then(function () {
       return saveChoices(choices.slice(1), question);
@@ -1496,7 +1489,6 @@ function (_React$Component) {
     _classCallCheck(this, ParticipantForm);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ParticipantForm).call(this, props));
-    debugger;
     _this.state = {
       answered: false,
       load: Object.keys(_this.props.choices).length > 0,
@@ -1543,7 +1535,6 @@ function (_React$Component) {
       this.setState({
         load: false
       });
-      debugger;
       this.props.fetchActive(this.props.match.params.username);
     }
   }, {
@@ -1575,7 +1566,6 @@ function (_React$Component) {
       var _this2 = this;
 
       if (this.props.active_id === -1) {
-        debugger;
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "\"As soon as ", this.props.match.params.username, " display a poll we'll update this area to give you the voting options. Easy as pie. Just hang tight, you're ready to go.\" ");
       }
 
@@ -1610,7 +1600,6 @@ function (_React$Component) {
         }, "Clear Response");
       }
 
-      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
         className: "participant-main-content"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.question[this.props.active_id].body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, answerRecorded), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, choices), clearAnswer)));
@@ -1787,6 +1776,7 @@ function (_React$Component) {
       body: "",
       group_id: 0,
       choices: _this.props.choices,
+      choiceCount: 0,
       question_type: ""
     };
     return _this;
@@ -1797,6 +1787,7 @@ function (_React$Component) {
     value: function handleButton(e) {
       var _this$setState;
 
+      debugger;
       e.preventDefault();
       this.setState((_this$setState = {}, _defineProperty(_this$setState, 'choiceCount', this.state.choiceCount + 1), _defineProperty(_this$setState, 'choices', lodash_merge__WEBPACK_IMPORTED_MODULE_2___default()({}, this.state.choices, _defineProperty({}, this.state.choiceCount, {
         body: '',
@@ -1831,6 +1822,10 @@ function (_React$Component) {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       if (this.props.choices !== nextProps.choices) {
+        debugger;
+        this.setState({
+          choiceCount: parseInt(Object.keys(nextProps.choices)[Object.keys(nextProps.choices).length - 1]) + 1
+        });
         this.setState({
           choices: nextProps.choices
         });
@@ -1863,6 +1858,7 @@ function (_React$Component) {
       };
       question = Object.assign({}, this.props.question, question);
       var choicesArray = Object.values(this.state.choices);
+      debugger;
       this.props.updateQuestion(question, choicesArray);
     }
   }, {
@@ -2036,7 +2032,7 @@ function (_React$Component) {
     _this.updateType = _this.updateType.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
       body: "",
-      group_id: 0,
+      group_id: _this.props.groups[0].id,
       choices: {
         0: {
           body: ''
@@ -2113,8 +2109,6 @@ function (_React$Component) {
       e.preventDefault();
       var question = Object.assign({}, this.state);
       this.props.createQuestion(question, question.choices).then(function (response) {
-        debugger;
-
         _this5.props.history.push("/questions/".concat(response.question.id));
       });
     }
@@ -2327,6 +2321,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -2419,7 +2415,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this2 = this,
+          _React$createElement;
 
       var _this$props = this.props,
           question = _this$props.question,
@@ -2450,13 +2447,23 @@ function (_React$Component) {
 
       var data = [];
       this.props.choices.forEach(function (choice, i) {
-        data.push({
-          name: choice.body,
-          answers: choice.answer_count / _this2.props.answerCount,
-          thisChoiceCount: choice.answer_count,
-          amt: 100,
-          time: 1
-        });
+        if (choice.answer_count === 0) {
+          data.push({
+            name: choice.body,
+            answers: 0,
+            thisChoiceCount: choice.answer_count,
+            amt: 100,
+            time: 1
+          });
+        } else {
+          data.push({
+            name: choice.body,
+            answers: choice.answer_count / _this2.props.answerCount,
+            thisChoiceCount: choice.answer_count,
+            amt: 100,
+            time: 1
+          });
+        }
       });
       var ticks = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
@@ -2465,16 +2472,36 @@ function (_React$Component) {
         return "".concat((decimal * 100).toFixed(fixed), "%");
       };
 
+      debugger;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "poll"
+        className: "chart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "poll-choices"
-      }, choicesArr), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "chart-buttons"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: buttonClassName,
-        onClick: this.handleActive
-      }, "Activate")), " */}", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "controls"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", (_React$createElement = {
+        className: buttonClassName
+      }, _defineProperty(_React$createElement, "className", "control"), _defineProperty(_React$createElement, "onClick", this.handleActive), _React$createElement), "Activate")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart header--title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "chart--title center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "title"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, question.body)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modality web"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "icon web--icon",
+        "m-icon-medium": "",
+        "data-glyph": "desktop",
+        "m-icon-wide": ""
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "web--text"
+      }, "Respond at ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        class: "url emphasis",
+        target: "_blank",
+        rel: "noopener",
+        href: "/" + this.props.currentUser.username
+      }, "/" + this.props.currentUser.username)))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "chart-container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["ResponsiveContainer"], {
         width: "95%"
@@ -2520,7 +2547,14 @@ function (_React$Component) {
         },
         isAnimationActive: false,
         fill: "rgb(60, 116, 158)"
-      })))));
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "branding-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "logo"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        className: "logo-img",
+        src: window.logoURL
+      }), "Poll'r Bear")));
     }
   }]);
 
@@ -3311,7 +3345,6 @@ var QuestionsReducer = function QuestionsReducer() {
 
     case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_QUESTION"]:
     case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEW_QUESTION2"]:
-      debugger;
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.question);
 
     case _actions_questions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_QUESTION"]:
@@ -3743,7 +3776,6 @@ var fetchQuestion = function fetchQuestion(questionId) {
   });
 };
 var createQuestion = function createQuestion(question) {
-  debugger;
   return $.ajax({
     method: "POST",
     url: "/api/questions",
