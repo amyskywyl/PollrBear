@@ -15,7 +15,11 @@ const GroupsReducer = (oldState = {}, action) => {
       return merge({}, action.group);
     case REMOVE_GROUP:
       let newState = merge({}, oldState);
-      delete newState[action.groupId];
+      if (oldState[action.groupId].title === "Ungrouped") {
+        newState[action.groupId].questions = [];
+      } else {
+        delete newState[action.groupId];
+      }
       return newState;
     case RECEIVE_QUESTION:
       return merge({}, oldState, action.data.groups);

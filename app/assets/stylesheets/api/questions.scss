@@ -67,23 +67,6 @@
     border: 0;
   }
 
-
-  .poll-body {
-    color: gray;
-    background-color: #bcbfc3;
-    height: 940px;
-    display: flex;
-    flex-direction: column;
-    padding: 14px;
-
-    .question-body:active {
-      font-size: 10px;
-    }
-    .question-body:active {
-      font-size: 10px;
-    }
-  }
-
   .x-btn {
     margin: 20px 10px;
     display: flex;
@@ -100,22 +83,83 @@
   }
 
   select { 
-      display: block;
-      padding: 10px 70px 10px 13px !important; 
-      max-width: 100%; 
-      height: auto !important; 
-      border: 1px solid #e3e3e3; 
-      border-radius: 3px; 
-      background-color: #fff; 
-      color: #444444; 
-      font-size: 12px; 
-      line-height: 16px !important; 
-      appearance: none; 
-      /* this is must */ -webkit-appearance: none; 
-      -moz-appearance: none; 
+    display: block;
+    padding: 10px 70px 10px 13px !important; 
+    max-width: 100%; 
+    height: auto !important; 
+    border: 1px solid #e3e3e3; 
+    border-radius: 3px; 
+    background-color: #fff; 
+    color: #444444; 
+    font-size: 12px; 
+    line-height: 16px !important; 
+    appearance: none; 
+    /* this is must */ -webkit-appearance: none; 
+    -moz-appearance: none; 
   } 
   /* body select.select_box option */ 
   body select option { 
-      padding: 0 4px; 
+    padding: 0 4px; 
   } 
 }
+
+body.genesis .genesis-modal {
+  top: 110px;
+  background-color: rgb(211, 211, 211);
+}
+
+body.genesis .genesis-modal .modal-dialog--shell {
+  max-width: 1000px;
+  top: 12.8px;
+}
+
+.genesis-modal .modal-dialog--shell {
+  max-width: 700px;
+  max-height: none;
+  margin-bottom: 38.4px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  transform: translateX(-50%);
+}
+
+.modal-dialog--shell {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  width: 100%;
+  max-width: calc(800px + 2 * 10px);
+  max-height: 100%;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+.genesis-modal .modal-dialog--content {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.modal-dialog--content {
+  position: relative;
+  background-color: #fff;
+  font-size: 14px;
+  color: #303233;
+  box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+}
+
+.modal-dialog--body {
+  position: relative;
+  padding: 10px calc(1.5 * 10px) 0;
+  overflow: hidden;
+}
+
+.component-activity-creator {
+  background-color: #8c9094;
+  padding: 14px;
+}
+

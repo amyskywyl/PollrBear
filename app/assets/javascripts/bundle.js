@@ -308,7 +308,7 @@ var clearErrors = function clearErrors() {
 /*!************************************!*\
   !*** ./frontend/actions/groups.js ***!
   \************************************/
-/*! exports provided: RECEIVE_ALL_GROUPS, RECEIVE_GROUP, REMOVE_GROUP, receiveAllGroups, fetchGroups, fetchGroup, createGroup, updateGroup, deleteGroup */
+/*! exports provided: RECEIVE_ALL_GROUPS, RECEIVE_GROUP, REMOVE_GROUP, receiveAllGroups, fetchGroups, fetchGroup, createGroup, updateGroup, deleteGroup, createRegroup */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -322,7 +322,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGroup", function() { return createGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateGroup", function() { return updateGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteGroup", function() { return deleteGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createRegroup", function() { return createRegroup; });
 /* harmony import */ var _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/group_api_util */ "./frontend/util/group_api_util.js");
+/* harmony import */ var _actions_questions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/questions */ "./frontend/actions/questions.js");
+/* harmony import */ var _error_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./error_actions */ "./frontend/actions/error_actions.js");
+
+
 
 var RECEIVE_ALL_GROUPS = 'RECEIVE_ALL_GROUPS';
 var RECEIVE_GROUP = 'RECEIVE_GROUP';
@@ -376,10 +381,26 @@ var updateGroup = function updateGroup(group) {
     });
   };
 };
-var deleteGroup = function deleteGroup(groupId) {
+var deleteGroup = function deleteGroup(group) {
   return function (dispatch) {
-    return _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteGroup"](groupId).then(function (group) {
-      return dispatch(removeGroup(groupId));
+    return _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__["deleteGroup"](group.id).then(function () {
+      Object.values(group.questions).forEach(function (question) {
+        dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_1__["removeQuestion"])(question));
+      });
+      dispatch(removeGroup(group.id));
+    });
+  };
+};
+var createRegroup = function createRegroup(group, questions) {
+  return function (dispatch) {
+    return _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__["createGroup"](group).then(function (gorup) {
+      dispatch(receiveGroup(group));
+      questions.forEach(function (question) {
+        question['group_id'] = group.id;
+        dispatch(Object(_actions_questions__WEBPACK_IMPORTED_MODULE_1__["updateQuestion"])(question));
+      });
+    }, function (err) {
+      return dispatch(Object(_error_actions__WEBPACK_IMPORTED_MODULE_2__["receiveErrors"])(err.responseJSON)).then(dispatch(fetchGroups()));
     });
   };
 };
@@ -390,7 +411,7 @@ var deleteGroup = function deleteGroup(groupId) {
 /*!***************************************!*\
   !*** ./frontend/actions/questions.js ***!
   \***************************************/
-/*! exports provided: RECEIVE_ALL_QUESTIONS, RECEIVE_QUESTION, RECEIVE_NEW_QUESTION, RECEIVE_NEW_QUESTION2, REMOVE_QUESTION, receiveAllQuestions, fetchQuestions, fetchQuestion, createQuestion, updateQuestion, activeQuestion, deleteQuestion */
+/*! exports provided: RECEIVE_ALL_QUESTIONS, RECEIVE_QUESTION, RECEIVE_NEW_QUESTION, RECEIVE_NEW_QUESTION2, REMOVE_QUESTION, receiveAllQuestions, removeQuestion, fetchQuestions, fetchQuestion, createQuestion, updateQuestion, activeQuestion, deleteQuestion */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -401,6 +422,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEW_QUESTION2", function() { return RECEIVE_NEW_QUESTION2; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_QUESTION", function() { return REMOVE_QUESTION; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllQuestions", function() { return receiveAllQuestions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeQuestion", function() { return removeQuestion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchQuestions", function() { return fetchQuestions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchQuestion", function() { return fetchQuestion; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createQuestion", function() { return createQuestion; });
@@ -453,7 +475,6 @@ var removeQuestion = function removeQuestion(question) {
     question: question
   };
 };
-
 var fetchQuestions = function fetchQuestions() {
   return function (dispatch) {
     return _util_question_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchQuestions"]().then(function (questions) {
@@ -1057,8 +1078,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchGroups: function fetchGroups() {
       return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["fetchGroups"])());
     },
-    deleteGroup: function deleteGroup(id) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["deleteGroup"])(id));
+    deleteGroup: function deleteGroup(group) {
+      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["deleteGroup"])(group));
     }
   };
 };
@@ -1116,7 +1137,7 @@ var GroupIndexItem = function GroupIndexItem(_ref) {
     to: "/group/".concat(group.id)
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
-      return deleteGroup(group.id);
+      return deleteGroup(group);
     }
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-trash"
@@ -3315,7 +3336,13 @@ var GroupsReducer = function GroupsReducer() {
 
     case _actions_groups__WEBPACK_IMPORTED_MODULE_0__["REMOVE_GROUP"]:
       var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_2___default()({}, oldState);
-      delete newState[action.groupId];
+
+      if (oldState[action.groupId].title === "Ungrouped") {
+        newState[action.groupId].questions = [];
+      } else {
+        delete newState[action.groupId];
+      }
+
       return newState;
 
     case _actions_questions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_QUESTION"]:

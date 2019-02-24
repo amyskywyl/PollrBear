@@ -24,7 +24,7 @@ const GroupIndexItem = ({ group, deleteGroup }) => {
         <Link className="question-index" to={`/group/${group.id}`}>
           <span>{group.title}</span>
         </Link>
-        <button onClick={() => deleteGroup(group.id)}><i className="fas fa-trash"></i></button>
+        <button onClick={() => deleteGroup(group)}><i className="fas fa-trash"></i></button>
       </ul>
       <ul className={showQuestion}>{questions}</ul>
     </div>

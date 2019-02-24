@@ -1,4 +1,6 @@
 import * as GroupAPI from "../util/group_api_util";
+import { removeQuestion, updateQuestion } from "../actions/questions";
+import { receiveErrors } from "./error_actions";
 
 export const RECEIVE_ALL_GROUPS = 'RECEIVE_ALL_GROUPS';
 export const RECEIVE_GROUP = 'RECEIVE_GROUP';
@@ -38,7 +40,26 @@ export const updateGroup = group => dispatch => (
     .then(group => dispatch(receiveGroup(group)))
 );
 
-export const deleteGroup = groupId => dispatch => (
-  GroupAPI.deleteGroup(groupId).then(group => dispatch(removeGroup(groupId)))
+export const deleteGroup = group => dispatch => (
+  GroupAPI.deleteGroup(group.id).then(() => {
+    Object.values(group.questions).forEach(question => {
+      dispatch(removeQuestion(question))
+    });
+    dispatch(removeGroup(group.id))
+  })
+);
+
+export const createRegroup = (group, questions) => dispatch => (
+  GroupAPI.createGroup(group).then(gorup => {
+    dispatch(receiveGroup(group))
+
+    questions.forEach((question) => {
+      question['group_id'] = group.id
+      dispatch(updateQuestion(question))
+    })
+  }, err => (dispatch(receiveErrors(err.responseJSON))
+  ).then(
+    dispatch(fetchGroups())
+  ))
 );
 

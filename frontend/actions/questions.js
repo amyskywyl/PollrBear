@@ -29,7 +29,7 @@ const receiveNewQuestion2 = (question) => ({
   question,
 });
 
-const removeQuestion = question => ({
+export const removeQuestion = question => ({
   type: REMOVE_QUESTION,
   question
 });
@@ -92,4 +92,5 @@ export const activeQuestion = (question) => dispatch => (
 export const deleteQuestion = (questionId) => dispatch => (
   QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
+
 

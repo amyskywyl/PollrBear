@@ -9,7 +9,7 @@ const mapStateToProps = ({ entities }) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchGroups: () => dispatch(fetchGroups()),
-  deleteGroup: id => dispatch(deleteGroup(id))
+  deleteGroup: (group) => dispatch(deleteGroup(group))
 });
 
 export default connect(
