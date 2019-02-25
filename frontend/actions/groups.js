@@ -21,6 +21,11 @@ const removeGroup = groupId => ({
   groupId
 });
 
+export const receiveUngroupedId = (id) => ({
+  type: RECEIVE_UNGROUPED_ID,
+  id
+})
+
 export const fetchGroups = () => dispatch => {
   return (
   GroupAPI.fetchGroups().then(groups => {

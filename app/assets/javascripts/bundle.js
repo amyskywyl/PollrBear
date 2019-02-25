@@ -308,7 +308,7 @@ var clearErrors = function clearErrors() {
 /*!************************************!*\
   !*** ./frontend/actions/groups.js ***!
   \************************************/
-/*! exports provided: RECEIVE_ALL_GROUPS, RECEIVE_GROUP, REMOVE_GROUP, receiveAllGroups, fetchGroups, fetchGroup, createGroup, updateGroup, deleteGroup, createRegroup */
+/*! exports provided: RECEIVE_ALL_GROUPS, RECEIVE_GROUP, REMOVE_GROUP, receiveAllGroups, receiveUngroupedId, fetchGroups, fetchGroup, createGroup, updateGroup, deleteGroup, createRegroup */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -317,6 +317,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_GROUP", function() { return RECEIVE_GROUP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_GROUP", function() { return REMOVE_GROUP; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllGroups", function() { return receiveAllGroups; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveUngroupedId", function() { return receiveUngroupedId; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGroups", function() { return fetchGroups; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGroup", function() { return fetchGroup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createGroup", function() { return createGroup; });
@@ -353,6 +354,12 @@ var removeGroup = function removeGroup(groupId) {
   };
 };
 
+var receiveUngroupedId = function receiveUngroupedId(id) {
+  return {
+    type: RECEIVE_UNGROUPED_ID,
+    id: id
+  };
+};
 var fetchGroups = function fetchGroups() {
   return function (dispatch) {
     return _util_group_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchGroups"]().then(function (groups) {
@@ -703,348 +710,14 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./frontend/components/groups/create_group_form_container.jsx":
-/*!********************************************************************!*\
-  !*** ./frontend/components/groups/create_group_form_container.jsx ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _group_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_form */ "./frontend/components/groups/group_form.jsx");
-/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/groups */ "./frontend/actions/groups.js");
-
-
-
-
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var group = {
-    title: ''
-  };
-  var formType = 'Create Group';
-  return {
-    group: group,
-    formType: formType
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    action: function action(group) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["createGroup"])(group));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_group_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
-
-/***/ }),
-
 /***/ "./frontend/components/groups/edit_group_form_container.jsx":
 /*!******************************************************************!*\
   !*** ./frontend/components/groups/edit_group_form_container.jsx ***!
   \******************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _group_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./group_form */ "./frontend/components/groups/group_form.jsx");
-/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/groups */ "./frontend/actions/groups.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-
-var mapStateToProps = function mapStateToProps(state, ownProps) {
-  var group = {
-    title: ''
-  };
-  var formType = 'Edit Group';
-  return {
-    group: group,
-    formType: formType
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    fetchGroup: function fetchGroup(id) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_3__["fetchGroup"])(id));
-    },
-    action: function action(group) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_3__["updateGroup"])(group));
-    }
-  };
-};
-
-var EditGroupForm =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(EditGroupForm, _React$Component);
-
-  function EditGroupForm() {
-    _classCallCheck(this, EditGroupForm);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(EditGroupForm).apply(this, arguments));
-  }
-
-  _createClass(EditGroupForm, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchGroup(this.props.match.params.groupId);
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      if (prevProps.group.id !== this.props.match.params.groupId) {
-        this.props.fetchGroup(this.props.match.params.groupId);
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          action = _this$props.action,
-          formType = _this$props.formType,
-          group = _this$props.group;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_group_form__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        action: action,
-        formType: formType,
-        group: group
-      });
-    }
-  }]);
-
-  return EditGroupForm;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(EditGroupForm));
-
-/***/ }),
-
-/***/ "./frontend/components/groups/group_form.jsx":
-/*!***************************************************!*\
-  !*** ./frontend/components/groups/group_form.jsx ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-var GroupForm =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(GroupForm, _React$Component);
-
-  function GroupForm(props) {
-    var _this;
-
-    _classCallCheck(this, GroupForm);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(GroupForm).call(this, props));
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.state = _this.props.group;
-    return _this;
-  }
-
-  _createClass(GroupForm, [{
-    key: "update",
-    value: function update(field) {
-      var _this2 = this;
-
-      return function (e) {
-        _this2.setState(_defineProperty({}, field, e.target.value));
-      };
-    }
-  }, {
-    key: "handleSubmit",
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      this.props.action(this.state).then(this.setState({
-        title: ''
-      }));
-    }
-  }, {
-    key: "errors",
-    value: function errors() {
-      if (this.props.errors) {
-        return this.props.errors.map(function (error) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "error",
-            key: error
-          }, error);
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-        className: "questions"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.errors()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        className: "group-form",
-        onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        value: this.state.title,
-        onChange: this.update('title')
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "submit",
-        value: this.props.formType
-      })));
-    }
-  }]);
-
-  return GroupForm;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (GroupForm);
-
-/***/ }),
-
-/***/ "./frontend/components/groups/group_index.jsx":
-/*!****************************************************!*\
-  !*** ./frontend/components/groups/group_index.jsx ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _group_index_item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_index_item */ "./frontend/components/groups/group_index_item.jsx");
-/* harmony import */ var _create_group_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create_group_form_container */ "./frontend/components/groups/create_group_form_container.jsx");
-/* harmony import */ var _edit_group_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit_group_form_container */ "./frontend/components/groups/edit_group_form_container.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-
-
-
-var GroupIndex =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(GroupIndex, _React$Component);
-
-  function GroupIndex() {
-    _classCallCheck(this, GroupIndex);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(GroupIndex).apply(this, arguments));
-  }
-
-  _createClass(GroupIndex, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.fetchGroups();
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      var groups = this.props.groups.map(function (group) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_group_index_item__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          key: "group".concat(group.id),
-          group: group,
-          deleteGroup: _this.props.deleteGroup
-        });
-      });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "poll-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "app-discovery"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
-        className: "create-poll",
-        to: "/questions/new"
-      }, "Create"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "app-discovery--title"
-      }, "Download the app"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Use the  app to embed polls in your slides."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Select your presentation software to start the download."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "icon app-discovery--icon",
-        "data-glyph": "powerpoint-logo-gray"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "icon app-discovery--icon",
-        "data-glyph": "keynote-logo-gray"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "icon app-discovery--icon",
-        "data-glyph": "googleslides-logo-gray"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "poll-groups"
-      }, groups));
-    }
-  }]);
-
-  return GroupIndex;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["default"] = (GroupIndex);
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/yilin/Documents/app academy/PollrBear/frontend/components/groups/edit_group_form_container.jsx'");
 
 /***/ }),
 
@@ -1053,100 +726,9 @@ function (_React$Component) {
   !*** ./frontend/components/groups/group_index_container.jsx ***!
   \**************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _group_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./group_index */ "./frontend/components/groups/group_index.jsx");
-/* harmony import */ var _actions_groups__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/groups */ "./frontend/actions/groups.js");
-
-
-
-
-var mapStateToProps = function mapStateToProps(_ref) {
-  var entities = _ref.entities;
-  return {
-    groups: Object.keys(entities.groups).map(function (id) {
-      return entities.groups[id];
-    })
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    fetchGroups: function fetchGroups() {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["fetchGroups"])());
-    },
-    deleteGroup: function deleteGroup(group) {
-      return dispatch(Object(_actions_groups__WEBPACK_IMPORTED_MODULE_2__["deleteGroup"])(group));
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_group_index__WEBPACK_IMPORTED_MODULE_1__["default"]));
-
-/***/ }),
-
-/***/ "./frontend/components/groups/group_index_item.jsx":
-/*!*********************************************************!*\
-  !*** ./frontend/components/groups/group_index_item.jsx ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-
-
-
-var GroupIndexItem = function GroupIndexItem(_ref) {
-  var group = _ref.group,
-      deleteGroup = _ref.deleteGroup;
-  var questions;
-
-  if (!group.questions) {
-    questions = null;
-  } else {
-    questions = Object.values(group.questions).map(function (question, index) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        key: index,
-        className: "question-index-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        to: "/questions/".concat(question.id)
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, question.body)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-        className: "edit-icon",
-        to: "/questions/".concat(question.id, "/edit")
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-edit"
-      })));
-    });
-  }
-
-  var showQuestion = "question-index";
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "groups"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    key: group.id,
-    className: "group-index-item"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    className: "question-index",
-    to: "/group/".concat(group.id)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, group.title)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: function onClick() {
-      return deleteGroup(group);
-    }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fas fa-trash"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: showQuestion
-  }, questions));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (GroupIndexItem);
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open '/Users/yilin/Documents/app academy/PollrBear/frontend/components/groups/group_index_container.jsx'");
 
 /***/ }),
 
