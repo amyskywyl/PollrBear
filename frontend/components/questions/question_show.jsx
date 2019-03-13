@@ -40,10 +40,6 @@ class QuestionShow extends React.Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   this.channel.unbind();
-  // }
-
   renderToolTip(props) {
     if (props.payload[0]) {
       return (
@@ -57,11 +53,6 @@ class QuestionShow extends React.Component {
   }
   
   handleActive(e) {
-    // if (this.props.question.active) {
-    //   this.props.updateActive({question_id: null});
-    // } else {
-    //   this.props.updateActive({question_id: this.props.question.id})
-    // }
     this.props.updateActive(this.props.question.id)
   }
 

@@ -6,7 +6,6 @@ import { receiveErrors } from './error_actions';
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
-// export const RECEIVE_NEW_QUESTION2 = 'RECEIVE_NEW_QUESTION2';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
 
 export const receiveAllQuestions = questions => ({
@@ -23,11 +22,6 @@ const receiveNewQuestion = ({question}) => ({
   type: RECEIVE_NEW_QUESTION,
   question
 });
-
-// const receiveNewQuestion2 = data => ({
-//   type: RECEIVE_NEW_QUESTION2,
-//   data,
-// });
 
 export const removeQuestion = question => ({
   type: REMOVE_QUESTION,

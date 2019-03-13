@@ -64,8 +64,7 @@ export const createRegroup = (group, questionIds) => dispatch => (
           dispatch(fetchGroups())
         }
       })
-      })
-    // )})
+    })
   }, err => (dispatch(receiveErrors(err.responseJSON)))
   )
 );
@@ -80,5 +79,4 @@ export const updateUngroup = (group, questionIds) => dispatch => {
         }
       })
       })
-    // )})
     };
