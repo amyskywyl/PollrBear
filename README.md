@@ -21,7 +21,7 @@ Groups act as organizational containers that the user can use to store related q
 
 The user also has a permanent container named 'Ungrouped'. Similar to PollEverywhere, an attempt to delete this group will cause all of the questions within itself to be deleted, but the 'Ungrouped' container will remain. This is due to conditional logic in the backend.
 
-![image of group index](app/assets/images/group.png)
+![image of group index](app/assets/images/groups.png)
 
 ### Graph Rendering & Live Results
 
