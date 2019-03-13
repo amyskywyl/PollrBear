@@ -6,7 +6,7 @@ import { receiveErrors } from './error_actions';
 export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
-export const RECEIVE_NEW_QUESTION2 = 'RECEIVE_NEW_QUESTION2';
+// export const RECEIVE_NEW_QUESTION2 = 'RECEIVE_NEW_QUESTION2';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
 
 export const receiveAllQuestions = questions => ({
@@ -14,7 +14,7 @@ export const receiveAllQuestions = questions => ({
   questions
 });
 
-const receiveQuestion = data => ({
+export const receiveQuestion = data => ({
   type: RECEIVE_QUESTION,
   data
 });
@@ -24,10 +24,10 @@ const receiveNewQuestion = ({question}) => ({
   question
 });
 
-const receiveNewQuestion2 = (question) => ({
-  type: RECEIVE_NEW_QUESTION2,
-  question,
-});
+// const receiveNewQuestion2 = data => ({
+//   type: RECEIVE_NEW_QUESTION2,
+//   data,
+// });
 
 export const removeQuestion = question => ({
   type: REMOVE_QUESTION,
@@ -72,6 +72,9 @@ export const updateQuestion = (question, choices) => dispatch => (
 );
 
 const saveChoices = (choices, question) => {
+  if (choices.length === 0){
+    return;
+  }
   if (choices.length === 1) {
     if (choices[0].question_id === 0 ) {
       return ChoiceAPI.createChoice(choices, question.question.id)
@@ -93,4 +96,14 @@ export const deleteQuestion = (questionId) => dispatch => (
   QuestionAPI.deleteQuestion(questionId).then(questionId => dispatch(removeQuestion(questionId)))
 );
 
+export const updateQuestionGroup = (question) => {
+  return dispatch => {
+    QuestionAPI.updateQuestion(question)
+    .then(question => {
+      window.location.href = `/#/groups`;
+      return dispatch(receiveQuestion(question));
+    }
+    ), err => (dispatch(receiveErrors(err.responseJSON)))
+  }
+};
 

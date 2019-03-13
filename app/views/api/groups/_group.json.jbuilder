@@ -1,0 +1,1 @@
+json.extract! group, :id, :title, :user_id, :question_ids

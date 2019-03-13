@@ -13,8 +13,9 @@ class QuestionShow extends React.Component {
   componentDidMount() {
     this.props.fetchQuestion(this.props.match.params.questionId);
     this.props.fetchActive(this.props.currentUser);
-    const pusher = new Pusher('c63d1e70a3b1cf4564ac', {
+    const pusher = new Pusher('ad9fa68c4a14e101bb75', {
       cluster: 'us2',
+      forceTLS: true,
       encrypted: true
     });
 
@@ -96,7 +97,7 @@ class QuestionShow extends React.Component {
       } else {
         data.push(
           {
-            name: choice.body, answers: (choice.answer_count) / this.props.answerCount, thisChoiceCount: choice.answer_count, amt: 100, time: 1
+            name: choice.body, answers: ((choice.answer_count) / this.props.answerCount).toFixed(2), thisChoiceCount: choice.answer_count, amt: 100, time: 1
           }
         )
 

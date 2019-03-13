@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const GroupIndexItem = ({ group, deleteGroup }) => {
+const GroupIndexItem = ({ group, deleteGroup, handleCheckboxChange }) => {
+
   let questions;
   if (!group.questions) {
     questions = null
@@ -9,6 +10,12 @@ const GroupIndexItem = ({ group, deleteGroup }) => {
     questions = Object.values(group.questions).map((question, index) => {
       return (
         <li key={index} className="question-index-item">
+          <input 
+            className="checkBoxClass"
+            name="isGoing"
+            type="checkbox"
+            onChange={(e) => handleCheckboxChange(question.id, e)}
+             />
           <Link to={`/questions/${question.id}`}>
             <span>{question.body}</span>
           </Link>

@@ -136,7 +136,7 @@ class QuestionForm extends React.Component {
               <div className="choices">
                 {choiceList}
                 <div className="add-answers-button">
-                  <button onClick={this.handleButton}>+</button>
+                  <button onClick={this.handleButton}>+ Add option</button>
                 </div>
               </div>
 

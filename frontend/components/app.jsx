@@ -11,9 +11,11 @@ import CreateQuestionFormContainer from './questions/create_question_form_contai
 import { Route, Link, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 import ParticipantFormContainer from './participant/participant_form_container';
+import Modal from './modal/modal';
 
 const App = () => (
   <div>
+    <Modal />
     <header>
       <NavBarContainer />
     </header>

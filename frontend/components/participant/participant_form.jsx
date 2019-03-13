@@ -17,8 +17,9 @@ class ParticipantForm extends React.Component {
   componentWillMount() {
     this.props.fetchActive(this.props.match.params.username)
     
-    const pusher = new Pusher('c63d1e70a3b1cf4564ac', {
+    const pusher = new Pusher('ad9fa68c4a14e101bb75', {
       cluster: 'us2',
+      forceTLS: true,
       encrypted: true
     });
 
@@ -67,17 +68,17 @@ class ParticipantForm extends React.Component {
   render() {
     if (this.props.active_id === -1) {
       return (
-        <body className="active-poll">
+        <div className="active-poll">
           <div className="hold-screen">
             <h1 className="header">Welcome to {this.props.match.params.username}'s presentation</h1>
             <div className="callout">
               <div className="instruction">
                   As soon as {this.props.match.params.username} display a poll, we'll update this area to give you the voting options.
               </div>
-              <div class="instruction">Easy as pie. Just hang tight, you're ready to go.</div>
+              <div className="instruction">Easy as pie. Just hang tight, you're ready to go.</div>
             </div>
           </div>
-        </body>
+        </div>
       )
     }
      if(!this.state.load) {

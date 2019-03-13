@@ -11,11 +11,11 @@ export const fetchGroup = (groupId) => {
     url: `/api/groups/${groupId}`,
   });
 };
-export const createGroup = (group) => {
+export const createGroup = (group, questions) => {
   return $.ajax({
     method: "POST",
     url: "/api/groups",
-    data: { group }
+    data: { group, questions }
   });
 };
 export const updateGroup = (group) => {

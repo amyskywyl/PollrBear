@@ -13,7 +13,8 @@
   border-bottom: 1px solid #fff;
   background-color: #ccdce8;
   justify-content: space-between;
-  height: 27px;
+  height: 30px;
+  width: 75vw;
 }
 
 .question-index-item{
@@ -22,8 +23,12 @@
   background-color: #e9eff4;
   border-bottom: 1px solid #fff;
   align-items: center;
-  justify-content: space-between;
-  height: 27px;
+  height: 30px;
+  width: 75vw;
+}
+
+.question-index-item a{
+  padding-left: 0.75em;
 }
 
 .create-poll {
@@ -67,6 +72,181 @@
   position: relative;
 }
 
-// .delete-icon {
+.edit-icon {
+  float: right;
+  margin-left: auto;
+}
 
-// }
+
+.modal-dialog {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.modal-dialog--backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-dialog--shell {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+.modal-dialog--content {
+  position: relative;
+  background-color: #fff;
+  font-size: 14px;
+  color: #303233;
+  box-shadow: 0 3px 9px rgba(0,0,0,0.5);
+}
+
+.modal-dialog--body {
+  position: relative;
+  padding: 10px 15px 0;
+  overflow: hidden;
+}
+
+.modal-dialog--body h3 {
+  color: #303233;
+  font-size: 1.43em;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.modal-dialog--prompt {
+  margin-top: 14px;
+}
+
+.modal-dialog--prompt input {
+  height: 28px;
+  width: 100%;
+  margin-bottom: 3.5px;
+  padding: 0 5px;
+  font-size: 14px;
+  border: 1px solid #ededed;
+}
+
+.modal-dialog--footer {
+  height: 55px;
+  padding: 10px 15px 15px;
+  box-sizing: border-box;
+}
+
+.modal-dialog--footer .modal-dialog--primary {
+  font-weight: 400;
+  border-radius: 0;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  display: inline-block;
+  justify-content: center;
+  line-height: 1.5;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
+  background-color: #fc5d51;
+  border-color: #fc5d51;
+  color: #fff;
+  font-size: 14px;
+  padding: calc(.5rem - 1px) 1rem;
+  min-width: 100px;
+}
+
+.modal-dialog--footer .modal-dialog--cancel {
+  text-decoration: none;
+  color: #303233;
+  border: 1px solid #dbdbdb;
+  box-sizing: border-box;
+  display: inline-block;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 14px;
+  padding: calc(.5rem - 1px) 1rem;
+  background-color: transparent;
+  border-color: transparent;
+  margin-right: 10px;
+}
+
+.modal-dialog--footer .modal-dialog--primary:hover {
+  background-color: #fb3c2e;
+  border-color: #fb3c2e;
+  color: #fff;
+}
+
+.modal-dialog--footer .modal-dialog--cancel:hover {
+    background-color: #ddd;
+    border-color: #c9c9c9;
+    text-decoration: none;
+}
+
+.modal-dialog--footer .modal-dialog--cancel, .modal-dialog--footer .modal-dialog--primary {
+    float: right;
+}
+
+.top-bar{
+  margin: 12px 10px;
+  background-color: white;
+  height: 40px;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  text-align: left;
+  text-indent: 5px;
+}
+
+.top-bar button {
+  display: inline-block;
+  margin: 0.125em;
+  padding: calc(.5rem - 1px) 1rem;
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid #dbdbdb;
+}
+
+.abled{
+  font-weight: bold;
+  height: 35px;
+  margin-right: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  display: flex;
+  background-color: #DBDBDB;
+
+}
+.abled:hover{
+  background-color: #c9c9c9;
+  color: #4f4f4f;
+}
+
+.disabled{
+  background-color: #dbdbdb;
+  border-color: #dbdbdb;
+  color: #4f4f4f;
+  cursor: not-allowed;
+  opacity: .5;
+  pointer-events: none;
+}
+.poll-container {
+  padding: 6.4px 10px;
+}

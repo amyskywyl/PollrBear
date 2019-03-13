@@ -1,6 +1,8 @@
 import * as GroupAPI from "../util/group_api_util";
-import { removeQuestion, updateQuestion } from "../actions/questions";
+import * as QuestionAPI from "../util/question_api_util";
+import { removeQuestion, updateQuestion, updateQuestionGroup } from "../actions/questions";
 import { receiveErrors } from "./error_actions";
+import { receiveQuestion } from "./questions";
 
 export const RECEIVE_ALL_GROUPS = 'RECEIVE_ALL_GROUPS';
 export const RECEIVE_GROUP = 'RECEIVE_GROUP';
@@ -42,24 +44,41 @@ export const updateGroup = group => dispatch => (
 
 export const deleteGroup = group => dispatch => (
   GroupAPI.deleteGroup(group.id).then(() => {
-    Object.values(group.questions).forEach(question => {
-      dispatch(removeQuestion(question))
-    });
+    if (group.questions) {
+      Object.values(group.questions).forEach(question => {
+        dispatch(removeQuestion(question))
+      });
+    }
     dispatch(removeGroup(group.id))
   })
 );
 
-export const createRegroup = (group, questions) => dispatch => (
-  GroupAPI.createGroup(group).then(gorup => {
-    dispatch(receiveGroup(group))
-
-    questions.forEach((question) => {
-      question['group_id'] = group.id
-      dispatch(updateQuestion(question))
-    })
-  }, err => (dispatch(receiveErrors(err.responseJSON))
-  ).then(
-    dispatch(fetchGroups())
-  ))
+export const createRegroup = (group, questionIds) => dispatch => (
+  GroupAPI.createGroup(group, questionIds).then(group => {
+    var i = 0;
+    questionIds.forEach((questionId) => {
+      QuestionAPI.changeQuestionGroup(questionId, group.id).then(data => {
+        dispatch(receiveQuestion(data))
+        i++;
+        if (i === questionIds.length) {
+          dispatch(fetchGroups())
+        }
+      })
+      })
+    // )})
+  }, err => (dispatch(receiveErrors(err.responseJSON)))
+  )
 );
-
+export const updateUngroup = (group, questionIds) => dispatch => {
+    var i = 0;
+    questionIds.forEach((questionId) => {
+      QuestionAPI.changeQuestionGroup(questionId, group.id).then(data => {
+        dispatch(receiveQuestion(data))
+        i++;
+        if (i === questionIds.length) {
+          dispatch(fetchGroups())
+        }
+      })
+      })
+    // )})
+    };

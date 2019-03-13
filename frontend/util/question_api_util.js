@@ -26,6 +26,14 @@ export const updateQuestion = (question) => {
     url: `/api/questions/${question.id}`,
     data: { question }
   });
+}; 
+
+export const changeQuestionGroup = (questionId, groupId) => {
+  return $.ajax({
+    method: "PATCH",
+    url: `/api/questions/${questionId}`,
+    data: { question: {group_id: groupId} }
+  });
 };
 
 export const deleteQuestion = (questionId) => {
