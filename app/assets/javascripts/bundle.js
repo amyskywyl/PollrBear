@@ -411,7 +411,7 @@ var createRegroup = function createRegroup(group, questionIds) {
             dispatch(fetchGroups());
           }
         });
-      }); // )})
+      });
     }, function (err) {
       return dispatch(Object(_error_actions__WEBPACK_IMPORTED_MODULE_3__["receiveErrors"])(err.responseJSON));
     });
@@ -429,7 +429,7 @@ var updateUngroup = function updateUngroup(group, questionIds) {
           dispatch(fetchGroups());
         }
       });
-    }); // )})
+    });
   };
 };
 
@@ -503,8 +503,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 var RECEIVE_QUESTION = 'RECEIVE_QUESTION';
-var RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION'; // export const RECEIVE_NEW_QUESTION2 = 'RECEIVE_NEW_QUESTION2';
-
+var RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
 var REMOVE_QUESTION = "REMOVE_QUESTION";
 var receiveAllQuestions = function receiveAllQuestions(questions) {
   return {
@@ -525,11 +524,7 @@ var receiveNewQuestion = function receiveNewQuestion(_ref) {
     type: RECEIVE_NEW_QUESTION,
     question: question
   };
-}; // const receiveNewQuestion2 = data => ({
-//   type: RECEIVE_NEW_QUESTION2,
-//   data,
-// });
-
+};
 
 var removeQuestion = function removeQuestion(question) {
   return {
@@ -1772,13 +1767,13 @@ function (_React$Component) {
         encrypted: true
       });
       Pusher.logToConsole = true;
-      var channel = pusher.subscribe('answer_channel');
-      channel.bind('pusher:subscription_succeeded', function (members) {
-        console.log('subscribed successful');
-      });
-      channel.bind('pusher:subscription_error', function (status) {
-        console.log('subscribed error: ' + status);
-      });
+      var channel = pusher.subscribe('answer_channel'); // channel.bind('pusher:subscription_succeeded', function (members) {
+      //   console.log('subscribed successful');
+      // });
+      // channel.bind('pusher:subscription_error', function (status) {
+      //   console.log('subscribed error: ' + status);
+      // });
+
       channel.bind('new-active', this.handleEvents);
     }
   }, {
@@ -2652,13 +2647,13 @@ function (_React$Component) {
         encrypted: true
       });
       Pusher.logToConsole = true;
-      var channel = pusher.subscribe('my-channel');
-      channel.bind('pusher:subscription_succeeded', function (members) {
-        console.log('subscribed successful');
-      });
-      channel.bind('pusher:subscription_error', function (status) {
-        console.log('subscribed error: ' + status);
-      });
+      var channel = pusher.subscribe('my-channel'); // channel.bind('pusher:subscription_succeeded', function (members) {
+      //   console.log('subscribed successful');
+      // });
+      // channel.bind('pusher:subscription_error', function (status) {
+      //   console.log('subscribed error: ' + status);
+      // });
+
       channel.bind('my-event', this.handleEvents);
     }
   }, {
@@ -2672,10 +2667,7 @@ function (_React$Component) {
       if (this.props.match.params.questionId !== nextProps.match.params.questionId) {
         this.props.fetchQuestion(nextProps.match.params.questionId);
       }
-    } // componentWillUnmount() {
-    //   this.channel.unbind();
-    // }
-
+    }
   }, {
     key: "renderToolTip",
     value: function renderToolTip(props) {
@@ -2688,11 +2680,6 @@ function (_React$Component) {
   }, {
     key: "handleActive",
     value: function handleActive(e) {
-      // if (this.props.question.active) {
-      //   this.props.updateActive({question_id: null});
-      // } else {
-      //   this.props.updateActive({question_id: this.props.question.id})
-      // }
       this.props.updateActive(this.props.question.id);
     }
   }, {
@@ -3901,17 +3888,23 @@ var usersReducer = function usersReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _reducers_root_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/root_reducer */ "./frontend/reducers/root_reducer.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 
 
+var middlewares = [redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"]];
 
+if (true) {
+  // must use 'require' (import only allowed at top of file)
+  var _require = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js"),
+      logger = _require.logger;
+
+  middlewares.push(logger);
+}
 
 var configureStore = function configureStore() {
   var preloadedState = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_1__["default"], preloadedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_3__["default"], redux_logger__WEBPACK_IMPORTED_MODULE_2___default.a));
+  return Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_root_reducer__WEBPACK_IMPORTED_MODULE_1__["default"], preloadedState, redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"].apply(void 0, middlewares));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (configureStore);

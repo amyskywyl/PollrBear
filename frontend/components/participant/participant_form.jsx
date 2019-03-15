@@ -25,12 +25,12 @@ class ParticipantForm extends React.Component {
 
     Pusher.logToConsole = true;
     const channel = pusher.subscribe('answer_channel');
-    channel.bind('pusher:subscription_succeeded', function (members) {
-      console.log('subscribed successful');
-    });
-    channel.bind('pusher:subscription_error', function (status) {
-      console.log('subscribed error: ' + status);
-    });
+    // channel.bind('pusher:subscription_succeeded', function (members) {
+    //   console.log('subscribed successful');
+    // });
+    // channel.bind('pusher:subscription_error', function (status) {
+    //   console.log('subscribed error: ' + status);
+    // });
     channel.bind('new-active', this.handleEvents);
   }
     
