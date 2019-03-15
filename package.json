@@ -34,6 +34,10 @@
     "start": "webpack --watch --mode=production",
     "postinstall": "webpack --mode=production"
   },
+  "engines": {
+    "node": "11.6.0",
+    "npm": "6.5.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
