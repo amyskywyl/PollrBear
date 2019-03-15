@@ -23,7 +23,7 @@ class ParticipantForm extends React.Component {
       encrypted: true
     });
 
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
     const channel = pusher.subscribe('answer_channel');
     // channel.bind('pusher:subscription_succeeded', function (members) {
     //   console.log('subscribed successful');
