@@ -118,7 +118,7 @@ class QuestionShow extends React.Component {
               </span>
               <div className="modality web">
                 <span className="icon web--icon" m-icon-medium="" data-glyph="desktop" m-icon-wide=""></span>
-                <span className="web--text">Respond at <a className="url emphasis" target="_blank" rel="noopener" href={"/" + this.props.currentUser.username}>{"/" + this.props.currentUser.username}</a></span>
+                <span className="web--text">Respond at <a className="url emphasis" target="_blank" rel="noopener" href={"/#/" + this.props.currentUser.username}>{"/#/" + this.props.currentUser.username}</a></span>
               </div> 
             </div>
           </div>
