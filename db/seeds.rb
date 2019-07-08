@@ -24,7 +24,6 @@ question1 = Question.create(body: "what", question_type: "q", group_id: demogrou
 question2 = Question.create(body: "is", question_type: "q", group_id: demogroup1.id)
 question3 = Question.create(body: "it", question_type: "q", group_id: demogroup3.id)
 question4 = Question.create(body: "really", question_type: "q", group_id: demogroup3.id)
-question5 = Question.create(body: "so happy", question_type: "q", group_id: demogroup3.id)
 
 choice1 = Choice.create(body: "okay", question_id: question1.id)
 choice2 = Choice.create(body: "not okay", question_id: question1.id)
@@ -32,5 +31,8 @@ choice3 = Choice.create(body: "lol", question_id: question2.id)
 choice4 = Choice.create(body: "em", question_id: question2.id)
 choice5 = Choice.create(body: "hmmm", question_id: question3.id)
 choice6 = Choice.create(body: "haha", question_id: question3.id)
+choice7 = Choice.create(body: "yes", question_id: question4.id)
+choice8 = Choice.create(body: "no", question_id: question4.id)
+choice9 = Choice.create(body: "maybe", question_id: question4.id)
 
 active_poll = ActivePoll.create!(user_id: demo.id)
