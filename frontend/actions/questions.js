@@ -46,6 +46,16 @@ export const fetchQuestion = (questionId) => dispatch => {
 
 
 export const createQuestion = (question, choices) => dispatch => {
+  let hasChoices = false;
+  for (let key in choices) {
+      if (choices[key].body !== null && choices[key].body !== "") {
+        hasChoices = true;
+        break;
+      }
+  } 
+  if (!hasChoices) {
+    return;
+  }
   return QuestionAPI.createQuestion(question)
     .then(question => {
       ChoiceAPI.createChoice(choices, question.question.id)

@@ -42,9 +42,16 @@ class Api::ActivePollsController < ApplicationController
   end
 
   def index
-    user = User.find_by_username(params[:username] || current_user.username)
+    user = nil
+    if current_user
+      user = User.find_by_username(current_user.username)
+    else
+      user = User.find_by_username(params[:username])
+    end
+
     @active_poll = user.active_poll
     if @active_poll
+      @question = Question.find(@active_poll.question_id)
       render 'api/active_polls/index'
     else
       render json: ["User has no active question"]
@@ -54,7 +61,7 @@ class Api::ActivePollsController < ApplicationController
   private
 
   def active_poll_params
-    params.require(:active_polls).permit(:question_id)
+    params.require(:active_polls).permit(:question_id, :username)
   end
 
 end

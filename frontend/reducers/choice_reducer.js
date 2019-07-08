@@ -15,10 +15,8 @@ const ChoicesReducer = ( state= {}, action) => {
       delete newState[action.choice.id];
       return newState;
     case RECEIVE_ANSWER:
-      newState[action.answer.choice_id].answer_count++;
       return merge({}, newState);
     case CLEAR_ANSWER:
-      newState[action.answer.choice_id].answer_count--;
       return newState;
     default:
       return state;

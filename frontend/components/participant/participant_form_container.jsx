@@ -7,18 +7,16 @@ import { fetchQuestion } from '../../actions/questions';
 
 const mapStateToProps = (state, ownProps) => {
   return({
-    answers: state.entities.answers,
-    choices: state.entities.choices,
+    answers: state.entities.active.answers,
+    choices: state.entities.active.choices,
     active_id: state.entities.active.question_id,
-    question: state.entities.questions,
-
+    question: state.entities.active.question,
   })
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createAnswer: params => dispatch(createAnswer(params)),
   fetchChoices: question_id => dispatch(fetchChoices(question_id)),
-  fetchQuestion: question_id => dispatch(fetchQuestion(question_id)),
   fetchActive: username => dispatch(fetchActive(username)),
   deleteAnswer: choice_id => dispatch(deleteAnswer(choice_id)),
 });

@@ -1,8 +1,8 @@
-export const fetchActive = user => {
+export const fetchActive = username => {
   return $.ajax({
     method: 'GET',
-    url: 'api/active_polls',
-    data: { username: user.username }
+    url: 'api/active_polls/',
+    data: { username: username }
   });
 };
 

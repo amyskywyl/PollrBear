@@ -12,7 +12,7 @@ class QuestionShow extends React.Component {
 
   componentDidMount() {
     this.props.fetchQuestion(this.props.match.params.questionId);
-    this.props.fetchActive(this.props.currentUser);
+    this.props.fetchActive(this.props.currentUser.username);
     const pusher = new Pusher('ad9fa68c4a14e101bb75', {
       cluster: 'us2',
       forceTLS: true,

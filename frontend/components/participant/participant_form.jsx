@@ -5,7 +5,7 @@ class ParticipantForm extends React.Component {
     super(props);
     this.state = {
       answered: false,
-      load: Object.keys(this.props.choices).length > 0,
+      load: false,
       choiceId: -1,
     };
 
@@ -34,14 +34,14 @@ class ParticipantForm extends React.Component {
     channel.bind('new-active', this.handleEvents);
   }
     
-    componentWillReceiveProps(nextProps) {
-      if (this.props.active_id !== nextProps.active_id) {
-        this.props.fetchQuestion(nextProps.active_id);
-      }
-      else if (this.props.choices !== nextProps.choices &&  !this.state.load) {
-        this.setState({ load: true });
-      }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.active_id !== nextProps.active_id) {
+      this.props.fetchActive(nextProps.match.params.username);
     }
+    else if (this.props.choices !== nextProps.choices &&  !this.state.load) {
+      this.setState({ load: true });
+    }
+  }
 
   handleEvents() {
     this.setState({ load: false });
@@ -111,7 +111,7 @@ class ParticipantForm extends React.Component {
         <section className="component-response-multiple-choice">
           <div className="component-response-multiple-choice">
             <div className="component-response-header">
-              <div className="component-response-header__title">{this.props.question[this.props.active_id].body}</div>
+              <div className="component-response-header__title">{this.props.question.body}</div>
               <div className="component-response-header__status">{answerRecorded}</div>
             </div>
             <div className="component-response-multiple-choice__body">
