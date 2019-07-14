@@ -41,7 +41,7 @@ class ParticipantForm extends React.Component {
     this.cookie = this.cookies.get('pollr-voting');
     if (this.cookie === null ||
         this.cookie === undefined) {
-      cookies.set('pollr-voting', {}, { path: '/' });
+      this.cookies.set('pollr-voting', {}, { path: '/' });
       this.cookie = this.cookies.get('pollr-voting');
     }
   }
