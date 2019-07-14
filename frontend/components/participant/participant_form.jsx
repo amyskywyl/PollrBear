@@ -1,5 +1,4 @@
 import React from 'react';
-import Cookies from 'universal-cookie';
 
 class ParticipantForm extends React.Component {
   constructor(props) {
@@ -36,7 +35,7 @@ class ParticipantForm extends React.Component {
     // });
     this.channel.bind('new-active', this.handleEvents);
 
-    this.cookies = new Cookies();
+    this.cookies = new UniversalCookie();
 
     this.cookie = this.cookies.get('pollr-voting');
     if (this.cookie === null ||
