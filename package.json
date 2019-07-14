@@ -20,8 +20,7 @@
     "webpack-cli": "^3.2.1"
   },
   "devDependencies": {
-    "redux-logger": "^3.0.6",
-    "@types/universal-cookie": "git+ssh://git@github.com:S64/types-universal-cookie.git#v2.1.2-2"
+    "redux-logger": "^3.0.6"
   },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "version": "1.0.0",
