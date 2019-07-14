@@ -8,36 +8,43 @@ class QuestionShow extends React.Component {
     super(props);
     this.handleActive = this.handleActive.bind(this);
     this.handleEvents = this.handleEvents.bind(this);
-  }
+    this.pusher = null;
+    }
 
   componentDidMount() {
-    this.props.fetchQuestion(this.props.match.params.questionId);
-    this.props.fetchActive(this.props.currentUser.username);
-    const pusher = new Pusher('ad9fa68c4a14e101bb75', {
+    this.props.fetchQuestion(this.props.id);
+    // this.props.fetchActive(this.props.currentUser);
+    this.pusher = new Pusher('ad9fa68c4a14e101bb75', {
       cluster: 'us2',
       forceTLS: true,
       encrypted: true
     });
 
-    Pusher.logToConsole = false;
-    const channel = pusher.subscribe('my-channel');
+    Pusher.logToConsole = true;
+    this.channel = this.pusher.subscribe("id_"+this.props.id);
     // channel.bind('pusher:subscription_succeeded', function (members) {
     //   console.log('subscribed successful');
     // });
     // channel.bind('pusher:subscription_error', function (status) {
     //   console.log('subscribed error: ' + status);
     // });
-    channel.bind('my-event', this.handleEvents);
+    this.channel.bind(this.props.id, this.handleEvents);
   }
 
   handleEvents(data) {
-    this.props.fetchQuestion(this.props.match.params.questionId);
+    this.props.fetchQuestion(this.props.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.questionId !== nextProps.match.params.questionId) {
-      this.props.fetchQuestion(nextProps.match.params.questionId);
+    if (this.props.match.params.questionId !== nextProps.match.params.questionId
+      && this.props.id === nextProps.match.params.questionId) {
+      this.props.fetchQuestion(this.props.id);
     }
+  }
+
+  componentWillUnmount() {
+    this.channel.unbind(this.props.id, this.handleEvents);
+    this.pusher.unsubscribe("id_" + this.props.id);
   }
 
   renderToolTip(props) {
@@ -53,7 +60,7 @@ class QuestionShow extends React.Component {
   }
   
   handleActive(e) {
-    this.props.updateActive(this.props.question.id)
+    this.props.updateActive(this.props.question.id);
   }
 
   render() {
@@ -74,7 +81,7 @@ class QuestionShow extends React.Component {
     }
 
     let buttonClassName = "control";
-    if (this.props.id === this.props.activeId) {
+    if (this.props.question.active) {
       buttonClassName += " active-button";
     }
     let data = [];

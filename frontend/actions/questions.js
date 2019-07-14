@@ -7,6 +7,7 @@ export const RECEIVE_ALL_QUESTIONS = 'RECEIVE_ALL_QUESTIONS';
 export const RECEIVE_QUESTION = 'RECEIVE_QUESTION';
 export const RECEIVE_NEW_QUESTION = 'RECEIVE_NEW_QUESTION';
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
+export const CLEAR_QUESTION = "CLEAR_QUESTION";
 
 export const receiveAllQuestions = questions => ({
   type: RECEIVE_ALL_QUESTIONS,
@@ -26,6 +27,10 @@ const receiveNewQuestion = ({question}) => ({
 export const removeQuestion = question => ({
   type: REMOVE_QUESTION,
   question
+});
+
+export const clearQuestion = () => ({
+  type: CLEAR_QUESTION
 });
 
 export const fetchQuestions = () => dispatch => {

@@ -325,3 +325,12 @@
     cursor: pointer;
     margin-left: 179px;
 }
+
+.participant-form {
+  background-color: #507aa3 !important;
+}
+
+button:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+}

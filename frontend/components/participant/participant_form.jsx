@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'universal-cookie';
 
 class ParticipantForm extends React.Component {
   constructor(props) {
@@ -12,6 +13,8 @@ class ParticipantForm extends React.Component {
     this.handleChoice = this.handleChoice.bind(this);
     this.handleClear = this.handleClear.bind(this);
     this.handleEvents = this.handleEvents.bind(this);
+    this.cookie = null;
+    this.cookies = null;
   }
 
   componentWillMount() {
@@ -24,22 +27,44 @@ class ParticipantForm extends React.Component {
     });
 
     Pusher.logToConsole = false;
-    const channel = pusher.subscribe('answer_channel');
+    this.channel = pusher.subscribe('answer_channel');
     // channel.bind('pusher:subscription_succeeded', function (members) {
     //   console.log('subscribed successful');
     // });
     // channel.bind('pusher:subscription_error', function (status) {
     //   console.log('subscribed error: ' + status);
     // });
-    channel.bind('new-active', this.handleEvents);
+    this.channel.bind('new-active', this.handleEvents);
+
+    this.cookies = new Cookies();
+
+    this.cookie = this.cookies.get('pollr-voting');
+    if (this.cookie === null ||
+        this.cookie === undefined) {
+      cookies.set('pollr-voting', {}, { path: '/' });
+      this.cookie = this.cookies.get('pollr-voting');
+    }
+  }
+
+  readFromCookie(props) {
+    const question_data = this.cookie[props.active_id];
+    if (question_data === null || 
+        question_data === undefined ||
+        question_data == -1) {
+      this.setState({ answered: false });
+    } else {
+      this.setState({ answered: true, choiceId: question_data });
+    }
   }
     
   componentWillReceiveProps(nextProps) {
     if (this.props.active_id !== nextProps.active_id) {
       this.props.fetchActive(nextProps.match.params.username);
+      this.setState({ load: false });
     }
     else if (this.props.choices !== nextProps.choices &&  !this.state.load) {
       this.setState({ load: true });
+      this.readFromCookie(nextProps);
     }
   }
 
@@ -58,11 +83,15 @@ class ParticipantForm extends React.Component {
           }
       }
     );
+    this.cookie[this.props.active_id] = id;
+    this.cookies.set('pollr-voting', this.cookie, { path: '/' });
   }
 
   handleClear() {
     this.props.deleteAnswer(this.state.choiceId);
     this.setState({choice: -1, answered: false});
+    this.cookie[this.props.active_id] = -1;
+    this.cookies.set('pollr-voting', this.cookie, { path: '/' });
   }
 
   render() {

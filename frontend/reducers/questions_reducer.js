@@ -2,6 +2,7 @@ import {
   RECEIVE_ALL_QUESTIONS,
   RECEIVE_QUESTION,
   REMOVE_QUESTION,
+  CLEAR_QUESTION,
   TOGGLE_ACTIVE,
   RECEIVE_NEW_QUESTION,
 } from '../actions/questions';
@@ -21,6 +22,8 @@ const QuestionsReducer = (oldState = {}, action) => {
       let newState = merge({}, oldState);
       delete newState[action.question.id];
       return newState;
+    case CLEAR_QUESTION:
+      return {};
     default:
       return oldState;
   }
