@@ -17,6 +17,7 @@ class Api::QuestionsController < ApplicationController
   end
 
   def show
+    # @question = User.find_by_username(params[:username]).questions.where(active: true)
     @question = Question.find(params[:id])
     if @question
       if @question[:active] == true || current_user.questions.find_by(id: params[:id])
