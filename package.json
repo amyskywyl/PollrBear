@@ -12,7 +12,7 @@
     "react-pusher": "^0.2.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "recharts": "^1.4.2",
+    "recharts": "^2.1.14",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "universal-cookie": "^4.0.2",
