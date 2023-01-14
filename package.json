@@ -17,7 +17,7 @@
     "redux-thunk": "^2.3.0",
     "universal-cookie": "^4.0.2",
     "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "redux-logger": "^3.0.6"
